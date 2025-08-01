@@ -18,9 +18,7 @@
         # Exemplo de como instalar alguns pacotes comuns
         { home.packages = with pkgs; [
             neovim
-            zsh
             git
-            htop
         ]; }
 
         # Exemplo de configuracao do Git
