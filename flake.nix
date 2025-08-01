@@ -16,17 +16,17 @@
         { home.stateVersion = "22.05"; }
 
         # Exemplo de como instalar alguns pacotes comuns
-        { home.packages = [
-            pkgs.neovim
-            pkgs.zsh
-            pkgs.git
-            pkgs.htop
+        { home.packages = with pkgs; [
+            neovim
+            zsh
+            git
+            htop
         ]; }
 
         # Exemplo de configuracao do Git
         { programs.git = {
             enable = true;
-            userName = "fabvarisco";
+            userName = "${builtins.getEnv "USER"}";
             userEmail = "fabricio.varisco@outlook.com";
         }; }
       ];
