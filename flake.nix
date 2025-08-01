@@ -3,15 +3,18 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    default.url = "github:fabvarisco/nixos-myflakes";
+    nixos-config.url = "github:fabvarisco/nixos-myflakes";
   };
 
-  outputs = { self, nixpkgs, default, ... }: {
-    nixosConfigurations.fabvarisco = nixpkgs.lib.nixosSystem {
+  outputs = { self, nixpkgs, nixos-config, ... }: {
+    nixosConfigurations.meu-hostname = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        default.nixosConfigurations.nixos.modules
-        `./configuration.nix`
+        # Importa a configuração base do flake
+        nixos-config.nixosConfigurations.nixos.modules
+
+        # Arquivos de configuracao
+        ./configuration.nix
       ];
     };
   };
