@@ -1,18 +1,18 @@
 {
-  description = "Meu NixOS - Configuração base sem Home Manager";
+  description = "Default Nix flake config";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    default.url = "github:fabvarisco/nixos-myflakes";
   };
 
-  outputs = { self, nixpkgs, ... }: {
-    nixosConfigurations = {
-      nixos = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./configuration.nix
-        ];
-      };
+  outputs = { self, nixpkgs, default, ... }: {
+    nixosConfigurations.fabvarisco = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        default.nixosConfigurations.nixos.modules
+        `./configuration.nix`
+      ];
     };
   };
 }
