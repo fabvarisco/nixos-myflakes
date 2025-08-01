@@ -1,20 +1,34 @@
 {
-  description = "Default Nix flake config";
+  description = "Minha configuracao de usuario universal";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixos-config.url = "github:fabvarisco/nixos-myflakes";
+    home-manager.url = "github:nix-community/home-manager/master";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, nixos-config, ... }: {
-    nixosConfigurations.meu-hostname = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        # Importa a configuração base do flake
-        nixos-config.nixosConfigurations.nixos.modules
+  outputs = { self, nixpkgs, home-manager, ... }: {
+    homeManagerConfigurations."${builtins.getEnv "USER"}" = home-manager.lib.homeManagerConfiguration {
+      pkgs = nixpkgs.legacyPackages.${builtins.currentSystem};
 
-        # Arquivos de configuracao
-        ./configuration.nix
+      modules = [
+        # Coloque suas configuracoes de usuario universais aqui
+        { home.stateVersion = "22.05"; }
+
+        # Exemplo de como instalar alguns pacotes comuns
+        { home.packages = [
+            pkgs.neovim
+            pkgs.zsh
+            pkgs.git
+            pkgs.htop
+        ]; }
+
+        # Exemplo de configuracao do Git
+        { programs.git = {
+            enable = true;
+            userName = "fabvarisco";
+            userEmail = "fabricio.varisco@outlook.com";
+        }; }
       ];
     };
   };
