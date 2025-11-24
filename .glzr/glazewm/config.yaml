@@ -150,8 +150,9 @@ window_rules:
       - window_process: { equals: 'POWERPNT' }
         window_class: { not_regex: 'PPTFrameClass' }
       # Ignora qualquer janela de Picture-in-Picture (PiP) de navegadores
-      - window_process: { equals: 'chrome' }
+      - window_title: { regex: "[Pp]icture.in.[Pp]icture" }
         window_class: { regex: "Chrome_WidgetWin_1|MozillaDialogClass" }
+      - window_title: { equals: 'Arc picture in picture' }
 
 binding_modes:
   # When enabled, the focused window can be resized via arrow keys or HJKL.
