@@ -50,6 +50,7 @@ bars:
           "systray",
           "cpu",
           "memory",
+          "battery",
           "media",
           "volume",
           "microphone",
@@ -121,6 +122,16 @@ widgets:
         left: 12
         bottom: 0
         right: 12
+  battery:
+    type: "yasb.battery.BatteryWidget"
+    options:
+      label: "\uf240 {percent}%"
+      label_alt: "\uf240 {time_remaining}"
+      update_interval: 10000
+      callbacks:
+        on_left: "toggle_label"
+        on_middle: "do_nothing"
+        on_right: "exec cmd.exe /c start ms-settings:batterysaver"
   todo:
     type: "yasb.todo.TodoWidget"
     options:
