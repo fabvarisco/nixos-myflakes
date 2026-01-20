@@ -1,6 +1,4 @@
-# My Dotfiles
-
-## Branch: windows/glazewm-yasb
+# Branch: windows/glazewm-yasb
 
 Esta branch contém configurações personalizadas para Windows, focando em um ambiente de gerenciamento de janelas e customização de interface.
 
