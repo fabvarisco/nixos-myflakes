@@ -1,43 +1,43 @@
 # Branch: windows/glazewm-yasb
 
-Esta branch contém configurações personalizadas para Windows, focando em um ambiente de gerenciamento de janelas e customização de interface.
+This branch contains custom configurations for Windows, focusing on a window management environment and interface customization.
 
-### O que está incluído
+### What's Included
 
-Este repositório contém configurações para:
+This repository contains configurations for:
 
-#### 🪟 **GlazeWM** - Gerenciador de Janelas Tiling
-- Gerenciador de janelas em mosaico para Windows
-- Configuração localizada em `.glzr/glazewm/config.yaml`
-- Proporciona uma experiência similar ao i3/bspwm no Windows
+#### 🪟 **GlazeWM** - Tiling Window Manager
+- Tiling window manager for Windows
+- Configuration located at `.glzr/glazewm/config.yaml`
+- Provides an i3/bspwm-like experience on Windows
 
 #### 📊 **YASB** (Yet Another Status Bar)
-- Barra de status personalizável para Windows
-- Arquivos de configuração em `.config/yasb/`:
-  - `config.yaml` - Configuração principal da barra
-  - `styles.css` - Estilos visuais customizados
+- Customizable status bar for Windows
+- Configuration files in `.config/yasb/`:
+  - `config.yaml` - Main bar configuration
+  - `styles.css` - Custom visual styles
 
 #### ⚡ **PowerShell**
-- Perfil customizado do PowerShell
-- Arquivo: `profile powershell`
-- Recursos:
-  - Configuração UTF-8
-  - Integração com Starship prompt
-  - Fastfetch com ASCII arts aleatórias na inicialização
+- Custom PowerShell profile
+- File: `profile powershell`
+- Features:
+  - UTF-8 configuration
+  - Starship prompt integration
+  - Fastfetch with random ASCII arts on startup
 
 #### 🚀 **Starship**
-- Prompt cross-shell minimalista e rápido
-- Configurações em `.config/`:
+- Minimal and fast cross-shell prompt
+- Configurations in `.config/`:
   - `starship.toml`
   - `starship-config.toml`
 
 #### 🎨 **Fastfetch**
-- Ferramenta de informações do sistema (alternativa ao neofetch)
-- Configuração em `.config/fastfetch/`:
-  - `config.jsonc` - Configuração principal
-  - `ascii-arts/` - Coleção de ASCII arts personalizadas (ascii1.txt - ascii4.txt)
+- System information tool (neofetch alternative)
+- Configuration in `.config/fastfetch/`:
+  - `config.jsonc` - Main configuration
+  - `ascii-arts/` - Collection of custom ASCII arts (ascii1.txt - ascii4.txt)
 
-### 📋 Lista Completa de Dotfiles
+### 📋 Complete Dotfiles List
 
 ```
 .
@@ -61,33 +61,33 @@ Este repositório contém configurações para:
 └── README.md
 ```
 
-## 🔧 Como Instalar
+## 🔧 How to Install
 
-### Pré-requisitos
+### Prerequisites
 
-Antes de instalar os dotfiles, você precisa ter os seguintes programas instalados:
+Before installing the dotfiles, you need to have the following programs installed:
 
-1. **GlazeWM** - [Instalação](https://github.com/glzr-io/glazewm)
-2. **YASB** - [Instalação](https://github.com/amnweb/yasb)
-3. **Starship** - [Instalação](https://starship.rs/guide/#🚀-installation)
-4. **Fastfetch** - [Instalação](https://github.com/fastfetch-cli/fastfetch)
-5. **PowerShell 7+** (recomendado)
+1. **GlazeWM** - [Installation](https://github.com/glzr-io/glazewm)
+2. **YASB** - [Installation](https://github.com/amnweb/yasb)
+3. **Starship** - [Installation](https://starship.rs/guide/#🚀-installation)
+4. **Fastfetch** - [Installation](https://github.com/fastfetch-cli/fastfetch)
+5. **PowerShell 7+** (recommended)
 
-### Instalação dos Dotfiles
+### Installing the Dotfiles
 
-#### Método 1: Clone e Copie Manualmente
+#### Method 1: Clone and Copy Manually
 
 ```powershell
-# Clone o repositório
+# Clone the repository
 git clone -b windows/glazewm-yasb https://github.com/fabvarisco/my-dotfiles.git
 cd my-dotfiles
 
-# Copie os arquivos para os locais apropriados
+# Copy files to appropriate locations
 
 # PowerShell Profile
-# Descubra o caminho do seu perfil
+# Find your profile path
 echo $PROFILE
-# Copie o conteúdo de 'profile powershell' para o arquivo indicado
+# Copy the content of 'profile powershell' to the indicated file
 
 # Fastfetch
 Copy-Item -Recurse .config/fastfetch/* $env:USERPROFILE/.config/fastfetch/
@@ -102,14 +102,14 @@ Copy-Item -Recurse .glzr/* $env:USERPROFILE/.glzr/
 Copy-Item -Recurse .config/yasb/* $env:USERPROFILE/.config/yasb/
 ```
 
-#### Método 2: Usando Symlinks (Recomendado)
+#### Method 2: Using Symlinks (Recommended)
 
 ```powershell
-# Clone o repositório
+# Clone the repository
 git clone -b windows/glazewm-yasb https://github.com/fabvarisco/my-dotfiles.git
 cd my-dotfiles
 
-# Crie symlinks (execute como Administrador)
+# Create symlinks (run as Administrator)
 # PowerShell Profile
 New-Item -ItemType SymbolicLink -Path $PROFILE -Target "$PWD/profile powershell" -Force
 
@@ -126,26 +126,26 @@ New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE/.glzr" -Target "$PWD/.gl
 New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE/.config/yasb" -Target "$PWD/.config/yasb" -Force
 ```
 
-### 🎯 Personalização
+### 🎯 Customization
 
-Após a instalação, você pode personalizar:
+After installation, you can customize:
 
-- **ASCII Arts**: Adicione seus próprios arquivos `.txt` em `.config/fastfetch/ascii-arts/`
-- **Cores da Barra**: Edite `.config/yasb/styles.css`
-- **Atalhos do GlazeWM**: Modifique `.glzr/glazewm/config.yaml`
-- **Prompt**: Ajuste `.config/starship.toml` conforme suas preferências
+- **ASCII Arts**: Add your own `.txt` files to `.config/fastfetch/ascii-arts/`
+- **Bar Colors**: Edit `.config/yasb/styles.css`
+- **GlazeWM Keybindings**: Modify `.glzr/glazewm/config.yaml`
+- **Prompt**: Adjust `.config/starship.toml` to your preferences
 
-### 🔄 Atualização
+### 🔄 Updating
 
-Para atualizar suas configurações:
+To update your configurations:
 
 ```powershell
 cd my-dotfiles
 git pull origin windows/glazewm-yasb
 ```
 
-Se você usou symlinks, as mudanças serão aplicadas automaticamente. Caso contrário, copie os arquivos novamente.
+If you used symlinks, changes will be applied automatically. Otherwise, copy the files again.
 
 ---
 
-**Nota**: Ajuste os caminhos conforme necessário para o seu sistema.
+**Note**: Adjust paths as needed for your system.
