@@ -1,48 +1,30 @@
 {
-  description = "Exemplo de Flake para instalação via terminal";
+ description="hyprland";
+ inputs = {
+   nixpkgs.url = "nixpkgs/nixos-unstable";
+   home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+   };
 
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
   };
 
-  outputs = { self, nixpkgs, ... }:
-    let
-      system = "x86_64-linux";
-      pkgs = import nixpkgs { inherit system; };
-    in {
-      # Um pacote simples que apenas expõe bash (exemplo)
-      packages.x86_64-linux.my-package = pkgs.stdenv.mkDerivation {
-        pname = "my-package";
-        version = "1.0";
+  outputs = {nixpkgs, home-manager, ... }:{ 
+   nixosConfigurations.thinkpad-hypr = nixpkgs.lib.nixosSystem {
+     system = "x86_64-linux";
+     modules = [
+       ./configuration.nix
+        home-manager.nixosModules.home-manager {
+        home-manager = 
+        {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.fabvarisco = import ./home.nix;
+              backupFileExtension = "backup";
+              };
+         }
+      ];
+   };
+}; 
 
-        # Apenas expondo bash como dependência para exemplificar
-        buildInputs = [ pkgs.bash ];
-
-        # Dummy buildPhase que não faz nada, só um exemplo simples
-        buildPhase = "true";
-
-        installPhase = ''
-          mkdir -p $out/bin
-          echo "Pacote simples instalado" > $out/bin/my-package-info
-          chmod +x $out/bin/my-package-info
-        '';
-      };
-
-      # Ambiente de desenvolvimento (devShell)
-      devShells.x86_64-linux.default = pkgs.mkShell {
-        name = "my-shell";
-        buildInputs = [
-          pkgs.bash
-          pkgs.git
-          pkgs.vim
-        ];
-
-        shellHook = ''
-          echo "Bem-vindo ao ambiente de desenvolvimento!"
-        '';
-      };
-
-      # Definindo um pacote padrão para comandos que não especificam nome
-      defaultPackage.x86_64-linux = self.packages.x86_64-linux.my-package;
-    };
 }
