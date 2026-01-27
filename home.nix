@@ -16,7 +16,7 @@
  home.file.".config/waybar".source = ./config/waybar;
  home.file.".config/kitty".source = ./config/kitty;
  home.file.".config/starship.toml".source = ./config/starship.toml;
- home.file.".config/swaync".source = ./config/swancy;
+ home.file.".config/swaync".source = ./config/swaync;
  
  # Wallpapers
  home.file."walls".source = ./config/walls;
