@@ -116,7 +116,7 @@
 
   # Fonts
   fonts.fonts = with pkgs; [
-    nerd-fonts-jetbrains-mono
+    nerd-fonts.jetbrains-mono
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];   
