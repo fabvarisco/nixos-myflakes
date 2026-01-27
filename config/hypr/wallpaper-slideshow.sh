@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-WALLPAPER_DIR="$HOME/walls"
+WALLPAPER_DIR="$HOME/.config/walls"
 INTERVAL=300 
 
 if [ ! -d "$WALLPAPER_DIR" ]; then
