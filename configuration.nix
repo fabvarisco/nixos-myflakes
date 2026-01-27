@@ -58,6 +58,16 @@
      xwayland.enable = true;
   };
 
+  # Enable sound with PipeWire
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
+  };
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -73,7 +83,40 @@
     hyprpaper
     starship
     nautilus
+    vscode
+    gh    
+    #--- UI ---
     
+    # Network
+    networkmanagerapplet
+    nwg-look
+
+    # Notifications
+    swaynotificationcenter  # Notification daemon and center
+
+    # Audio
+    pavucontrol      # GUI audio control
+    pamixer          # CLI audio control
+    playerctl        # Media player control
+     
+    #--- Utilities ---
+    # Media viewers
+    imv              # Image viewer (Wayland)
+    mpv              # Video player
+    vlc              # Alternative video player
+    
+    # Screenshot tools
+    grim             # Screenshot utility (Wayland)
+    slurp            # Screen region selector
+    swappy           # Screenshot editor
+    wl-clipboard     # Clipboard utilities (wl-copy, wl-paste)
+
+
+  ];
+
+  # Fonts
+  fonts.fonts = with pkgs; [
+    nerd-fonts-jetbrains-mono
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];   

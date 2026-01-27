@@ -16,4 +16,9 @@
  home.file.".config/waybar".source = ./config/waybar;
  home.file.".config/kitty".source = ./config/kitty;
  home.file.".config/starship.toml".source = ./config/starship.toml;
+ home.file.".config/swaync".source = ./config/swancy;
+ 
+ # Wallpapers
+ home.file."walls".source = ./config/walls;
+ home.file."walls".recursive = true;
 }
