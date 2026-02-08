@@ -15,7 +15,7 @@ if [ ! -d "$WALLPAPER_DIR" ]; then
 fi
 
 while true; do
-    WALLPAPERS=($(find "$WALLPAPER_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) | sort))
+    WALLPAPERS=($(find "$WALLPAPER_DIR" \( -type f -o -type l \) \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) | sort))
 
     if [ ${#WALLPAPERS[@]} -eq 0 ]; then
         echo "No wallpapers found in $WALLPAPER_DIR"
