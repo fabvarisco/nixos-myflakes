@@ -1,0 +1,64 @@
+@import "colours";
+
+// Base styling
+* {
+  font-family: "Adwaita Sans", "Cantarell", sans-serif;
+  color: $fg;
+}
+
+// Accent color applications
+entry selection {
+  background-color: $accent;
+}
+
+button.suggested-action {
+  background-color: $accent;
+  &:hover { background-color: $accent-hover; }
+  &:active { background-color: $accent-active; }
+}
+
+switch:checked slider {
+  background-color: $accent;
+}
+
+checkbutton:checked check,
+radiobutton:checked radio {
+  background-color: $accent;
+  border-color: $accent;
+}
+
+progressbar progress,
+levelbar block.filled {
+  background-color: $accent;
+}
+
+// Popup mixin
+@mixin popup {
+  background-color: $popup-bg;
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: $popup-shadow;
+  border: $popup-border;
+}
+
+// Custom button mixin
+@mixin custom-button {
+  background-color: $button-bg;
+  border-radius: 12px;
+  padding: 8px 12px;
+  transition: all 150ms ease;
+
+  &:hover {
+    background-color: $button-bg-hover;
+  }
+
+  &:active {
+    background-color: $button-bg-active;
+  }
+}
+
+// Import widget styles
+@import "widgets/Bar/style";
+@import "widgets/ControlCentre/style";
+@import "widgets/NotifsCalendar/style";
+@import "widgets/Clock/style";

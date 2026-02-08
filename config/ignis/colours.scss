@@ -1,0 +1,45 @@
+// Color palette - Dark theme (GNOME-like)
+
+$fg: #FDFDFD;
+$bg: #36363A;
+$window-bg: #1D1D20;
+
+// Accent color - Can be overridden
+$accent: #3584E4 !default;
+
+// Text colors
+$fg-active: $fg;
+$fg-inactive: #959595;
+$fg-subtle: #9C9C9D;
+
+// Button colors
+$button-bg: #3F3F44;
+$button-bg-hover: lighten($button-bg, 5%);
+$button-bg-active: lighten($button-bg, 10%);
+
+// Popup styling
+$popup-bg: #2E2E31;
+$popup-border: 1px solid rgba(255, 255, 255, 0.08);
+$popup-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+
+// Separator
+$separator: 1px solid rgba(255, 255, 255, 0.1);
+
+// Accent variations
+$accent-tertiary: adjust-color($accent, $lightness: 8%);
+$accent-hover: adjust-color($accent, $lightness: 5%);
+$accent-active: adjust-color($accent, $lightness: 10%);
+
+// Widget colors
+$widget-bg: $button-bg;
+$widget-bg-active: $accent;
+$widget-bg-disabled: rgba($button-bg, 0.5);
+
+// Slider colors
+$slider-trough: rgba(255, 255, 255, 0.15);
+$slider-highlight: $accent;
+
+// Status colors
+$success: #57E389;
+$warning: #F8E45C;
+$error: #ED333B;

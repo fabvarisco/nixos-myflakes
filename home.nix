@@ -1,9 +1,29 @@
-{ config, pkgs, ... }: 
+{ config, pkgs, inputs, ... }:
 
 {
+ imports = [
+   inputs.ignis.homeManagerModules.default
+ ];
+
  home.username = "fabvarisco";
  home.homeDirectory = "/home/fabvarisco";
  home.stateVersion = "25.05";
+
+ # Ignis - GNOME-like shell
+ programs.ignis = {
+   enable = true;
+   addToPythonEnv = true;
+   configDir = ./config/ignis;
+   services = {
+     bluetooth.enable = true;
+     audio.enable = true;
+     network.enable = true;
+   };
+   sass = {
+     enable = true;
+     useDartSass = true;
+   };
+ };
  programs.bash = {
  enable = true;
  initExtra = '' eval "$(starship init bash)"'';

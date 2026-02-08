@@ -6,21 +6,25 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
    };
-
+   ignis = {
+      url = "github:ignis-sh/ignis";
+      inputs.nixpkgs.follows = "nixpkgs";
+   };
   };
 
-  outputs = {nixpkgs, home-manager, ... }:{ 
+  outputs = {nixpkgs, home-manager, ignis, ... }@inputs:{ 
    nixosConfigurations.thinkpad-hypr = nixpkgs.lib.nixosSystem {
      system = "x86_64-linux";
      modules = [
        ./configuration.nix
         home-manager.nixosModules.home-manager {
-        home-manager = 
+        home-manager =
         {
               useGlobalPkgs = true;
               useUserPackages = true;
               users.fabvarisco = import ./home.nix;
               backupFileExtension = "backup";
+              extraSpecialArgs = { inherit inputs; };
               };
          }
       ];
