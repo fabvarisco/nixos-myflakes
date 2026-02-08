@@ -92,6 +92,7 @@
     # Network
     networkmanagerapplet
     nwg-look
+    nwg-displays    # Monitor/display configuration GUI
 
     # Notifications
     swaynotificationcenter  # Notification daemon and center
