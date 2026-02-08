@@ -9,7 +9,7 @@
     "modules-left": [],
     //"modules-left": ["hyprland/window"],
     "modules-center": ["clock"],
-    "modules-right": ["battery","backlight","pulseaudio","pulseaudio#microphone","tray"],
+    "modules-right": ["battery","backlight","pulseaudio","pulseaudio#microphone","tray","custom/nixos"],
     "hyprland/window": {
         "format": "{}"
     },
@@ -57,7 +57,8 @@
 
     "clock": {
         "format": "{:%H:%M  %a, %b %e}",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "on-click": "gnome-calendar"
     },
 
     "backlight": {
@@ -137,5 +138,11 @@
 	    "tooltip-format": "{device_alias}",
 	    "tooltip-format-connected": " {device_enumerate}",
 	    "tooltip-format-enumerate-connected": "{device_alias}"
+    },
+
+    "custom/nixos": {
+        "format": "",
+        "tooltip": false,
+        "on-click": "wofi --show drun"
     }
 }

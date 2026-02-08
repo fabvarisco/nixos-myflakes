@@ -9,7 +9,7 @@
 }
 
 window#waybar {
-    background: rgba(21, 18, 27, 0);
+    background: rgba(21, 18, 27, 0.85);
     color: #cdd6f4;
 }
 
@@ -157,4 +157,15 @@ tooltip {
     border-radius: 20px;
     border-right: 0px;
     margin-left: 0px;
+}
+
+#custom-nixos {
+    background: #1e1e2e;
+    color: #7ebae4;
+    border-radius: 20px;
+    padding: 0px 12px;
+    margin-left: 5px;
+    margin-top: 5px;
+    border: 1px solid #181825;
+    font-size: 14px;
 }

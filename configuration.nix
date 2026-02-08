@@ -87,6 +87,14 @@
     gh    
     nodejs_24
     claude-code
+
+    # Browsers
+  
+
+    # Social
+    discord
+
+
     #--- UI ---
     
     swww
