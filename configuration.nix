@@ -89,6 +89,8 @@
     claude-code
     #--- UI ---
     
+    swww
+    
     # Network
     networkmanagerapplet
     nwg-look
