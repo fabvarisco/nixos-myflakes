@@ -141,7 +141,7 @@
     },
 
     "custom/nixos": {
-        "format": "",
+        "format": "Nixos 󰌌",
         "tooltip": false,
         "on-click": "wofi --show drun"
     }

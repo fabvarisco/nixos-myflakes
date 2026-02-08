@@ -99,6 +99,7 @@
     kitty
     hyprpaper
     starship
+    fastfetch
     nautilus
     vscode
     gh    
