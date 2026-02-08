@@ -85,6 +85,8 @@
     nautilus
     vscode
     gh    
+    nodejs_24
+    claude-code
     #--- UI ---
     
     # Network
