@@ -9,16 +9,17 @@
 }
 
 window#waybar {
-    background: rgba(21, 18, 27, 0.85);
+    background: rgba(21, 18, 27, 0.10);
     color: #cdd6f4;
 }
 
 tooltip {
-    background: #1e1e2e;
+    background: #ffffff;
+    color: #1e1e2e;
     border-radius: 10px;
     border-width: 1.5px;
     border-style: solid;
-    border-color: #11111b;
+    border-color: #e0e0e0;
     transition: 0.3s;
 }
 
@@ -168,4 +169,31 @@ tooltip {
     margin-top: 5px;
     border: 1px solid #181825;
     font-size: 14px;
+}
+
+#calendar {
+    background: #ffffff;
+    color: #1e1e2e;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+#calendar.header {
+    color: #1e1e2e;
+    font-weight: bold;
+}
+
+#calendar.weekdays {
+    color: #585b70;
+}
+
+#calendar.today {
+    background: #fab387;
+    color: #1e1e2e;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+#calendar.week {
+    color: #7f849c;
 }

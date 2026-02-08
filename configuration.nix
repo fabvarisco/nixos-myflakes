@@ -103,6 +103,7 @@
     networkmanagerapplet
     nwg-look
     nwg-displays    # Monitor/display configuration GUI
+    nwg-dock-hyprland  # Dock for Hyprland
 
     # Notifications
     swaynotificationcenter  # Notification daemon and center
@@ -129,6 +130,11 @@
     slurp            # Screen region selector
     swappy           # Screenshot editor
     wl-clipboard     # Clipboard utilities (wl-copy, wl-paste)
+    cliphist         # Clipboard history manager (supports images)
+
+    # Calendar
+    gnome-calendar        # Calendar app
+    gnome-online-accounts # Sync with Google, Microsoft, etc
 
 
   ];
