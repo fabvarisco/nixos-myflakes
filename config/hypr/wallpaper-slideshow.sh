@@ -37,14 +37,11 @@ while true; do
         ((ATTEMPTS++))
     done
 
-    # Preload and set wallpaper
-    hyprctl hyprpaper preload "$RANDOM_WALL" 2>/dev/null
-    hyprctl hyprpaper wallpaper ",$RANDOM_WALL"
-
-    # Unload old wallpaper
-    if [ -n "$CURRENT_WALL" ] && [ "$CURRENT_WALL" != "$RANDOM_WALL" ]; then
-        hyprctl hyprpaper unload "$CURRENT_WALL" 2>/dev/null
-    fi
+    # Set wallpaper with animation
+    swww img "$RANDOM_WALL" \
+        --transition-type fade \
+        --transition-duration 2 \
+        --transition-fps 60
 
     # Save current wallpaper
     echo "$RANDOM_WALL" > "$CACHE_FILE"

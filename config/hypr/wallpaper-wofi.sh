@@ -41,7 +41,7 @@ done
 # Add special options
 MENU+="─────────────\n"
 MENU+="🔀 Random Wallpaper\n"
-MENU+="🔄 Reload Hyprpaper"
+MENU+="🔄 Reload swww"
 
 # Show wofi menu
 SELECTED=$(echo -e "$MENU" | wofi --dmenu \
@@ -62,15 +62,15 @@ if [[ "$SELECTED" == *"Random Wallpaper"* ]]; then
     exit 0
 fi
 
-if [[ "$SELECTED" == *"Reload Hyprpaper"* ]]; then
-    killall hyprpaper 2>/dev/null
-    hyprpaper &
+if [[ "$SELECTED" == *"Reload swww"* ]]; then
+    killall swww-daemon 2>/dev/null
+    swww-daemon &
     sleep 1
     if [ -f "$CACHE_FILE" ]; then
         LAST_WALL=$(cat "$CACHE_FILE")
-        hyprctl hyprpaper wallpaper ",$LAST_WALL"
+        swww img "$LAST_WALL" --transition-type fade --transition-duration 1
     fi
-    notify-send "Hyprpaper" "Reloaded successfully"
+    notify-send "swww" "Reloaded successfully"
     exit 0
 fi
 
@@ -96,14 +96,12 @@ if [ -z "$SELECTED_WALL" ]; then
     exit 1
 fi
 
-# Set the wallpaper
-hyprctl hyprpaper preload "$SELECTED_WALL" 2>/dev/null
-hyprctl hyprpaper wallpaper ",$SELECTED_WALL"
-
-# Unload old wallpaper
-if [ -n "$CURRENT_WALL" ] && [ "$CURRENT_WALL" != "$SELECTED_WALL" ]; then
-    hyprctl hyprpaper unload "$CURRENT_WALL" 2>/dev/null
-fi
+# Set the wallpaper with animation
+swww img "$SELECTED_WALL" \
+    --transition-type grow \
+    --transition-duration 1.5 \
+    --transition-fps 60 \
+    --transition-pos center
 
 # Save current wallpaper
 echo "$SELECTED_WALL" > "$CACHE_FILE"

@@ -31,16 +31,12 @@ while [ "$RANDOM_WALL" = "$CURRENT_WALL" ] && [ $ATTEMPTS -lt 10 ] && [ ${#WALLP
     ((ATTEMPTS++))
 done
 
-# Preload the new wallpaper (in case it's not already loaded)
-hyprctl hyprpaper preload "$RANDOM_WALL" 2>/dev/null
-
-# Set the wallpaper
-hyprctl hyprpaper wallpaper ",$RANDOM_WALL"
-
-# Unload old wallpaper to save memory (optional)
-if [ -n "$CURRENT_WALL" ] && [ "$CURRENT_WALL" != "$RANDOM_WALL" ]; then
-    hyprctl hyprpaper unload "$CURRENT_WALL" 2>/dev/null
-fi
+# Set the wallpaper with animation
+swww img "$RANDOM_WALL" \
+    --transition-type grow \
+    --transition-duration 1.5 \
+    --transition-fps 60 \
+    --transition-pos center
 
 # Save current wallpaper
 echo "$RANDOM_WALL" > "$CACHE_FILE"
