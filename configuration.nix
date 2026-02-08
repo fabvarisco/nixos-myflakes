@@ -71,6 +71,23 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # GTK Dark Mode
+  environment.sessionVariables = {
+    GTK_THEME = "Adwaita:dark";
+  };
+
+  programs.dconf = {
+    enable = true;
+    profiles.user.databases = [{
+      settings = {
+        "org/gnome/desktop/interface" = {
+          color-scheme = "prefer-dark";
+          gtk-theme = "Adwaita-dark";
+        };
+      };
+    }];
+  };
+
   # Firefox
   programs.firefox.enable = true;
 
@@ -108,6 +125,10 @@
     # Notifications
     swaynotificationcenter  # Notification daemon and center
 
+    # Qt theming (dark mode for Dolphin, etc)
+    kdePackages.breeze
+    kdePackages.breeze-icons
+
     # Audio
     pavucontrol      # GUI audio control
     pamixer          # CLI audio control
@@ -131,6 +152,7 @@
     swappy           # Screenshot editor
     wl-clipboard     # Clipboard utilities (wl-copy, wl-paste)
     cliphist         # Clipboard history manager (supports images)
+    imagemagick      # Image manipulation (for clipboard thumbnails)
 
     # Calendar
     gnome-calendar        # Calendar app
