@@ -19,6 +19,6 @@
  home.file.".config/swaync".source = ./config/swaync;
  
  # Wallpapers
- home.file."walls".source = ./config/walls;
- home.file."walls".recursive = true;
+ home.file.".config/walls".source = ./config/walls;
+ home.file.".config/walls".recursive = true;
 }

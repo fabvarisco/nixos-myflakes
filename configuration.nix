@@ -98,6 +98,12 @@
     pavucontrol      # GUI audio control
     pamixer          # CLI audio control
     playerctl        # Media player control
+    
+    # Brightness control
+    brightnessctl    # CLI brightness control
+    
+    # OSD (On-Screen Display)
+    avizo            # Visual feedback for volume/brightness
      
     #--- Utilities ---
     # Media viewers

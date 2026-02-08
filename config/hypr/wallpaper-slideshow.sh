@@ -19,14 +19,7 @@ while true; do
     
     RANDOM_WALL="${WALLPAPERS[$RANDOM % ${#WALLPAPERS[@]}]}"
     
-    hyprctl hyprpaper preload "$RANDOM_WALL"
-    hyprctl hyprpaper wallpaper ",$RANDOM_WALL"
-    
-    for wall in "${WALLPAPERS[@]}"; do
-        if [ "$wall" != "$RANDOM_WALL" ]; then
-            hyprctl hyprpaper unload "$wall" 2>/dev/null
-        fi
-    done
+    hyprctl hyprpaper wallpaper ",$RANDOM_WALL,cover"
     
     sleep $INTERVAL
 done
