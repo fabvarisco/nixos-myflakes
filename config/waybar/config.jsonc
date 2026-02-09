@@ -8,7 +8,7 @@
     "height": 30,
     "modules-left": ["custom/nixos","hyprland/window"],
     "modules-center": ["custom/weather","clock"],
-    "modules-right": ["custom/files","cpu","network","battery","backlight","pulseaudio","pulseaudio#microphone","tray"],
+    "modules-right": ["custom/files","cpu","network","battery","backlight","pulseaudio","pulseaudio#microphone","tray","custom/power"],
     "hyprland/window": {
         "format": "{}"
     },
@@ -155,5 +155,11 @@
         "format": "",
         "tooltip": false,
         "on-click": "kitty --class floating -e yazi"
+    },
+
+    "custom/power": {
+        "format": "⏻",
+        "tooltip": false,
+        "on-click": "~/.config/waybar/scripts/power-menu.sh"
     }
 }

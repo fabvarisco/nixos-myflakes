@@ -1,12 +1,18 @@
 { config, pkgs, ... }:
 
 let
+  # Wallpaper para o tema SDDM
+  sddmWallpaper = ./config/walls/lock.jpg;
+
   # Tema SDDM customizado
   sddm-nixos-theme = pkgs.stdenv.mkDerivation {
     name = "sddm-nixos-linux-theme";
     dontUnpack = true;
     installPhase = ''
       mkdir -p $out/share/sddm/themes/nixos-linux
+
+      # Copiar wallpaper para o tema
+      cp ${sddmWallpaper} $out/share/sddm/themes/nixos-linux/background.jpg
 
       cat > $out/share/sddm/themes/nixos-linux/metadata.desktop << 'METADATA'
 [SddmGreeterTheme]
@@ -21,7 +27,7 @@ METADATA
 
       cat > $out/share/sddm/themes/nixos-linux/theme.conf << 'THEMECONF'
 [General]
-Background=/home/fabvarisco/.config/walls/lock.jpg
+Background=background.jpg
 AccentColor=#cdd6f4
 BackgroundColor=#1e1e2e
 ForegroundColor=#cdd6f4
@@ -31,10 +37,9 @@ RoundCorners=8
 THEMECONF
 
       cat > $out/share/sddm/themes/nixos-linux/Main.qml << 'MAINQML'
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtGraphicalEffects 1.15
-import SddmComponents 2.0
+import QtQuick
+import QtQuick.Controls
+import Qt5Compat.GraphicalEffects
 
 Rectangle {
     id: root
@@ -47,10 +52,20 @@ Rectangle {
     property string errorColor: "#f38ba8"
     property string successColor: "#a6e3a1"
 
+    Connections {
+        target: sddm
+        function onLoginSucceeded() { errorMessage.text = "" }
+        function onLoginFailed() {
+            errorMessage.text = "Login failed. Please try again."
+            passwordField.text = ""
+            passwordField.focus = true
+        }
+    }
+
     Image {
         id: backgroundImage
         anchors.fill: parent
-        source: config.Background || "/home/fabvarisco/.config/walls/lock.jpg"
+        source: "background.jpg"
         fillMode: Image.PreserveAspectCrop
         asynchronous: true
     }
@@ -82,20 +97,12 @@ Rectangle {
             anchors.top: parent.top
             anchors.topMargin: parent.height * 0.25
 
-            Image {
-                id: userAvatar
-                anchors.fill: parent
-                anchors.margins: 3
-                source: "/home/fabvarisco/.config/walls/profile.png"
-                fillMode: Image.PreserveAspectCrop
-                layer.enabled: true
-                layer.effect: OpacityMask {
-                    maskSource: Rectangle {
-                        width: userAvatar.width
-                        height: userAvatar.height
-                        radius: width / 2
-                    }
-                }
+            Text {
+                anchors.centerIn: parent
+                text: "\uf007"
+                font.family: "JetBrainsMono Nerd Font"
+                font.pixelSize: 48
+                color: accentColor
             }
         }
 
@@ -265,12 +272,6 @@ Rectangle {
         }
     }
 
-    Connections {
-        target: sddm
-        function onLoginSucceeded() { errorMessage.text = "" }
-        function onLoginFailed() { errorMessage.text = "Login failed. Please try again."; passwordField.text = ""; passwordField.focus = true }
-    }
-
     Component.onCompleted: passwordField.forceActiveFocus()
 }
 MAINQML
@@ -341,10 +342,11 @@ in
     wayland.enable = true;
     theme = "nixos-linux";
     package = pkgs.kdePackages.sddm;
-    extraPackages = with pkgs; [
-      kdePackages.qtgraphicaleffects
-      kdePackages.qtquickcontrols2
-      kdePackages.qt5compat
+    extraPackages = with pkgs.kdePackages; [
+      qt5compat
+      qtsvg
+      qtdeclarative
+      qtquickcontrols2
     ];
     settings = {
       Theme = {

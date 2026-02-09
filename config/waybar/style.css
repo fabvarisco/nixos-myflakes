@@ -198,3 +198,20 @@ tooltip {
 #calendar.week {
     color: #a6adc8;
 }
+
+#custom-power {
+    background: #1e1e2e;
+    color: #f38ba8;
+    border-radius: 20px;
+    padding: 0px 12px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    border: 1px solid #181825;
+    font-size: 14px;
+}
+
+#custom-power:hover {
+    background: #f38ba8;
+    color: #1e1e2e;
+}
