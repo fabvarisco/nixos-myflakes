@@ -5,7 +5,7 @@
  home.homeDirectory = "/home/fabvarisco";
  home.stateVersion = "25.05";
 
- # Cursor estilo macOS
+ # Cursor macOS
  home.pointerCursor = {
    name = "macOS";
    package = pkgs.apple-cursor;
@@ -33,9 +33,17 @@
  home.file.".config/starship.toml".source = ./config/starship.toml;
  home.file.".config/swaync".source = ./config/swaync;
  
+ home.file.".config/sddm-theme".source = ./config/sddm-theme;
+ home.file.".config/kde".source = ./config/kde;
+
+
+
  # Wallpapers
  home.file.".config/walls".source = ./config/walls;
  home.file.".config/walls".recursive = true;
-
+ 
+ # Pics
+ home.file.".config/profile-pics".source = ./config/profile-pics;
+ home.file.".config/profile-pics".recursive = true;
 
 }

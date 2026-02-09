@@ -44,8 +44,8 @@ Rectangle {
         // User avatar
         Rectangle {
             id: avatarContainer
-            width: 120
-            height: 120
+            width: 98
+            height: 98
             radius: 60
             color: backgroundColor
             border.color: accentColor
@@ -58,7 +58,7 @@ Rectangle {
                 id: userAvatar
                 anchors.fill: parent
                 anchors.margins: 3
-                source: "/home/fabvarisco/.config/walls/profile.png"
+                source: "/home/fabvarisco/.config/profile-pics/miku.jpg"
                 fillMode: Image.PreserveAspectCrop
                 layer.enabled: true
                 layer.effect: OpacityMask {
