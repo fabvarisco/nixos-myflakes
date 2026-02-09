@@ -12,8 +12,8 @@
 
   networking.hostName = "nixos"; # Define your hostname.
 
-  # Enable networking
-  networking.networkmanager.enable = true;
+  # Enable networking with iwd
+  networking.wireless.iwd.enable = true;
 
   # Set your time zone.
   time.timeZone = "America/Sao_Paulo";
@@ -46,7 +46,7 @@
   users.users.fabvarisco = {
     isNormalUser = true;
     description = "Fabricio Varisco Oliveira";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "wheel" ];
     packages = with pkgs; [
       tree
     ];
@@ -118,7 +118,7 @@
     swww
     
     # Network
-    networkmanagerapplet
+    impala           # TUI WiFi manager
     nwg-look
     nwg-displays    # Monitor/display configuration GUI
     nwg-dock-hyprland  # Dock for Hyprland
@@ -142,6 +142,9 @@
     avizo            # Visual feedback for volume/brightness
      
     #--- Utilities ---
+    yazi             # Terminal file manager
+    btop             # System monitor
+
     # Media viewers
     imv              # Image viewer (Wayland)
     mpv              # Video player
