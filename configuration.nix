@@ -58,10 +58,16 @@
      xwayland.enable = true;
   };
 
-  # SDDM Display Manager
+  # SDDM Display Manager with SilentSDDM theme
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = true;
+  };
+
+  # SilentSDDM theme configuration
+  programs.silentSDDM = {
+    enable = true;
+    theme = "default";  # Opções: default, rei, ken, silvia, everforest, catppuccin, nord
   };
 
   # Enable sound with PipeWire
