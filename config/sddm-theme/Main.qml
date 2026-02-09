@@ -18,7 +18,7 @@ Rectangle {
     Image {
         id: backgroundImage
         anchors.fill: parent
-        source: config.Background || "/home/fabvarisco/.config/walls/lock.jpg"
+        source: config.Background || ""
         fillMode: Image.PreserveAspectCrop
         asynchronous: true
     }
@@ -58,7 +58,7 @@ Rectangle {
                 id: userAvatar
                 anchors.fill: parent
                 anchors.margins: 3
-                source: "/home/fabvarisco/.config/profile-pics/miku.jpg"
+                source: config.Avatar || ""
                 fillMode: Image.PreserveAspectCrop
                 layer.enabled: true
                 layer.effect: OpacityMask {
