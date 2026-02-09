@@ -14,12 +14,12 @@
      src = pkgs.fetchFromGitHub {
        owner = "yeyushengfan258";
        repo = "Twilight-Cursors";
-       rev = "5d8cd90b57e70b9435d78f4c6aa24dfe549f6d00";
-       sha256 = "sha256-WjjSVQL0oM1sEMVnf7D3mn2S1AJO3Fq5jRYcKLGv3XY=";
+       rev = "ca9c69f7632fda345d71bd6062de136d77924fe9";
+       sha256 = "sha256-8HENtltZVmCybcS6o8rRQ306ZkNCCz8eF7eYaxYQgfE=";
      };
      installPhase = ''
-       mkdir -p $out/share/icons
-       cp -r dist/Twilight $out/share/icons/
+       mkdir -p $out/share/icons/Twilight
+       cp -r dist/* $out/share/icons/Twilight/
      '';
    };
    size = 24;
@@ -42,11 +42,9 @@
  home.file.".config/starship.toml".source = ./config/starship.toml;
  home.file.".config/swaync".source = ./config/swaync;
 
- # SDDM theme - arquivos estáticos
+ # SDDM theme 
  home.file.".config/sddm-theme/Main.qml".source = ./config/sddm-theme/Main.qml;
  home.file.".config/sddm-theme/metadata.desktop".source = ./config/sddm-theme/metadata.desktop;
-
- # SDDM theme - config gerado dinamicamente com paths do usuário
  home.file.".config/sddm-theme/theme.conf".text = ''
    [General]
    Background=${config.home.homeDirectory}/.config/walls/lock.jpg
