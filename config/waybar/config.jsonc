@@ -6,10 +6,9 @@
     "passthrough": false,
     "gtk-layer-shell": true,
     "height": 30,
-    "modules-left": [],
-    //"modules-left": ["hyprland/window"],
-    "modules-center": ["clock"],
-    "modules-right": ["battery","backlight","pulseaudio","pulseaudio#microphone","tray","custom/nixos"],
+    "modules-left": ["custom/nixos","custom/weather","hyprland/window"],
+    "modules-center": [ "clock"],
+    "modules-right": ["battery","backlight","pulseaudio","pulseaudio#microphone","tray"],
     "hyprland/window": {
         "format": "{}"
     },
@@ -41,14 +40,12 @@
     //    "signal": 8
     //},
 
-    //"custom/weather" : {
-        //shows the current weather and forecast
-        // "tooltip" : true,
-        //"format" : "{}",
-        //"interval" : 30,
-        //"exec" : "~/.config/waybar/scripts/waybar-wttr.py",
-        //"return-type" : "json"
-    //},
+    "custom/weather": {
+        "format": "{}",
+        "interval": 900,
+        "exec": "~/.config/waybar/scripts/weather.sh",
+        "tooltip": false
+    },
 
     "tray": {
         "icon-size": 15,
@@ -76,11 +73,12 @@
             "warning": 30,
             "critical": 20
         },
-        "format": "{icon} {capacity}%",
+        "format": " {icon} {capacity}%",
         "format-charging": " {capacity}%",
         "format-plugged": " {capacity}%",
         "format-alt": "{time} {icon}",
-        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+        "min-length": 7
     },
 
     "pulseaudio": {
@@ -141,7 +139,7 @@
     },
 
     "custom/nixos": {
-        "format": "Nixos 󰌌",
+        "format": "\ue843",
         "tooltip": false,
         "on-click": "wofi --show drun"
     }

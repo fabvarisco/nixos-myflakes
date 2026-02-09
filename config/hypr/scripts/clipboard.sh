@@ -10,141 +10,123 @@ THUMB_DIR="$HOME/.cache/cliphist-thumbs"
 mkdir -p "$THUMB_DIR"
 touch "$PINS_FILE"
 
-# Check if item is pinned (by hash)
+# Get a hash for an entry (first field)
+get_id() {
+    echo "$1" | cut -f1
+}
+
+# Check if item is pinned (by id)
 is_pinned() {
-    grep -qxF "$1" "$PINS_FILE" 2>/dev/null
+    local id=$(get_id "$1")
+    grep -qxF "$id" "$PINS_FILE" 2>/dev/null
 }
 
 # Toggle pin status
 toggle_pin() {
-    local hash="$1"
-    if is_pinned "$hash"; then
-        grep -vxF "$hash" "$PINS_FILE" > "$PINS_FILE.tmp" && mv "$PINS_FILE.tmp" "$PINS_FILE"
-        notify-send -t 1500 "📌 Clipboard" "Item unpinned"
+    local id=$(get_id "$1")
+    if grep -qxF "$id" "$PINS_FILE" 2>/dev/null; then
+        grep -vxF "$id" "$PINS_FILE" > "$PINS_FILE.tmp" && mv "$PINS_FILE.tmp" "$PINS_FILE"
+        notify-send -t 1500 "Clipboard" "Item unpinned"
     else
-        echo "$hash" >> "$PINS_FILE"
-        notify-send -t 1500 "📌 Clipboard" "Item pinned"
+        echo "$id" >> "$PINS_FILE"
+        notify-send -t 1500 "Clipboard" "Item pinned"
     fi
 }
 
 # Delete item from cliphist and pins
 delete_item() {
-    local hash="$1"
-    cliphist delete <<< "$hash"
-    grep -vxF "$hash" "$PINS_FILE" > "$PINS_FILE.tmp" 2>/dev/null && mv "$PINS_FILE.tmp" "$PINS_FILE"
+    local entry="$1"
+    local id=$(get_id "$entry")
+
+    echo "$entry" | cliphist delete
+    grep -vxF "$id" "$PINS_FILE" > "$PINS_FILE.tmp" 2>/dev/null && mv "$PINS_FILE.tmp" "$PINS_FILE"
+
     # Remove thumbnail if exists
-    rm -f "$THUMB_DIR/$hash.png" 2>/dev/null
-    notify-send -t 1500 "🗑️ Clipboard" "Item deleted"
+    rm -f "$THUMB_DIR/$id.png" 2>/dev/null
+    notify-send -t 1500 "Clipboard" "Item deleted"
 }
 
-# Generate thumbnail for image (returns path if successful)
-get_thumb() {
-    local hash="$1"
-    local thumb="$THUMB_DIR/$hash.png"
-
-    if [[ ! -f "$thumb" ]]; then
-        cliphist decode <<< "$hash" 2>/dev/null | \
-            convert - -resize 48x48^ -gravity center -extent 48x48 "$thumb" 2>/dev/null
-    fi
-
-    [[ -f "$thumb" ]] && echo "$thumb"
+# Check if entry is an image
+is_image_entry() {
+    echo "$1" | grep -qE '\[\[.*binary.*\]\]'
 }
 
-# Show image preview
+# Show image preview using imv or feh
 preview_image() {
-    local hash="$1"
+    local entry="$1"
     local tmp="/tmp/clipboard_preview_$$.png"
 
-    cliphist decode <<< "$hash" > "$tmp" 2>/dev/null
+    echo "$entry" | cliphist decode > "$tmp" 2>/dev/null
 
     if [[ -f "$tmp" && -s "$tmp" ]]; then
-        notify-send -i "$tmp" "🖼️ Image Preview" "Image from clipboard" -t 3000
+        # Try imv first, then feh, then notify-send as fallback
+        if command -v imv &>/dev/null; then
+            imv -s none "$tmp" &
+            sleep 3
+            pkill -f "imv.*$tmp" 2>/dev/null
+        elif command -v feh &>/dev/null; then
+            feh --scale-down --auto-zoom "$tmp" &
+            sleep 3
+            pkill -f "feh.*$tmp" 2>/dev/null
+        else
+            # Fallback to notification with image
+            notify-send -i "$tmp" "Image Preview" "Image from clipboard" -t 5000
+        fi
+    else
+        notify-send -t 2000 "Clipboard" "Failed to preview image"
     fi
 
     rm -f "$tmp" 2>/dev/null
 }
 
-# Build formatted list for wofi
-build_list() {
-    local pinned=()
-    local regular=()
-
-    while IFS=$'\t' read -r hash content; do
-        [[ -z "$hash" ]] && continue
-
-        local prefix=""
-        local display=""
-        local is_image=false
-
-        # Check if pinned
-        if is_pinned "$hash"; then
-            prefix="📌 "
-        fi
-
-        # Check if image (binary data)
-        if [[ "$content" == *"[[ binary data"* ]] || [[ "$content" == "[[binary"* ]]; then
-            is_image=true
-            display="${prefix}🖼️ [Image]"
-        else
-            # Truncate and clean text
-            display="${prefix}$(echo "$content" | tr '\n\t' '  ' | head -c 80)"
-        fi
-
-        # Format: hash|display
-        local entry="$hash|$display"
-
-        if is_pinned "$hash"; then
-            pinned+=("$entry")
-        else
-            regular+=("$entry")
-        fi
-    done < <(cliphist list)
-
-    # Output pinned first, then regular
-    printf '%s\n' "${pinned[@]}" "${regular[@]}"
+# Copy item to clipboard
+copy_item() {
+    local entry="$1"
+    echo "$entry" | cliphist decode | wl-copy
+    notify-send -t 1500 "Clipboard" "Copied!"
 }
 
-# Show actions menu
+# Show actions menu for an item
 show_actions() {
-    local hash="$1"
-    local is_image="$2"
+    local entry="$1"
+    local is_img="$2"
 
-    local pin_action
-    if is_pinned "$hash"; then
-        pin_action="📌 Unpin"
+    local id=$(get_id "$entry")
+
+    local pin_label
+    if grep -qxF "$id" "$PINS_FILE" 2>/dev/null; then
+        pin_label="Unpin"
     else
-        pin_action="📌 Pin"
+        pin_label="Pin"
     fi
 
-    local options="📋 Copy to clipboard\n$pin_action\n🗑️ Delete"
+    local options="Copy\n$pin_label\nDelete"
 
-    # Add preview option for images
-    if [[ "$is_image" == "true" ]]; then
-        options="👁️ Preview image\n$options"
+    if [[ "$is_img" == "true" ]]; then
+        options="Preview\n$options"
     fi
 
     local action=$(echo -e "$options" | \
         wofi --dmenu \
              --prompt "Action" \
-             --width 250 \
-             --height 200 \
+             --width 200 \
+             --height 180 \
              --cache-file /dev/null)
 
     case "$action" in
-        "👁️ Preview image")
-            preview_image "$hash"
-            show_actions "$hash" "$is_image"
+        "Preview")
+            preview_image "$entry"
+            show_actions "$entry" "$is_img"
             ;;
-        "📋 Copy to clipboard")
-            cliphist decode <<< "$hash" | wl-copy
-            notify-send -t 1500 "📋 Clipboard" "Copied!"
+        "Copy")
+            copy_item "$entry"
             ;;
-        "📌 Pin"|"📌 Unpin")
-            toggle_pin "$hash"
+        "Pin"|"Unpin")
+            toggle_pin "$entry"
             main
             ;;
-        "🗑️ Delete")
-            delete_item "$hash"
+        "Delete")
+            delete_item "$entry"
             main
             ;;
     esac
@@ -152,40 +134,80 @@ show_actions() {
 
 # Main function
 main() {
-    local list=$(build_list)
+    # Get all entries from cliphist
+    local entries=()
+    local display_lines=()
+    local pinned_entries=()
+    local pinned_display=()
+    local regular_entries=()
+    local regular_display=()
 
-    if [[ -z "$list" ]]; then
-        notify-send "📋 Clipboard" "History is empty"
+    while IFS= read -r line; do
+        [[ -z "$line" ]] && continue
+
+        local id=$(get_id "$line")
+        local content=$(echo "$line" | cut -f2-)
+        local prefix=""
+        local display=""
+
+        # Check if pinned
+        if grep -qxF "$id" "$PINS_FILE" 2>/dev/null; then
+            prefix="[PIN] "
+        fi
+
+        # Check if image
+        if echo "$line" | grep -qE '\[\[.*binary.*\]\]'; then
+            display="${prefix}[Image]"
+        else
+            # Truncate and clean text for display
+            display="${prefix}$(echo "$content" | tr '\n\t\r' '   ' | head -c 80)"
+        fi
+
+        if [[ -n "$prefix" ]]; then
+            pinned_entries+=("$line")
+            pinned_display+=("$display")
+        else
+            regular_entries+=("$line")
+            regular_display+=("$display")
+        fi
+    done < <(cliphist list)
+
+    # Combine pinned first, then regular
+    entries=("${pinned_entries[@]}" "${regular_entries[@]}")
+    display_lines=("${pinned_display[@]}" "${regular_display[@]}")
+
+    if [[ ${#entries[@]} -eq 0 ]]; then
+        notify-send "Clipboard" "History is empty"
         exit 0
     fi
 
-    # Extract display text for wofi (remove hash prefix)
-    local display_list=$(echo "$list" | cut -d'|' -f2)
-
-    local selected=$(echo "$display_list" | \
+    # Show wofi menu
+    local selected=$(printf '%s\n' "${display_lines[@]}" | \
         wofi --dmenu \
-             --prompt " Clipboard" \
+             --prompt "Clipboard" \
              --width 600 \
              --height 400 \
              --cache-file /dev/null)
 
     [[ -z "$selected" ]] && exit 0
 
-    # Find the hash for the selected item
-    local hash=""
-    local is_image="false"
-
-    while IFS='|' read -r h d; do
-        if [[ "$d" == "$selected" ]]; then
-            hash="$h"
-            [[ "$d" == *"[Image]"* ]] && is_image="true"
+    # Find the matching entry
+    local idx=0
+    for i in "${!display_lines[@]}"; do
+        if [[ "${display_lines[$i]}" == "$selected" ]]; then
+            idx=$i
             break
         fi
-    done <<< "$list"
+    done
 
-    if [[ -n "$hash" ]]; then
-        show_actions "$hash" "$is_image"
+    local chosen_entry="${entries[$idx]}"
+    local is_img="false"
+
+    if echo "$chosen_entry" | grep -qE '\[\[.*binary.*\]\]'; then
+        is_img="true"
     fi
+
+    show_actions "$chosen_entry" "$is_img"
 }
 
 main "$@"

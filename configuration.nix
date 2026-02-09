@@ -152,7 +152,7 @@
     slurp            # Screen region selector
     swappy           # Screenshot editor
     wl-clipboard     # Clipboard utilities (wl-copy, wl-paste)
-    cliphist         # Clipboard history manager (supports images)
+    clipse           # Clipboard manager with TUI
     imagemagick      # Image manipulation (for clipboard thumbnails)
 
     # Calendar
