@@ -132,6 +132,7 @@
 
     # Notifications
     swaynotificationcenter  # Notification daemon and center
+    libnotify               # notify-send command
 
     # Qt theming (dark mode for Dolphin, etc)
     kdePackages.breeze
