@@ -14,12 +14,12 @@ window#waybar {
 }
 
 tooltip {
-    background: #ffffff;
-    color: #1e1e2e;
+    background: #1e1e2e;
+    color: #cdd6f4;
     border-radius: 10px;
     border-width: 1.5px;
     border-style: solid;
-    border-color: #e0e0e0;
+    border-color: #313244;
     transition: 0.3s;
 }
 
@@ -152,39 +152,40 @@ tooltip {
     border-radius: 0 20px 20px 0;
     margin-right: 5px;
     border-left: 0px;
+    padding-right: 10px;
 }
 
 #custom-weather {
+    color: #f9e2af;
     border-radius: 20px;
-    border-right: 0px;
-    margin-left: 0px;
+    margin-left: 5px;
 }
 
 #custom-nixos {
     background: #1e1e2e;
     color: #7ebae4;
     border-radius: 20px;
-    padding: 0px 12px;
+    padding: 0px 10px;
     margin-left: 5px;
     margin-top: 5px;
     border: 1px solid #181825;
-    font-size: 14px;
+    font-size: 20px;
 }
 
 #calendar {
-    background: #ffffff;
-    color: #1e1e2e;
+    background: #1e1e2e;
+    color: #cdd6f4;
     border-radius: 10px;
     padding: 10px;
 }
 
 #calendar.header {
-    color: #1e1e2e;
+    color: #cdd6f4;
     font-weight: bold;
 }
 
 #calendar.weekdays {
-    color: #585b70;
+    color: #a6adc8;
 }
 
 #calendar.today {
@@ -195,5 +196,22 @@ tooltip {
 }
 
 #calendar.week {
-    color: #7f849c;
+    color: #a6adc8;
+}
+
+#custom-power {
+    background: #1e1e2e;
+    color: #f38ba8;
+    border-radius: 20px;
+    padding: 0px 12px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    border: 1px solid #181825;
+    font-size: 14px;
+}
+
+#custom-power:hover {
+    background: #f38ba8;
+    color: #1e1e2e;
 }

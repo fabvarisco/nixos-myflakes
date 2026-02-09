@@ -2,7 +2,7 @@
 
 {
   imports =
-    [ 
+    [
       ./hardware-configuration.nix
     ];
 
@@ -12,8 +12,8 @@
 
   networking.hostName = "nixos"; # Define your hostname.
 
-  # Enable networking
-  networking.networkmanager.enable = true;
+  # Enable networking with iwd
+  networking.wireless.iwd.enable = true;
 
   # Set your time zone.
   time.timeZone = "America/Sao_Paulo";
@@ -46,7 +46,7 @@
   users.users.fabvarisco = {
     isNormalUser = true;
     description = "Fabricio Varisco Oliveira";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "wheel" ];
     packages = with pkgs; [
       tree
     ];
@@ -56,6 +56,12 @@
   programs.hyprland = {
      enable = true;
      xwayland.enable = true;
+  };
+
+  # SDDM Display Manager
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true;
   };
 
   # Enable sound with PipeWire
@@ -98,7 +104,9 @@
     wofi
     kitty
     hyprpaper
+    hyprlock
     starship
+    fastfetch
     nautilus
     vscode
     gh    
@@ -117,7 +125,7 @@
     swww
     
     # Network
-    networkmanagerapplet
+    impala           # TUI WiFi manager
     nwg-look
     nwg-displays    # Monitor/display configuration GUI
     nwg-dock-hyprland  # Dock for Hyprland
@@ -141,6 +149,9 @@
     avizo            # Visual feedback for volume/brightness
      
     #--- Utilities ---
+    yazi             # Terminal file manager
+    btop             # System monitor
+
     # Media viewers
     imv              # Image viewer (Wayland)
     mpv              # Video player
@@ -151,14 +162,12 @@
     slurp            # Screen region selector
     swappy           # Screenshot editor
     wl-clipboard     # Clipboard utilities (wl-copy, wl-paste)
-    cliphist         # Clipboard history manager (supports images)
+    clipse           # Clipboard manager with TUI
     imagemagick      # Image manipulation (for clipboard thumbnails)
 
     # Calendar
     gnome-calendar        # Calendar app
     gnome-online-accounts # Sync with Google, Microsoft, etc
-
-
   ];
 
   # Fonts

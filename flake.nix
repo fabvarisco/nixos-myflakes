@@ -6,13 +6,9 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
    };
-   ignis = {
-      url = "github:ignis-sh/ignis";
-      inputs.nixpkgs.follows = "nixpkgs";
-   };
   };
 
-  outputs = {nixpkgs, home-manager, ignis, ... }@inputs:{ 
+  outputs = {nixpkgs, home-manager, ... }@inputs:{ 
    nixosConfigurations.thinkpad-hypr = nixpkgs.lib.nixosSystem {
      system = "x86_64-linux";
      modules = [
