@@ -215,3 +215,18 @@ tooltip {
     background: #f38ba8;
     color: #1e1e2e;
 }
+
+#custom-notification {
+    background: #1e1e2e;
+    color: #89b4fa;
+    border-radius: 20px;
+    padding: 0px 10px;
+    margin-right: 5px;
+    margin-top: 5px;
+    border: 1px solid #181825;
+    font-size: 14px;
+}
+
+#custom-notification:hover {
+    background: rgba(137, 180, 250, 0.2);
+}

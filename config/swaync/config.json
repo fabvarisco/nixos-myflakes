@@ -66,39 +66,59 @@
       "loop-carousel": true
     },
     "volume": {
-			"label": "",
+      "label": "",
       "tooltip": true
-		},
-		"backlight": {
-			"label": "󰃠",
+    },
+    "backlight": {
+      "label": "󰃠",
       "tooltip": true
-		},
+    },
     "buttons-grid": {
       "buttons-per-row": 7,
       "actions": [
-       {
-					"label": "",
-					"command": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
-					"type": "toggle"
-				},
-       {
-  "type": "toggle",
-  "label": "",
-  "command": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
-  "status-command": "pactl get-source-mute @DEFAULT_SOURCE@ | grep -q 'yes' && echo muted || echo unmuted",
-  "status": {
-    "muted": {
-      "label": ""  
-    },
-    "unmuted": {
-      "label": ""  
-    }
-  }
-},
         {
-					"label": "󰤨",
-					"command": "nm-connection-editor"
-				}
+          "label": "",
+          "command": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+          "type": "toggle"
+        },
+        {
+          "type": "toggle",
+          "label": "",
+          "command": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
+          "status-command": "pactl get-source-mute @DEFAULT_SOURCE@ | grep -q 'yes' && echo muted || echo unmuted",
+          "status": {
+            "muted": {
+              "label": ""
+            },
+            "unmuted": {
+              "label": ""
+            }
+          }
+        },
+        {
+          "label": "󰤨",
+          "command": "kitty --class floating -e impala"
+        },
+        {
+          "label": "󰂯",
+          "command": "blueman-manager"
+        },
+        {
+          "label": "",
+          "command": "pavucontrol"
+        },
+        {
+          "label": "󰐥",
+          "command": "systemctl poweroff"
+        },
+        {
+          "label": "󰜉",
+          "command": "systemctl reboot"
+        },
+        {
+          "label": "󰍃",
+          "command": "hyprctl dispatch exit"
+        }
       ]
     }
   }

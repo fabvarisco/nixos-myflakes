@@ -42,15 +42,19 @@
   # Configure console keymap
   console.keyMap = "br-abnt2";
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.fabvarisco = {
     isNormalUser = true;
     description = "Fabricio Varisco Oliveira";
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "wheel" "bluetooth" "audio" ];
     packages = with pkgs; [
       tree
     ];
   };
+
+  # Bluetooth
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+  services.blueman.enable = true;
 
   # Hyprland
   programs.hyprland = {
@@ -148,6 +152,9 @@
     pavucontrol      # GUI audio control
     pamixer          # CLI audio control
     playerctl        # Media player control
+
+    # Bluetooth
+    blueman          # Bluetooth manager GUI
     
     # Brightness control
     brightnessctl    # CLI brightness control
