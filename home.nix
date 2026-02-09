@@ -35,7 +35,7 @@
    '';
  };
 
- home.file.".config/hypr".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/my-dotfiles/config/hypr";
+ home.file.".config/hypr".source = "./config/hypr";
  home.file.".config/wofi".source = ./config/wofi;
  home.file.".config/waybar".source = ./config/waybar;
  home.file.".config/kitty".source = ./config/kitty;
@@ -47,8 +47,8 @@
  home.file.".config/sddm-theme/metadata.desktop".source = ./config/sddm-theme/metadata.desktop;
  home.file.".config/sddm-theme/theme.conf".text = ''
    [General]
-   Background=${config.home.homeDirectory}/.config/walls/lock.jpg
-   Avatar=${config.home.homeDirectory}/.config/profile-pics/miku.jpg
+   Background=/.config/walls/lock.jpg
+   Avatar=/.config/profile-pics/miku.jpg
    AccentColor=#cdd6f4
    BackgroundColor=#1e1e2e
    ForegroundColor=#cdd6f4
