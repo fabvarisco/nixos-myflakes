@@ -39,6 +39,7 @@
  home.file.".config/wofi".source = ./config/wofi;
  home.file.".config/waybar".source = ./config/waybar;
  home.file.".config/kitty".source = ./config/kitty;
+ home.file.".config/btop".source = ./config/btop;
  home.file.".config/starship.toml".source = ./config/starship.toml;
  home.file.".config/swaync".source = ./config/swaync;
 
