@@ -8,7 +8,7 @@
     "height": 30,
     "modules-left": ["custom/nixos","hyprland/window"],
     "modules-center": ["custom/weather","clock"],
-    "modules-right": ["custom/files","cpu","network","battery","backlight","pulseaudio","pulseaudio#microphone","custom/notification","tray","custom/power"],
+    "modules-right": ["custom/files","cpu","network","battery","backlight","wireplumber","wireplumber#microphone","custom/notification","tray","custom/power"],
     "hyprland/window": {
         "format": "{}"
     },
@@ -81,34 +81,27 @@
         "min-length": 7
     },
 
-    "pulseaudio": {
+    "wireplumber": {
         "format": "{icon} {volume}%",
         "tooltip": false,
         "format-muted": " Muted",
         "on-click": "pavucontrol",
-        "on-click-right": "pamixer -t",
-        "on-scroll-up": "pamixer -i 5",
-        "on-scroll-down": "pamixer -d 5",
+        "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+",
+        "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-",
         "scroll-step": 5,
-        "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", "", ""]
-        }
+        "format-icons": ["", "", ""]
     },
 
-    "pulseaudio#microphone": {
-        "format": "{format_source}",
-        "format-source": " {volume}%",
-        "format-source-muted": " Muted",
+    "wireplumber#microphone": {
+        "node-type": "source",
+        "format": " {volume}%",
+        "format-muted": " Muted",
+        "tooltip": false,
         "on-click": "pavucontrol --tab=4",
-        "on-click-right": "pamixer --default-source -t",
-        "on-scroll-up": "pamixer --default-source -i 5",
-        "on-scroll-down": "pamixer --default-source -d 5",
+        "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
+        "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%+",
+        "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%-",
         "scroll-step": 5
     },
     

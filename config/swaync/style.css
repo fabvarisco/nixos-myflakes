@@ -288,9 +288,10 @@
 
 .control-center {
   /* The Control Center which contains the old notifications + widgets */
-  background: var(--cc-bg);
+  background: rgba(57, 68, 81, 0.184);
   color: var(--text-color);
   border-radius: 12px;
+  border: 1px solid red;
 }
 
 .control-center .control-center-list-placeholder {
