@@ -35,30 +35,6 @@
    '';
  };
 
- # Hyprland - arquivos estáticos (colors.conf e hyprlock.conf são gerados pelo theme-switcher)
- home.file.".config/hypr/hyprland.conf".source = ./config/hypr/hyprland.conf;
- home.file.".config/hypr/hyprpaper.conf".source = ./config/hypr/hyprpaper.conf;
- home.file.".config/hypr/monitors.conf".source = ./config/hypr/monitors.conf;
- home.file.".config/hypr/workspaces.conf".source = ./config/hypr/workspaces.conf;
- home.file.".config/hypr/change-wallpaper.sh".source = ./config/hypr/change-wallpaper.sh;
- home.file.".config/hypr/wallpaper-slideshow.sh".source = ./config/hypr/wallpaper-slideshow.sh;
- home.file.".config/hypr/wallpaper-wofi.sh".source = ./config/hypr/wallpaper-wofi.sh;
- home.file.".config/hypr/scripts".source = ./config/hypr/scripts;
-
- # Wofi - apenas config estático (style.css é gerado pelo theme-switcher)
- home.file.".config/wofi/config".source = ./config/wofi/config;
-
- # Waybar - config estático e scripts (style.css é gerado pelo theme-switcher)
- home.file.".config/waybar/config.jsonc".source = ./config/waybar/config.jsonc;
- home.file.".config/waybar/scripts".source = ./config/waybar/scripts;
-
- # Kitty - arquivos estáticos (theme.conf é gerado pelo theme-switcher)
- home.file.".config/kitty/kitty.conf".source = ./config/kitty/kitty.conf;
- home.file.".config/kitty/mocha.conf".source = ./config/kitty/mocha.conf;
-
- # Btop - apenas os temas (btop.conf é modificado pelo theme-switcher)
- home.file.".config/btop/themes".source = ./config/btop/themes;
-
  home.file.".config/starship.toml".source = ./config/starship.toml;
 
  # SwayNC - config estático e widgets (style.css é gerado pelo theme-switcher)
