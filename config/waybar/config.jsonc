@@ -6,11 +6,33 @@
     "passthrough": false,
     "gtk-layer-shell": true,
     "height": 30,
-    "modules-left": ["custom/nixos","hyprland/window"],
+    "modules-left": ["custom/nixos","hyprland/window","mpris"],
     "modules-center": ["custom/weather","clock"],
     "modules-right": ["custom/files","cpu","network","battery","backlight","wireplumber","wireplumber#microphone","custom/notification","tray","custom/power"],
     "hyprland/window": {
         "format": "{}"
+    },
+
+    "mpris": {
+        "format": "{player_icon} {dynamic}",
+        "format-paused": "{status_icon} <i>{dynamic}</i>",
+        "dynamic-order": ["title", "artist"],
+        "dynamic-importance-order": ["title", "artist"],
+        "dynamic-len": 40,
+        "player-icons": {
+            "default": "▶",
+            "spotify": "",
+            "firefox": "",
+            "chromium": "",
+            "brave": "",
+            "vlc": "󰕼",
+            "mpv": ""
+        },
+        "status-icons": {
+            "paused": ""
+        },
+        "tooltip-format": "{player} ({status})\n\n{dynamic}",
+        "tooltip-format-player": "󰎈 {title}\n {artist}\n󰀥 {album}\n󰁫 {position}/{length}"
     },
 
     "wlr/workspaces": {
