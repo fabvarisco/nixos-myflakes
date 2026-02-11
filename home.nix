@@ -42,6 +42,7 @@
  home.file.".config/btop".source = ./config/btop;
  home.file.".config/starship.toml".source = ./config/starship.toml;
  home.file.".config/swaync".source = ./config/swaync;
+ home.file.".config/themes".source = ./config/themes;
 
  # SDDM theme 
  home.file.".config/sddm-theme/Main.qml".source = ./config/sddm-theme/Main.qml;

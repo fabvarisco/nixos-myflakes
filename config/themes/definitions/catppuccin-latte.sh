@@ -1,0 +1,118 @@
+#!/usr/bin/env bash
+# Catppuccin Latte Theme Definition (Light)
+# https://github.com/catppuccin/catppuccin
+
+THEME_NAME="Catppuccin Latte"
+THEME_TYPE="light"
+VSCODE_THEME="Catppuccin Latte"
+BTOP_THEME="catppuccin_latte"
+
+# Base colors
+BASE="#eff1f5"
+MANTLE="#e6e9ef"
+CRUST="#dce0e8"
+
+# Surface colors
+SURFACE0="#ccd0da"
+SURFACE1="#bcc0cc"
+SURFACE2="#acb0be"
+
+# Overlay colors
+OVERLAY0="#9ca0b0"
+OVERLAY1="#8c8fa1"
+OVERLAY2="#7c7f93"
+
+# Text colors
+TEXT="#4c4f69"
+SUBTEXT0="#6c6f85"
+SUBTEXT1="#5c5f77"
+
+# Accent colors
+ROSEWATER="#dc8a78"
+FLAMINGO="#dd7878"
+PINK="#ea76cb"
+MAUVE="#8839ef"
+RED="#d20f39"
+MAROON="#e64553"
+PEACH="#fe640b"
+YELLOW="#df8e1d"
+GREEN="#40a02b"
+TEAL="#179299"
+SKY="#04a5e5"
+SAPPHIRE="#209fb5"
+BLUE="#1e66f5"
+LAVENDER="#7287fd"
+
+# Semantic mappings
+PRIMARY="$LAVENDER"
+SECONDARY="$MAUVE"
+ACCENT="$PINK"
+SUCCESS="$GREEN"
+WARNING="$YELLOW"
+ERROR="$RED"
+INFO="$BLUE"
+
+# Terminal ANSI colors (0-15)
+COLOR0="$SUBTEXT1"
+COLOR1="$RED"
+COLOR2="$GREEN"
+COLOR3="$YELLOW"
+COLOR4="$BLUE"
+COLOR5="$PINK"
+COLOR6="$TEAL"
+COLOR7="$SURFACE2"
+COLOR8="$SUBTEXT0"
+COLOR9="$RED"
+COLOR10="$GREEN"
+COLOR11="$YELLOW"
+COLOR12="$BLUE"
+COLOR13="$PINK"
+COLOR14="$TEAL"
+COLOR15="$SURFACE1"
+
+# Cursor
+CURSOR="$ROSEWATER"
+CURSOR_TEXT="$BASE"
+
+# Selection
+SELECTION_BG="$ROSEWATER"
+SELECTION_FG="$BASE"
+
+# URL
+URL_COLOR="$ROSEWATER"
+
+# Borders
+ACTIVE_BORDER="$LAVENDER"
+INACTIVE_BORDER="$OVERLAY0"
+
+# Transparency variants (for CSS rgba)
+BASE_RGB="239, 241, 245"
+TEXT_RGB="76, 79, 105"
+SURFACE0_RGB="204, 208, 218"
+
+# HEX without # prefix (for hyprland/hyprlock)
+BASE_HEX="eff1f5"
+MANTLE_HEX="e6e9ef"
+CRUST_HEX="dce0e8"
+SURFACE0_HEX="ccd0da"
+SURFACE1_HEX="bcc0cc"
+SURFACE2_HEX="acb0be"
+OVERLAY0_HEX="9ca0b0"
+OVERLAY1_HEX="8c8fa1"
+TEXT_HEX="4c4f69"
+SUBTEXT0_HEX="6c6f85"
+SUBTEXT1_HEX="5c5f77"
+ROSEWATER_HEX="dc8a78"
+FLAMINGO_HEX="dd7878"
+PINK_HEX="ea76cb"
+MAUVE_HEX="8839ef"
+RED_HEX="d20f39"
+MAROON_HEX="e64553"
+PEACH_HEX="fe640b"
+YELLOW_HEX="df8e1d"
+GREEN_HEX="40a02b"
+TEAL_HEX="179299"
+SKY_HEX="04a5e5"
+SAPPHIRE_HEX="209fb5"
+BLUE_HEX="1e66f5"
+LAVENDER_HEX="7287fd"
