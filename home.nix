@@ -35,14 +35,13 @@
    '';
  };
 
+ home.file.".config/hypr".source = ./config/hypr;
+ home.file.".config/wofi".source = ./config/wofi;
+ home.file.".config/waybar".source = ./config/waybar;
+ home.file.".config/kitty".source = ./config/kitty;
+ home.file.".config/btop".source = ./config/btop;
  home.file.".config/starship.toml".source = ./config/starship.toml;
-
- # SwayNC - config estático e widgets (style.css é gerado pelo theme-switcher)
- home.file.".config/swaync/config.json".source = ./config/swaync/config.json;
- home.file.".config/swaync/widgets.css".source = ./config/swaync/widgets.css;
-
- # Themes - templates e definições para o theme-switcher
- home.file.".config/themes".source = ./config/themes;
+ home.file.".config/swaync".source = ./config/swaync;
 
  # SDDM theme 
  home.file.".config/sddm-theme/Main.qml".source = ./config/sddm-theme/Main.qml;
