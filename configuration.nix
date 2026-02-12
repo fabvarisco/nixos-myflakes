@@ -164,6 +164,9 @@
      
     #--- Utilities ---
     yazi             # Terminal file manager
+    unzip            # Extract zip files
+    zip              # Create zip files
+    p7zip            # 7z support
     btop             # System monitor
 
     # Media viewers

@@ -1,0 +1,21 @@
+# Compress plugin keymaps
+[[manager.prepend_keymap]]
+on   = [ "c", "a" ]
+run  = "plugin compress"
+desc = "Archive selected files"
+
+# Compress with specific formats
+[[manager.prepend_keymap]]
+on   = [ "c", "z" ]
+run  = "plugin compress -- zip"
+desc = "Compress to zip"
+
+[[manager.prepend_keymap]]
+on   = [ "c", "7" ]
+run  = "plugin compress -- 7z"
+desc = "Compress to 7z"
+
+[[manager.prepend_keymap]]
+on   = [ "c", "t" ]
+run  = "plugin compress -- tar.gz"
+desc = "Compress to tar.gz"
