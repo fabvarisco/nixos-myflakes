@@ -43,6 +43,7 @@
  home.file.".config/starship.toml".source = ./config/starship.toml;
  home.file.".config/swaync".source = ./config/swaync;
  home.file.".config/yazi".source = ./config/yazi;
+ home.file.".config/yazi".recursive = true;
 
  # SDDM theme 
  home.file.".config/sddm-theme/Main.qml".source = ./config/sddm-theme/Main.qml;

@@ -23,5 +23,5 @@ desc = "Compress to tar.gz"
 # Extract
 [[mgr.prepend_keymap]]
 on   = [ "c", "x" ]
-run  = 'shell "unar -o . $@" --confirm'
+run  = 'shell "7z x -o. $@" --confirm'
 desc = "Extract archive here"
