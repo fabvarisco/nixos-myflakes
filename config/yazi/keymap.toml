@@ -19,3 +19,9 @@ desc = "Compress to 7z"
 on   = [ "c", "t" ]
 run  = "plugin compress -- tar.gz"
 desc = "Compress to tar.gz"
+
+# Extract
+[[mgr.prepend_keymap]]
+on   = [ "c", "x" ]
+run  = 'shell "unar -o . $@" --confirm'
+desc = "Extract archive here"
