@@ -5,7 +5,7 @@
     "exclusive": true,
     "passthrough": false,
     "gtk-layer-shell": true,
-    "height": 30,
+    "height": 34,
     "modules-left": ["custom/nixos","hyprland/window","mpris"],
     "modules-center": ["custom/weather","clock"],
     "modules-right": ["custom/files","cpu","network","battery","backlight","wireplumber","wireplumber#microphone","custom/notification","tray","custom/power"],

@@ -65,8 +65,16 @@
   # SDDM Display Manager with SilentSDDM theme
   services.displayManager.sddm = {
     enable = true;
-    wayland.enable = true;
+    wayland.enable = false; # SSDM X11
   };
+
+  # SDDM setup commands to configure external monitor on login
+  services.displayManager.setupCommands = ''
+    EXTERNAL=$(${pkgs.xorg.xrandr}/bin/xrandr | ${pkgs.gnugrep}/bin/grep " connected" | ${pkgs.gnugrep}/bin/grep -v "eDP" | head -1 | cut -d' ' -f1)
+    if [ -n "$EXTERNAL" ]; then
+      ${pkgs.xorg.xrandr}/bin/xrandr --output "$EXTERNAL" --primary --auto --output eDP-1 --auto
+    fi
+  '';
 
   # SilentSDDM theme configuration
   programs.silentSDDM = {

@@ -57,7 +57,7 @@
       "actions": [
         {
           "label": "",
-          "command": "kitty nmtui",
+          "command": "kitty impala",
           "tooltip": "Network"
         },
         {
@@ -73,17 +73,17 @@
         },
         {
           "label": "󰍜",
-          "command": "gnome-network-displays",
+          "command": "nwg-displays",
           "tooltip": "Screens"
         },
         {
           "label": "󰈙",
-          "command": "kitty bash -i -c 'Docs'",
+          "command": "kitty yazi",
           "tooltip": "Files"
         },
         {
           "label": "",
-          "command": "kitty bash -i -c 'Settings'",
+          "command": "nwg-look",
           "tooltip": "Settings"
         },
         {
