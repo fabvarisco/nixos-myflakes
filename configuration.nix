@@ -131,8 +131,9 @@
 
 
     #--- UI ---
-    
+
     swww
+    wlogout
     
     # Network
     impala           # TUI WiFi manager
