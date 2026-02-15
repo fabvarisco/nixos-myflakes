@@ -8,7 +8,7 @@
     "height": 34,
     "modules-left": ["custom/nixos","hyprland/workspaces","hyprland/window","mpris"],
     "modules-center": ["custom/weather","clock"],
-    "modules-right": ["custom/files","cpu","network","battery","wireplumber","wireplumber#microphone","custom/notification","tray","custom/power"],
+    "modules-right": ["custom/files","cpu","network","battery","wireplumber","wireplumber#microphone","custom/notification","tray"],
     "hyprland/window": {
         "format": "{}"
     },
@@ -41,19 +41,9 @@
         "on-click": "activate",
         "format": "{icon}",
         "format-icons": {
-            "1": "1",
-            "2": "2",
-            "3": "3",
-            "4": "4",
-            "5": "5",
-            "6": "6",
-            "7": "7",
-            "8": "8",
-            "9": "9",
-            "10": "10",
-            "urgent": "",
-            "active": "",
-            "default": ""
+            "active": "●",
+            "default": "○",
+            "urgent": "●"
         },
         "persistent-workspaces": {
             "*": 5

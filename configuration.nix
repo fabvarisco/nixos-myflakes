@@ -82,7 +82,14 @@
   # SilentSDDM theme configuration
   programs.silentSDDM = {
     enable = true;
-    theme = "default";  # Opções: default, rei, ken, silvia, everforest, catppuccin, nord
+    theme = "rei";
+    backgrounds = {
+      "LoginScreen" = ./config/sddm-theme/backgrounds/rei.mp4;
+      "LockScreen" = ./config/sddm-theme/backgrounds/rei.mp4;
+    };
+    profileIcons = {
+      "fabvarisco" = ./config/profile-pics/miku.jpg;
+    };
   };
 
   # Enable sound with PipeWire
@@ -133,10 +140,9 @@
     gh    
     nodejs_24
     claude-code
-
+    
     # Browsers
-  
-
+    
     # Social
     discord
 

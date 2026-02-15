@@ -86,6 +86,11 @@
           "label": "󰒓",
           "command": "nwg-look",
           "tooltip": "Settings"
+        },
+        {
+          "label": "⏻",
+          "command": "wlogout",
+          "tooltip": "Power"
         }
       ]
     }

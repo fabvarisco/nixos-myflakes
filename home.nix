@@ -43,21 +43,6 @@
  home.file.".config/starship.toml".source = ./config/starship.toml;
  home.file.".config/swaync".source = ./config/swaync;
 
- # SDDM theme 
- home.file.".config/sddm-theme/Main.qml".source = ./config/sddm-theme/Main.qml;
- home.file.".config/sddm-theme/metadata.desktop".source = ./config/sddm-theme/metadata.desktop;
- home.file.".config/sddm-theme/theme.conf".text = ''
-   [General]
-   Background=/.config/walls/lock.jpg
-   Avatar=/.config/profile-pics/miku.jpg
-   AccentColor=#cdd6f4
-   BackgroundColor=#1e1e2e
-   ForegroundColor=#cdd6f4
-   Font=JetBrainsMono Nerd Font
-   FontSize=12
-   RoundCorners=8
- '';
-
  home.file.".config/kde".source = ./config/kde;
 
 
