@@ -28,12 +28,12 @@
   "hide-on-action": true,
   "script-fail-notify": true,
   "widgets": [
+    "buttons-grid",
     "mpris",
-    "title",
     "volume",
-    "notifications",
     "backlight",
-    "buttons-grid"
+    "title",
+    "notifications"
   ],
   "widget-config": {
     "title": {
@@ -43,10 +43,11 @@
     },
     "mpris": {
       "image-size": 80,
-      "image-radius": 10
+      "image-radius": 10,
+      "visibility": "when-playing"
     },
     "volume": {
-      "label": "",
+      "label": "",
       "step": 5
     },
     "backlight": {
@@ -56,12 +57,12 @@
     "buttons-grid": {
       "actions": [
         {
-          "label": "",
+          "label": "󰖩",
           "command": "kitty impala",
           "tooltip": "Network"
         },
         {
-          "label": "",
+          "label": "󰂯",
           "command": "blueman-manager",
           "tooltip": "Bluetooth"
         },
@@ -82,24 +83,9 @@
           "tooltip": "Files"
         },
         {
-          "label": "",
+          "label": "󰒓",
           "command": "nwg-look",
           "tooltip": "Settings"
-        },
-        {
-          "label": "",
-          "command": "hyprlock",
-          "tooltip": "Lock"
-        },
-        {
-          "label": "󰜉",
-          "command": "reboot",
-          "tooltip": "Reboot"
-        },
-        {
-          "label": "⏻",
-          "command": "shutdown now",
-          "tooltip": "Power Off"
         }
       ]
     }

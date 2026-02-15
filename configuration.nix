@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports =
@@ -62,14 +62,17 @@
      xwayland.enable = true;
   };
 
+  # Enable X11 for SDDM
+  services.xserver.enable = true;
+
   # SDDM Display Manager with SilentSDDM theme
   services.displayManager.sddm = {
     enable = true;
-    wayland.enable = false; # SSDM X11
+    wayland.enable = lib.mkForce false; # SDDM X11 para configurar monitores
   };
 
   # SDDM setup commands to configure external monitor on login
-  services.displayManager.setupCommands = ''
+  services.xserver.displayManager.setupCommands = ''
     EXTERNAL=$(${pkgs.xorg.xrandr}/bin/xrandr | ${pkgs.gnugrep}/bin/grep " connected" | ${pkgs.gnugrep}/bin/grep -v "eDP" | head -1 | cut -d' ' -f1)
     if [ -n "$EXTERNAL" ]; then
       ${pkgs.xorg.xrandr}/bin/xrandr --output "$EXTERNAL" --primary --auto --output eDP-1 --auto

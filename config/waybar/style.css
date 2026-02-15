@@ -203,11 +203,13 @@ tooltip {
     background: #1e1e2e;
     color: #7ebae4;
     border-radius: 20px;
-    padding: 0px 10px;
+    padding: 0px;
+    padding-right: 6px;
+    padding-left: 3px;
     margin-left: 5px;
     margin-top: 5px;
     border: 1px solid #181825;
-    font-size: 20px;
+    font-size: 22px;
 }
 
 #calendar {
