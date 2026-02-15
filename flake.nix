@@ -10,11 +10,16 @@
       url = "github:uiriansan/SilentSDDM";
       inputs.nixpkgs.follows = "nixpkgs";
    };
+   zen-browser = {
+      url = "github:youwen5/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {nixpkgs, home-manager, silent-sddm, ... }@inputs:{
    nixosConfigurations.thinkpad-hypr = nixpkgs.lib.nixosSystem {
      system = "x86_64-linux";
+     specialArgs = { inherit inputs; };
      modules = [
        ./configuration.nix
        silent-sddm.nixosModules.default

@@ -170,6 +170,7 @@ tooltip {
     color: #89b4fa;
     border-left: 0px;
     border-right: 0px;
+    border-radius: 20px 0px 0px 0px;
 }
 
 #pulseaudio.microphone,
@@ -177,7 +178,7 @@ tooltip {
     color: #cba6f7;
     border-left: 0px;
     border-right: 0px;
-    border-radius: 0px 20px 20px 20px;
+    border-radius: 0px 20px 20px 0px;
     margin-right: 5px;
     padding-right: 8px;
 }

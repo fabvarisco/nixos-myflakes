@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
   imports =
@@ -142,6 +142,7 @@
     claude-code
     
     # Browsers
+    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     
     # Social
     discord
