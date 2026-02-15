@@ -56,6 +56,46 @@
   hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable = true;
 
+  # Power Management (TLP for ThinkPad)
+  services.tlp = {
+    enable = true;
+    settings = {
+      # CPU scaling
+      CPU_SCALING_GOVERNOR_ON_AC = "performance";
+      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+
+      CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+      CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+
+      # CPU turbo boost
+      CPU_BOOST_ON_AC = 1;
+      CPU_BOOST_ON_BAT = 0;
+
+      # Platform profile (performance, balanced, low-power)
+      PLATFORM_PROFILE_ON_AC = "performance";
+      PLATFORM_PROFILE_ON_BAT = "low-power";
+
+      # ThinkPad Battery Thresholds (preserve battery health)
+      # Start charging when below 75%, stop at 80%
+      START_CHARGE_THRESH_BAT0 = 75;
+      STOP_CHARGE_THRESH_BAT0 = 80;
+
+      # WiFi power saving
+      WIFI_PWR_ON_AC = "off";
+      WIFI_PWR_ON_BAT = "on";
+
+      # Runtime PM for PCI devices
+      RUNTIME_PM_ON_AC = "on";
+      RUNTIME_PM_ON_BAT = "auto";
+
+      # USB autosuspend
+      USB_AUTOSUSPEND = 1;
+    };
+  };
+
+  # Disable power-profiles-daemon (conflicts with TLP)
+  services.power-profiles-daemon.enable = false;
+
   # Hyprland
   programs.hyprland = {
      enable = true;
@@ -133,6 +173,7 @@
     kitty
     hyprpaper
     hyprlock
+    hypridle
     starship
     fastfetch
     nautilus
