@@ -1,0 +1,68 @@
+# Wiremix configuration
+# https://github.com/tsowell/wiremix
+
+# General settings
+fps = 60.0
+mouse = true
+peaks = "auto"
+char_set = "default"
+theme = "default"
+tab = "playback"
+max_volume_percent = 150.0
+enforce_max_volume = false
+lazy_capture = true
+
+# Keybindings
+# Available actions: Exit, ToggleMute, SetDefault, SetRelativeVolume, ActivateDropdown,
+#                    CloseDropdown, MoveDown, MoveUp, TabRight, TabLeft, SetAbsoluteVolume,
+#                    Help, Nothing, SelectTab
+keybindings = [
+    # Navigation
+    { key = { Char = "j" }, action = "MoveDown" },
+    { key = { Char = "k" }, action = "MoveUp" },
+    { key = "Down", action = "MoveDown" },
+    { key = "Up", action = "MoveUp" },
+
+    # Volume control
+    { key = { Char = "h" }, action = { SetRelativeVolume = -0.05 } },
+    { key = { Char = "l" }, action = { SetRelativeVolume = 0.05 } },
+    { key = "Left", action = { SetRelativeVolume = -0.05 } },
+    { key = "Right", action = { SetRelativeVolume = 0.05 } },
+    { key = { Char = "H" }, modifier = "SHIFT", action = { SetRelativeVolume = -0.01 } },
+    { key = { Char = "L" }, modifier = "SHIFT", action = { SetRelativeVolume = 0.01 } },
+
+    # Quick volume presets
+    { key = { Char = "`" }, action = { SetAbsoluteVolume = 0.0 } },
+    { key = { Char = "1" }, action = { SetAbsoluteVolume = 0.1 } },
+    { key = { Char = "2" }, action = { SetAbsoluteVolume = 0.2 } },
+    { key = { Char = "3" }, action = { SetAbsoluteVolume = 0.3 } },
+    { key = { Char = "4" }, action = { SetAbsoluteVolume = 0.4 } },
+    { key = { Char = "5" }, action = { SetAbsoluteVolume = 0.5 } },
+    { key = { Char = "6" }, action = { SetAbsoluteVolume = 0.6 } },
+    { key = { Char = "7" }, action = { SetAbsoluteVolume = 0.7 } },
+    { key = { Char = "8" }, action = { SetAbsoluteVolume = 0.8 } },
+    { key = { Char = "9" }, action = { SetAbsoluteVolume = 0.9 } },
+    { key = { Char = "0" }, action = { SetAbsoluteVolume = 1.0 } },
+
+    # Mute and default
+    { key = { Char = "m" }, action = "ToggleMute" },
+    { key = { Char = "d" }, action = "SetDefault" },
+
+    # Tab navigation
+    { key = "Tab", action = "TabRight" },
+    { key = "BackTab", modifier = "SHIFT", action = "TabLeft" },
+    { key = { F = 1 }, action = { SelectTab = 0 } },  # Playback
+    { key = { F = 2 }, action = { SelectTab = 1 } },  # Recording
+    { key = { F = 3 }, action = { SelectTab = 2 } },  # Output devices
+    { key = { F = 4 }, action = { SelectTab = 3 } },  # Input devices
+    { key = { F = 5 }, action = { SelectTab = 4 } },  # Configuration
+
+    # Dropdown/confirm
+    { key = "Enter", action = "ActivateDropdown" },
+    { key = { Char = "c" }, action = "ActivateDropdown" },
+    { key = "Esc", action = "CloseDropdown" },
+
+    # Help and exit
+    { key = { Char = "?" }, action = "Help" },
+    { key = { Char = "q" }, action = "Exit" },
+]
