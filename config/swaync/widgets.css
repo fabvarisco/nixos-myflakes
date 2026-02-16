@@ -1,21 +1,108 @@
-@define-color pink rgb(245, 194, 231); @define-color crust rgb(17, 17, 27); @define-color surface0 #313244; @define-color text rgb(205, 214, 244);
-/* widget vpn */
-.widget-buttons-grid>flowbox>flowboxchild:nth-child(4)>button{background: @transparent; border: 2px solid @surface0}
-.widget-buttons-grid>flowbox>flowboxchild:nth-child(4)>button:hover{background: @transparent; border: 2px solid @pink}
-.widget-buttons-grid>flowbox>flowboxchild:nth-child(4)>button>label{color: @text;}
-.widget-buttons-grid>flowbox>flowboxchild:nth-child(4)>button:hover>label{color: @pink;}
-/* widget mute */
-.widget-buttons-grid>flowbox>flowboxchild:nth-child(2)>button{background: @transparent; border: 2px solid @surface0}
-.widget-buttons-grid>flowbox>flowboxchild:nth-child(2)>button:hover{background: @transparent; border: 2px solid @pink}
-.widget-buttons-grid>flowbox>flowboxchild:nth-child(2)>button>label{color: @text;}
-.widget-buttons-grid>flowbox>flowboxchild:nth-child(2)>button:hover>label{color: @pink;}
-/* widget wifi */
-.widget-buttons-grid>flowbox>flowboxchild:nth-child(1)>button{background: @pink; border: 2px solid @pink}
-.widget-buttons-grid>flowbox>flowboxchild:nth-child(1)>button:hover{background: @pink; border: 2px solid @pink}
-.widget-buttons-grid>flowbox>flowboxchild:nth-child(1)>button>label{color: @crust;}
-.widget-buttons-grid>flowbox>flowboxchild:nth-child(1)>button:hover>label{color: @crust;}
-/* widget bluetooth */
-.widget-buttons-grid>flowbox>flowboxchild:nth-child(3)>button{background: @transparent; border: 2px solid @surface0}
-.widget-buttons-grid>flowbox>flowboxchild:nth-child(3)>button:hover{background: @transparent; border: 2px solid @pink}
-.widget-buttons-grid>flowbox>flowboxchild:nth-child(3)>button>label{color: @text;}
-.widget-buttons-grid>flowbox>flowboxchild:nth-child(3)>button:hover>label{color: @pink;}
+@define-color pink rgb(245, 194, 231);
+@define-color crust rgb(17, 17, 27);
+@define-color surface0 #313244;
+@define-color text rgb(205, 214, 244);
+
+/* Botão 1: Bluetooth */
+.widget-buttons-grid>flowbox>flowboxchild:nth-child(1)>button {
+  background: @transparent;
+  border: 2px solid @surface0;
+}
+.widget-buttons-grid>flowbox>flowboxchild:nth-child(1)>button:hover {
+  background: @transparent;
+  border: 2px solid @pink;
+}
+.widget-buttons-grid>flowbox>flowboxchild:nth-child(1)>button>label {
+  color: @text;
+}
+.widget-buttons-grid>flowbox>flowboxchild:nth-child(1)>button:hover>label {
+  color: @pink;
+}
+
+/* Botão 2: Power */
+.widget-buttons-grid>flowbox>flowboxchild:nth-child(2)>button {
+  background: @transparent;
+  border: 2px solid @surface0;
+}
+.widget-buttons-grid>flowbox>flowboxchild:nth-child(2)>button:hover {
+  background: @transparent;
+  border: 2px solid @pink;
+}
+.widget-buttons-grid>flowbox>flowboxchild:nth-child(2)>button>label {
+  color: @text;
+}
+.widget-buttons-grid>flowbox>flowboxchild:nth-child(2)>button:hover>label {
+  color: @pink;
+}
+
+/* Botão 3: Launcher */
+.widget-buttons-grid>flowbox>flowboxchild:nth-child(3)>button {
+  background: @transparent;
+  border: 2px solid @surface0;
+}
+.widget-buttons-grid>flowbox>flowboxchild:nth-child(3)>button:hover {
+  background: @transparent;
+  border: 2px solid @pink;
+}
+.widget-buttons-grid>flowbox>flowboxchild:nth-child(3)>button>label {
+  color: @text;
+}
+.widget-buttons-grid>flowbox>flowboxchild:nth-child(3)>button:hover>label {
+  color: @pink;
+}
+
+/* Botão 4: WiFi */
+.widget-buttons-grid>flowbox>flowboxchild:nth-child(4)>button {
+  background: @transparent;
+  border: 2px solid @surface0;
+}
+.widget-buttons-grid>flowbox>flowboxchild:nth-child(4)>button:hover {
+  background: @transparent;
+  border: 2px solid @pink;
+}
+.widget-buttons-grid>flowbox>flowboxchild:nth-child(4)>button>label {
+  color: @text;
+}
+.widget-buttons-grid>flowbox>flowboxchild:nth-child(4)>button:hover>label {
+  color: @pink;
+}
+
+/* MPRIS media player buttons - hide broken icons and use Nerd Font */
+.widget-mpris .widget-mpris-player .mpris-overlay > box > button image {
+  -gtk-icon-size: 0px;
+  min-width: 0;
+  min-height: 0;
+  opacity: 0;
+}
+
+.widget-mpris .widget-mpris-player .mpris-overlay > box > button {
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 1.2rem;
+  min-width: 36px;
+  min-height: 36px;
+}
+
+/* Previous button */
+.widget-mpris .widget-mpris-player .mpris-overlay > box > button:nth-child(1)::before {
+  content: "󰒮";
+}
+
+/* Play/Pause button */
+.widget-mpris .widget-mpris-player .mpris-overlay > box > button:nth-child(2)::before {
+  content: "󰐊";
+}
+
+/* Next button */
+.widget-mpris .widget-mpris-player .mpris-overlay > box > button:nth-child(3)::before {
+  content: "󰒭";
+}
+
+/* Shuffle button */
+.widget-mpris .widget-mpris-player .mpris-overlay > box > button:nth-child(4)::before {
+  content: "󰒝";
+}
+
+/* Repeat button */
+.widget-mpris .widget-mpris-player .mpris-overlay > box > button:nth-child(5)::before {
+  content: "󰑖";
+}

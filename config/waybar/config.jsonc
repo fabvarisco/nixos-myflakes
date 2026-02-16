@@ -8,7 +8,7 @@
     "height": 34,
     "modules-left": ["custom/nixos","hyprland/workspaces","hyprland/window","mpris"],
     "modules-center": ["custom/weather","clock"],
-    "modules-right": ["custom/files","cpu","network","battery","wireplumber","wireplumber#microphone","custom/notification","tray"],
+    "modules-right": ["custom/wallpaper","custom/files","cpu","network","battery","wireplumber","wireplumber#microphone","custom/notification","tray"],
     "hyprland/window": {
         "format": "{}"
     },
@@ -49,12 +49,12 @@
             "*": 5
         }
     },
-    
+
     //"custom/power_profile":{
         //shows the current power profile and switches to next on click
     //    "exec": "asusctl profile -p | sed s:'Active profile is'::",
     //    "interval": 30,
-    //    "format": "󰈐{}", 
+    //    "format": "󰈐{}",
     //    "on-click": "asusctl profile -n; pkill -SIGRTMIN+8 waybar",
     //    "signal": 8
     //},
@@ -93,8 +93,8 @@
             "critical": 20
         },
         "format": "{icon} {capacity}%",
-        "format-charging": " {capacity}%",
-        "format-plugged": " {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
         "format-alt": "{time} {icon}",
         "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
         "min-length": 7
@@ -103,32 +103,32 @@
     "wireplumber": {
         "format": "{icon} {volume}%",
         "tooltip": false,
-        "format-muted": " Muted",
-        "on-click": "pavucontrol",
+        "format-muted": "󰝟  Muted",
+        "on-click": "kitty --class floating -e wiremix",
         "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
         "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+",
         "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-",
         "scroll-step": 5,
-        "format-icons": ["", "", ""]
+        "format-icons": ["󰕿", "󰖀", "󰕾"]
     },
 
     "wireplumber#microphone": {
         "node-type": "source",
-        "format": " {volume}%",
-        "format-muted": " Muted",
+        "format": "󰍬  {volume}%",
+        "format-muted": "󰍭  Muted",
         "tooltip": false,
-        "on-click": "pavucontrol --tab=4",
+        "on-click": "kitty --class floating -e wiremix",
         "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
         "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%+",
         "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%-",
         "scroll-step": 5
     },
-    
+
     //"temperature": {
         //"thermal-zone": 1,
-        //"format": "{temperatureF}°F ",
+        //"format": "{temperatureF}°F ",
         //"critical-threshold": 80,
-        //"format-critical": "{temperatureC}°C "
+        //"format-critical": "{temperatureC}°C "
     //},
 
     "cpu": {
@@ -139,21 +139,21 @@
 
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": "  {essid}",
-        "format-ethernet": "{ipaddr}/{cidr} ",
-        "tooltip-format": "{essid} - {ifname} via {gwaddr} ",
-        "format-linked": "{ifname} (No IP) ",
+        "format-wifi": "  {essid}",
+        "format-ethernet": "{ipaddr}/{cidr} ",
+        "tooltip-format": "{essid} - {ifname} via {gwaddr} ",
+        "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "Disconnected ⚠",
         "format-alt": "{ifname}:{essid} {ipaddr}/{cidr}",
         "on-click": "kitty --class floating -e impala"
     },
 
     "bluetooth": {
-	    "format": " {status}",
+	    "format": " {status}",
 	    "format-disabled": "", // an empty format will hide the module
-	    "format-connected": " {num_connections}",
+	    "format-connected": " {num_connections}",
 	    "tooltip-format": "{device_alias}",
-	    "tooltip-format-connected": " {device_enumerate}",
+	    "tooltip-format-connected": " {device_enumerate}",
 	    "tooltip-format-enumerate-connected": "{device_alias}"
     },
 
@@ -167,6 +167,13 @@
         "format": "",
         "tooltip": false,
         "on-click": "kitty --class floating -e yazi"
+    },
+
+    "custom/wallpaper": {
+        "format": "󰸉",
+        "tooltip-format": "Change Wallpaper",
+        "on-click": "~/.config/hypr/wallpaper-wofi.sh",
+        "on-click-right": "~/.config/hypr/change-wallpaper.sh"
     },
 
     "custom/power": {

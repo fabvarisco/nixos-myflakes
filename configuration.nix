@@ -209,7 +209,8 @@
     kdePackages.breeze-icons
 
     # Audio
-    pavucontrol      # GUI audio control
+    wiremix
+    pwvucontrol      # GUI audio control (PipeWire)
     pamixer          # CLI audio control
     playerctl        # Media player control
 
