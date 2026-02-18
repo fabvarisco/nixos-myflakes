@@ -99,7 +99,7 @@ window {
 }
 
 #entry:drop(active) {
-    background-color: @text !important;
+    background-color: @text;
 }
 
 #img {

@@ -5,6 +5,7 @@
 
 WALLPAPER_DIR="$HOME/.config/walls"
 CACHE_FILE="$HOME/.cache/hypr/current_wallpaper"
+CACHE_DIR="$HOME/.cache/wal"
 
 mkdir -p "$(dirname "$CACHE_FILE")"
 
@@ -43,13 +44,20 @@ MENU+="─────────────\n"
 MENU+="🔀 Random Wallpaper\n"
 MENU+="🔄 Reload swww"
 
+# Determine wofi style file (use cached if available, fallback to config)
+WOFI_STYLE="$CACHE_DIR/wofi-style.css"
+if [ ! -f "$WOFI_STYLE" ]; then
+    WOFI_STYLE="$HOME/.config/wofi/style.css"
+fi
+
 # Show wofi menu
 SELECTED=$(echo -e "$MENU" | wofi --dmenu \
     --prompt "Select Wallpaper" \
     --width 400 \
     --height 350 \
     --cache-file /dev/null \
-    --insensitive)
+    --insensitive \
+    -s "$WOFI_STYLE")
 
 # Handle selection
 if [ -z "$SELECTED" ]; then
@@ -103,7 +111,50 @@ swww img "$SELECTED_WALL" \
     --transition-fps 60 \
     --transition-pos center
 
+# Generate colors with pywal
+wal -i "$SELECTED_WALL" -n --cols16
+
+# Update kitty theme
+if command -v kitty &>/dev/null && [ -f "$CACHE_DIR/colors-kitty.conf" ]; then
+    mkdir -p ~/.cache/kitty
+    cat "$CACHE_DIR/colors-kitty.conf" > ~/.cache/kitty/current-theme.conf
+    pkill -USR1 kitty 2>/dev/null
+fi
+
+# Reload swaync styles
+swaync-client --reload-css 2>/dev/null
+
+# Update pywalfox
+if command -v pywalfox &>/dev/null; then
+    pywalfox update 2>/dev/null
+fi
+
+# Generate complete CSS files (GTK CSS doesn't support @import)
+generate_css() {
+    local colors_file="$CACHE_DIR/colors-waybar.css"
+    local waybar_base="$HOME/.config/waybar/style.css"
+    local wofi_base="$HOME/.config/wofi/style.css"
+
+    if [ -f "$colors_file" ]; then
+        if [ -f "$waybar_base" ]; then
+            cat "$colors_file" > "$CACHE_DIR/waybar-style.css"
+            tail -n +2 "$waybar_base" >> "$CACHE_DIR/waybar-style.css"
+        fi
+        if [ -f "$wofi_base" ]; then
+            cat "$colors_file" > "$CACHE_DIR/wofi-style.css"
+            tail -n +2 "$wofi_base" >> "$CACHE_DIR/wofi-style.css"
+        fi
+    fi
+}
+generate_css
+
+# Restart waybar with generated CSS
+pkill waybar
+sleep 0.3
+waybar -s "$CACHE_DIR/waybar-style.css" &
+
 # Save current wallpaper
 echo "$SELECTED_WALL" > "$CACHE_FILE"
+source "$CACHE_DIR/colors.sh" && cp -r "$wallpaper" ~/wallpapers/pywallpaper.jpg 2>/dev/null
 
 notify-send "Wallpaper Changed" "$WALL_NAME"
