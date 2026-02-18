@@ -5,11 +5,16 @@
  *   uc.pywalzen.darkness = default | dark | darker | yet-darker | pitch-black
  */
 
+/* Default/fallback styles - applies pywalfox colors even without theme element */
 :root {
-  --zen-primary-color: #d9d9d9 !important;
-  --zen-colors-primary: var(--tab-loading-fill) !important;
-  --zen-colors-secondary: var(--tab-loading-fill) !important;
-  --toolbarbutton-icon-fill: var(--tab-loading-fill) !important;
+  --zen-primary-color: var(--lwt-accent-color, #d9d9d9) !important;
+  --zen-colors-primary: var(--tab-loading-fill, var(--lwt-accent-color)) !important;
+  --zen-colors-secondary: var(--tab-loading-fill, var(--lwt-accent-color)) !important;
+  --zen-colors-tertiary: color-mix(in srgb, var(--lwt-accent-color, #1a1a1a), black 25%) !important;
+  --zen-main-browser-background: color-mix(in srgb, var(--lwt-accent-color, #1a1a1a), black 25%) !important;
+  --zen-themed-toolbar-bg: color-mix(in srgb, var(--lwt-accent-color, #1a1a1a), black 25%) !important;
+  --toolbarbutton-icon-fill: var(--tab-loading-fill, var(--lwt-accent-color)) !important;
+  --arrowpanel-background: color-mix(in srgb, var(--lwt-accent-color, #1a1a1a), black 25%) !important;
 }
 
 :root:has(#theme-PywalZen[uc-pywalzen-darkness="default"]) {
