@@ -1,142 +1,115 @@
+@import url('../../.cache/wal/colors-waybar.css');
+
 * {
-    border: none;
-    border-radius: 0px;
-    font-family: "jetbrains mono nerd font";
+    font-size: 15px;
+    font-family: "JetBrains Mono Nerd Font";
     font-weight: bold;
-    font-size: 11px;
     min-height: 0;
     transition: 0.3s;
 }
 
 window#waybar {
-    background: rgba(21, 18, 27, 0.10);
-    color: #cdd6f4;
+    all: unset;
+}
+
+.modules-left {
+    padding: 7px;
+    margin: 10px 0 5px 10px;
+    border-radius: 10px;
+    background: alpha(@background, 0.6);
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.6);
+}
+
+.modules-center {
+    padding: 7px;
+    margin: 10px 0 5px 0;
+    border-radius: 10px;
+    background: alpha(@background, 0.6);
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.6);
+}
+
+.modules-right {
+    padding: 7px;
+    margin: 10px 10px 5px 0;
+    border-radius: 10px;
+    background: alpha(@background, 0.6);
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.6);
 }
 
 tooltip {
-    background: #1e1e2e;
-    color: #cdd6f4;
+    background: @background;
+    color: @color7;
     border-radius: 10px;
-    border-width: 1.5px;
-    border-style: solid;
-    border-color: #313244;
-    transition: 0.3s;
+}
+
+/* Workspaces */
+#workspaces {
+    padding: 0px 5px;
 }
 
 #workspaces button {
-    padding: 2px 6px;
-    color: #585b70;
-    margin: 0px 1px;
-    font-size: 12px;
-    min-width: 16px;
-    min-height: 16px;
-    background: transparent;
-    border-radius: 50%;
+    all: unset;
+    padding: 0px 5px;
+    color: alpha(@color7, 0.4);
+    transition: all 0.2s ease;
+}
+
+#workspaces button:hover {
+    color: rgba(0, 0, 0, 0);
+    border: none;
+    text-shadow: 0px 0px 1.5px rgba(0, 0, 0, 0.5);
+    transition: all 1s ease;
 }
 
 #workspaces button.active {
-    color: #f5c2e7;
-    background: rgba(245, 194, 231, 0.3);
-    border-radius: 50%;
-    padding: 2px 8px;
-    text-shadow: 0 0 5px rgba(245, 194, 231, 0.5);
+    color: @color9;
+    border: none;
+    text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
 }
 
 #workspaces button.urgent {
-    color: #f38ba8;
-    background: rgba(243, 139, 168, 0.3);
-    border-radius: 50%;
+    color: @color1;
     animation: pulse 1s ease-in-out infinite;
 }
 
 @keyframes pulse {
-    0% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.5;
-    }
-    100% {
-        opacity: 1;
-    }
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
 }
 
-#workspaces button:hover {
-    background: rgba(205, 214, 244, 0.15);
-    color: #cdd6f4;
-    border-radius: 50%;
+/* Clock */
+#clock {
+    padding: 0px 5px;
+    color: @color7;
+    transition: all 0.3s ease;
 }
 
-#custom-power_profile,
-#custom-weather,
-#custom-files,
-#window,
-#clock,
-#battery,
-#pulseaudio,
-#wireplumber,
-#network,
-#bluetooth,
-#temperature,
-#workspaces,
-#tray,
-#cpu {
-    background: #1e1e2e;
-    opacity: 0.8;
-    padding: 0px 10px;
-    margin: 0;
-    margin-top: 5px;
-    border: 1px solid #181825;
+#clock:hover {
+    color: @color9;
 }
 
-#temperature {
-    border-radius: 20px 0px 0px 20px;
+/* Custom NixOS */
+#custom-nixos {
+    color: @color4;
+    padding: 0px 5px;
+    font-size: 18px;
 }
 
-#temperature.critical {
-    color: #eba0ac;
-}
-
-
-#tray {
-    border-radius: 20px;
-    margin-right: 5px;
-    padding: 0px 4px;
-}
-
-#workspaces {
-    background: #1e1e2e;
-    border-radius: 20px;
-    margin-left: 5px;
-    padding: 2px 8px;
-}
-
-#custom-power_profile {
-    color: #a6e3a1;
-    border-left: 0px;
-    border-right: 0px;
-}
-
+/* Window */
 #window {
-    border-radius: 20px;
-    margin-left: 5px;
-    margin-right: 5px;
+    color: @color7;
+    padding: 0px 5px;
 }
 
+/* MPRIS */
 #mpris {
-    background: #1e1e2e;
-    color: #a6e3a1;
-    opacity: 0.8;
-    padding: 0px 10px;
-    margin: 0;
-    margin-top: 5px;
-    margin-left: 5px;
-    border: 1px solid #181825;
-    border-radius: 20px;
+    color: @color2;
+    padding: 0px 5px;
 }
 
 #mpris.paused {
-    color: #a6adc8;
+    color: alpha(@color7, 0.6);
     font-style: italic;
 }
 
@@ -144,139 +117,133 @@ tooltip {
     background: transparent;
 }
 
-#clock {
-    color: #fab387;
-    border-radius: 20px;
-    margin-left: 5px;
-    border-right: 0px;
-    transition: 0.3s;
-    padding-left: 7px;
-}
-
-#network {
-    color: #f9e2af;
-    border-left: 0px;
-    border-right: 0px;
-}
-
-#bluetooth {
-    color: #89b4fa;
-    border-radius: 20px;
-    margin-right: 10px
-} 
-
-#pulseaudio,
-#wireplumber {
-    color: #89b4fa;
-    border-left: 0px;
-    border-right: 0px;
-    border-radius: 20px 0px 0px 20px;
-}
-
-#pulseaudio.microphone,
-#wireplumber.microphone {
-    color: #cba6f7;
-    border-left: 0px;
-    border-right: 0px;
-    border-radius: 0px 20px 20px 0px;
-    margin-right: 5px;
-    padding-right: 8px;
-}
-
-#cpu {
-    color: #94e2d5;
-    border-radius: 20px 0px 0px 20px;
-    border-right: 0px;
-}
-
-#custom-files {
-    color: #f5c2e7;
-    border-radius: 20px;
-    margin-right: 5px;
-}
-
-#battery {
-    color: #a6e3a1;
-    border-radius: 0 20px 20px 0;
-    margin-right: 5px;
-    border-left: 0px;
-    padding-right: 10px;
-}
-
+/* Weather */
 #custom-weather {
-    color: #f9e2af;
-    border-radius: 20px;
-    margin-left: 5px;
+    color: @color3;
+    padding: 0px 5px;
 }
 
-#custom-nixos {
-    background: #1e1e2e;
-    color: #7ebae4;
-    border-radius: 20px;
-    padding: 0px;
-    padding-right: 15px;
-    padding-left: 10px;
-    margin-left: 5px;
-    margin-top: 5px;
-    border: 1px solid #181825;
-    font-size: 22px;
+/* CPU */
+#cpu {
+    color: @color6;
+    padding: 0px 5px;
+    transition: all 0.3s ease;
 }
 
-#calendar {
-    background: #1e1e2e;
-    color: #cdd6f4;
-    border-radius: 10px;
-    padding: 10px;
+#cpu:hover {
+    color: @color9;
 }
 
-#calendar.header {
-    color: #cdd6f4;
-    font-weight: bold;
+/* Network */
+#network {
+    color: @color3;
+    padding: 0px 5px;
+    transition: all 0.3s ease;
 }
 
-#calendar.weekdays {
-    color: #a6adc8;
+#network:hover {
+    color: @color9;
 }
 
-#calendar.today {
-    background: #fab387;
-    color: #1e1e2e;
-    border-radius: 5px;
-    font-weight: bold;
+/* Battery */
+#battery {
+    color: @color2;
+    padding: 0px 5px;
+    transition: all 0.3s ease;
 }
 
-#calendar.week {
-    color: #a6adc8;
+#battery:hover {
+    color: @color9;
 }
 
-#custom-power {
-    background: #1e1e2e;
-    color: #f38ba8;
-    border-radius: 20px;
-    padding: 0px 12px;
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-top: 5px;
-    border: 1px solid #181825;
-    font-size: 14px;
+#battery.charging {
+    color: #26A65B;
 }
 
-#custom-power:hover {
-    background: #f38ba8;
-    color: #1e1e2e;
+#battery.warning:not(.charging) {
+    color: #ffbe61;
 }
 
+#battery.critical:not(.charging) {
+    color: #f53c3c;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes blink {
+    to {
+        color: @foreground;
+    }
+}
+
+/* Wireplumber / Audio */
+#wireplumber {
+    color: @color4;
+    padding: 0px 5px;
+    transition: all 0.3s ease;
+}
+
+#wireplumber:hover {
+    color: @color9;
+}
+
+#wireplumber.muted {
+    color: alpha(@color7, 0.4);
+}
+
+/* Bluetooth */
+#bluetooth {
+    color: @color4;
+    padding: 0px 5px;
+    transition: all 0.3s ease;
+}
+
+#bluetooth:hover {
+    color: @color9;
+}
+
+/* Notification */
 #custom-notification {
-    background: #1e1e2e;
-    color: #89b4fa;
-    border-radius: 20px;
-    padding: 0px 10px;
-    margin-right: 5px;
-    margin-top: 5px;
-    border: 1px solid #181825;
-    font-size: 14px;
+    color: @color7;
+    padding: 0px 5px;
+    transition: all 0.3s ease;
 }
 
 #custom-notification:hover {
-    background: rgba(137, 180, 250, 0.2);
+    color: @color9;
+}
+
+/* Tray */
+#tray {
+    padding: 0px 5px;
+    transition: all 0.3s ease;
+}
+
+#tray menu * {
+    padding: 0px 5px;
+}
+
+/* Custom Power */
+#custom-power {
+    color: @color1;
+    padding: 0px 5px;
+}
+
+#custom-power:hover {
+    color: @color9;
+}
+
+/* Backlight */
+#backlight {
+    color: @color3;
+    padding: 0px 5px;
+}
+
+/* Custom Wallpaper */
+#custom-wallpaper {
+    color: @color5;
+    padding: 0px 5px;
 }

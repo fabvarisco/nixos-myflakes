@@ -1,15 +1,15 @@
 [config]
 allow_images=true
-width=500
-height=400
+width=800
+height=500
 location=center
-show=drun
-prompt=Search
+show=dmenu
+prompt=Select Wallpaper
 term=kitty
-hide_scroll=true
-print_command=true
+hide_scroll=false
+print_command=false
 insensitive=true
 columns=1
 no_actions=true
-image_size=32
+image_size=64
 gtk_dark=true
