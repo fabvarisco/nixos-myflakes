@@ -5,6 +5,10 @@
  home.homeDirectory = "/home/fabvarisco";
  home.stateVersion = "25.05";
 
+ home.packages = with pkgs; [
+   pywal
+ ];
+
  # Cursor Twilight
  home.pointerCursor = {
    name = "Twilight";

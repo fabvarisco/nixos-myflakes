@@ -2,7 +2,7 @@
 
 # Random wallpaper selector with pywal integration
 
-WALLPAPER_DIR="$HOME/wallpapers/walls"
+WALLPAPER_DIR="$HOME/.config/walls"
 CACHE_FILE="$HOME/.cache/hypr/current_wallpaper"
 
 mkdir -p "$(dirname "$CACHE_FILE")"

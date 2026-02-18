@@ -3,7 +3,7 @@
 # Wallpaper selector with pywal integration
 # Selects wallpaper via wofi, applies with swww, generates colors with pywal
 
-WALLPAPER_DIR="$HOME/wallpapers/walls"
+WALLPAPER_DIR="$HOME/.config/walls"
 CACHE_FILE="$HOME/.cache/hypr/current_wallpaper"
 
 mkdir -p "$(dirname "$CACHE_FILE")"
