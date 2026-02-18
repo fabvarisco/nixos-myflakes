@@ -52,6 +52,24 @@ generate_css() {
     fi
 }
 
+# Setup Zen Browser PywalZen theme
+setup_zen_browser() {
+    local zen_dir="$HOME/.zen"
+    local zen_config="$HOME/.config/zen"
+
+    if [ -d "$zen_dir" ] && [ -d "$zen_config" ]; then
+        for profile in "$zen_dir"/*; do
+            if [ -d "$profile" ] && [[ "$(basename "$profile")" != "Profile Groups" ]]; then
+                mkdir -p "$profile/chrome"
+                if [ -f "$zen_config/userChrome.css" ]; then
+                    rm -f "$profile/chrome/userChrome.css" 2>/dev/null
+                    cp "$zen_config/userChrome.css" "$profile/chrome/userChrome.css"
+                fi
+            fi
+        done
+    fi
+}
+
 # Function to apply wallpaper and update all themes
 apply_wallpaper() {
     local selected_wallpaper="$1"
@@ -76,10 +94,13 @@ apply_wallpaper() {
         pkill -USR1 kitty 2>/dev/null
     fi
 
-    # Update pywalfox (Firefox)
+    # Update pywalfox (Firefox/Zen Browser)
     if command -v pywalfox &>/dev/null; then
         pywalfox update 2>/dev/null
     fi
+
+    # Setup Zen Browser PywalZen theme
+    setup_zen_browser
 
     # Update cava colors if cava config exists
     if [ -f "$HOME/.config/cava/config" ]; then

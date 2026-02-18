@@ -7,6 +7,7 @@
 
  home.packages = with pkgs; [
    pywal
+   pywalfox-native
  ];
 
  # Cursor Twilight
@@ -51,6 +52,7 @@
  home.file.".config/starship.toml".source = ./config/starship.toml;
  home.file.".config/swaync".source = ./config/swaync;
  home.file.".config/zen".source = ./config/zen;
+ home.file.".local/share/zen-startpage".source = ./config/zen/startpage;
 
  home.file.".config/kde".source = ./config/kde;
 

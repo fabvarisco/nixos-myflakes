@@ -61,14 +61,16 @@ fi
 # Setup Zen Browser PywalZen theme
 setup_zen_browser() {
     local zen_dir="$HOME/.zen"
-    local chrome_src="$HOME/.config/zen/userChrome.css"
+    local zen_config="$HOME/.config/zen"
 
-    if [ -d "$zen_dir" ] && [ -f "$chrome_src" ]; then
-        # Find all Zen profiles and copy userChrome.css
-        for profile in "$zen_dir"/*.default* "$zen_dir"/*-release*; do
-            if [ -d "$profile" ]; then
+    if [ -d "$zen_dir" ] && [ -d "$zen_config" ]; then
+        for profile in "$zen_dir"/*; do
+            if [ -d "$profile" ] && [[ "$(basename "$profile")" != "Profile Groups" ]]; then
                 mkdir -p "$profile/chrome"
-                cp "$chrome_src" "$profile/chrome/userChrome.css"
+                if [ -f "$zen_config/userChrome.css" ]; then
+                    rm -f "$profile/chrome/userChrome.css" 2>/dev/null
+                    cp "$zen_config/userChrome.css" "$profile/chrome/userChrome.css"
+                fi
             fi
         done
     fi
