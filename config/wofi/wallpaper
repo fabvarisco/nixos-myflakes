@@ -13,3 +13,4 @@ columns=1
 no_actions=true
 image_size=64
 gtk_dark=true
+style=/home/fabvarisco/.cache/wal/wofi-style-wallpaper.css

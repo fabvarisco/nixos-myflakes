@@ -34,6 +34,10 @@
  programs.bash = {
    enable = true;
    initExtra = ''
+     # Use pywal-generated starship config if available
+     if [ -f "$HOME/.cache/wal/starship.toml" ]; then
+       export STARSHIP_CONFIG="$HOME/.cache/wal/starship.toml"
+     fi
      eval "$(starship init bash)"
      fastfetch
    '';
@@ -45,6 +49,7 @@
  home.file.".config/kitty".source = ./config/kitty;
  home.file.".config/btop".source = ./config/btop;
  home.file.".config/starship.toml".source = ./config/starship.toml;
+ home.file.".config/starship.toml.base".source = ./config/starship.toml.base;
  home.file.".config/swaync".source = ./config/swaync;
 
  home.file.".config/kde".source = ./config/kde;
