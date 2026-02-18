@@ -53,10 +53,28 @@ if command -v kitty &>/dev/null && [ -f "$CACHE_DIR/colors-kitty.conf" ]; then
     pkill -USR1 kitty 2>/dev/null
 fi
 
-# Update pywalfox
+# Update pywalfox (Firefox/Zen Browser)
 if command -v pywalfox &>/dev/null; then
     pywalfox update 2>/dev/null
 fi
+
+# Setup Zen Browser PywalZen theme
+setup_zen_browser() {
+    local zen_dir="$HOME/.zen"
+    local chrome_src="$HOME/.config/zen/userChrome.css"
+
+    if [ -d "$zen_dir" ] && [ -f "$chrome_src" ]; then
+        # Find all Zen profiles and copy userChrome.css
+        for profile in "$zen_dir"/*.default* "$zen_dir"/*-release*; do
+            if [ -d "$profile" ]; then
+                mkdir -p "$profile/chrome"
+                cp "$chrome_src" "$profile/chrome/userChrome.css"
+            fi
+        done
+    fi
+}
+setup_zen_browser
+
 
 # Update cava colors
 if [ -f "$HOME/.config/cava/config" ]; then
@@ -69,7 +87,7 @@ fi
 
 # Generate starship config with pywal colors
 generate_starship() {
-    local starship_base="$HOME/.config/starship.toml.base"
+    local starship_base="$HOME/.config/starship.toml"
     local colors_file="$CACHE_DIR/colors.sh"
     local output="$CACHE_DIR/starship.toml"
 
@@ -82,10 +100,10 @@ generate_starship() {
         local bg_g=$((16#${color0:3:2}))
         local bg_b=$((16#${color0:5:2}))
 
-        # Create darker background variants
-        local bg1=$(printf "#%02x%02x%02x" $((bg_r*80/100)) $((bg_g*80/100)) $((bg_b*80/100)))
-        local bg2=$(printf "#%02x%02x%02x" $((bg_r*60/100)) $((bg_g*60/100)) $((bg_b*60/100)))
-        local bg3=$(printf "#%02x%02x%02x" $((bg_r*40/100)) $((bg_g*40/100)) $((bg_b*40/100)))
+        # Create darker background variants with good contrast
+        local bg1=$(printf "#%02x%02x%02x" $((bg_r*120/100 > 255 ? 255 : bg_r*120/100)) $((bg_g*120/100 > 255 ? 255 : bg_g*120/100)) $((bg_b*120/100 > 255 ? 255 : bg_b*120/100)))
+        local bg2=$(printf "#%02x%02x%02x" $((bg_r*90/100)) $((bg_g*90/100)) $((bg_b*90/100)))
+        local bg3=$(printf "#%02x%02x%02x" $((bg_r*70/100)) $((bg_g*70/100)) $((bg_b*70/100)))
 
         # Replace placeholders with actual colors
         sed -e "s/COLOR_PRIMARY/${color4}/g" \

@@ -49,8 +49,8 @@
  home.file.".config/kitty".source = ./config/kitty;
  home.file.".config/btop".source = ./config/btop;
  home.file.".config/starship.toml".source = ./config/starship.toml;
- home.file.".config/starship.toml.base".source = ./config/starship.toml.base;
  home.file.".config/swaync".source = ./config/swaync;
+ home.file.".config/zen".source = ./config/zen;
 
  home.file.".config/kde".source = ./config/kde;
 
