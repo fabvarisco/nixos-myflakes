@@ -70,6 +70,95 @@ setup_zen_browser() {
     fi
 }
 
+# Generate btop theme with pywal colors
+generate_btop_theme() {
+    local colors_file="$CACHE_DIR/colors.sh"
+    local output="$CACHE_DIR/btop-pywal.theme"
+
+    if [ -f "$colors_file" ]; then
+        source "$colors_file"
+
+        cat > "$output" << EOF
+# PyWal generated theme for btop
+theme[main_bg]="${color0}"
+theme[main_fg]="${color7}"
+theme[title]="${color7}"
+theme[hi_fg]="${color4}"
+theme[selected_bg]="${color8}"
+theme[selected_fg]="${color7}"
+theme[inactive_fg]="${color8}"
+theme[graph_text]="${color15}"
+theme[meter_bg]="${color8}"
+theme[proc_misc]="${color6}"
+theme[cpu_box]="${color5}"
+theme[mem_box]="${color2}"
+theme[net_box]="${color6}"
+theme[proc_box]="${color4}"
+theme[div_line]="${color8}"
+theme[temp_start]="${color6}"
+theme[temp_mid]="${color3}"
+theme[temp_end]="${color1}"
+theme[cpu_start]="${color6}"
+theme[cpu_mid]="${color3}"
+theme[cpu_end]="${color1}"
+theme[free_start]="${color2}"
+theme[free_mid]="${color3}"
+theme[free_end]="${color1}"
+theme[cached_start]="${color3}"
+theme[cached_mid]="${color5}"
+theme[cached_end]="${color1}"
+theme[available_start]="${color6}"
+theme[available_mid]="${color4}"
+theme[available_end]="${color5}"
+theme[used_start]="${color2}"
+theme[used_mid]="${color3}"
+theme[used_end]="${color1}"
+theme[download_start]="${color6}"
+theme[download_mid]="${color4}"
+theme[download_end]="${color5}"
+theme[upload_start]="${color2}"
+theme[upload_mid]="${color3}"
+theme[upload_end]="${color5}"
+theme[process_start]="${color4}"
+theme[process_mid]="${color5}"
+theme[process_end]="${color6}"
+EOF
+        # Copy to btop themes directory
+        mkdir -p "$HOME/.config/btop/themes"
+        cp "$output" "$HOME/.config/btop/themes/pywal.theme"
+    fi
+}
+
+# Generate yazi theme with pywal colors
+generate_yazi_theme() {
+    local colors_file="$CACHE_DIR/colors.sh"
+    local yazi_base="$HOME/.config/yazi/theme-base.toml"
+    local output="$HOME/.config/yazi/theme.toml"
+
+    if [ -f "$colors_file" ] && [ -f "$yazi_base" ]; then
+        source "$colors_file"
+
+        # Replace color placeholders with actual pywal colors
+        sed -e "s/PYWAL_COLOR0/${color0}/g" \
+            -e "s/PYWAL_COLOR1/${color1}/g" \
+            -e "s/PYWAL_COLOR2/${color2}/g" \
+            -e "s/PYWAL_COLOR3/${color3}/g" \
+            -e "s/PYWAL_COLOR4/${color4}/g" \
+            -e "s/PYWAL_COLOR5/${color5}/g" \
+            -e "s/PYWAL_COLOR6/${color6}/g" \
+            -e "s/PYWAL_COLOR7/${color7}/g" \
+            -e "s/PYWAL_COLOR8/${color8}/g" \
+            -e "s/PYWAL_COLOR9/${color9}/g" \
+            -e "s/PYWAL_COLOR10/${color10}/g" \
+            -e "s/PYWAL_COLOR11/${color11}/g" \
+            -e "s/PYWAL_COLOR12/${color12}/g" \
+            -e "s/PYWAL_COLOR13/${color13}/g" \
+            -e "s/PYWAL_COLOR14/${color14}/g" \
+            -e "s/PYWAL_COLOR15/${color15}/g" \
+            "$yazi_base" > "$output"
+    fi
+}
+
 # Function to apply wallpaper and update all themes
 apply_wallpaper() {
     local selected_wallpaper="$1"
@@ -110,6 +199,12 @@ apply_wallpaper() {
         sed -i "s/^gradient_color_2 = .*/gradient_color_2 = '${color3}'/" "$cava_config" 2>/dev/null
         pkill -USR2 cava 2>/dev/null
     fi
+
+    # Generate btop theme
+    generate_btop_theme
+
+    # Generate yazi theme
+    generate_yazi_theme
 
     # Generate complete CSS files
     generate_css

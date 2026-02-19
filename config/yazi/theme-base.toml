@@ -1,0 +1,124 @@
+# Yazi theme - PyWal colors placeholders
+# This file is used as a base template. The actual theme is generated
+# in ~/.cache/wal/yazi-theme.toml by the wallpaper change script.
+# Include the generated theme in ~/.config/yazi/theme.toml
+
+[manager]
+cwd = { fg = "PYWAL_COLOR4" }
+
+# Find
+find_keyword  = { fg = "PYWAL_COLOR3", bold = true }
+find_position = { fg = "PYWAL_COLOR5", bg = "reset", bold = true }
+
+# Marker
+marker_copied   = { fg = "PYWAL_COLOR2", bg = "PYWAL_COLOR2" }
+marker_cut      = { fg = "PYWAL_COLOR1", bg = "PYWAL_COLOR1" }
+marker_selected = { fg = "PYWAL_COLOR4", bg = "PYWAL_COLOR4" }
+marker_marked   = { fg = "PYWAL_COLOR5", bg = "PYWAL_COLOR5" }
+
+# Tab
+tab_active   = { fg = "PYWAL_COLOR0", bg = "PYWAL_COLOR4" }
+tab_inactive = { fg = "PYWAL_COLOR7", bg = "PYWAL_COLOR8" }
+tab_width    = 1
+
+# Count
+count_copied   = { fg = "PYWAL_COLOR0", bg = "PYWAL_COLOR2" }
+count_cut      = { fg = "PYWAL_COLOR0", bg = "PYWAL_COLOR1" }
+count_selected = { fg = "PYWAL_COLOR0", bg = "PYWAL_COLOR4" }
+
+# Border
+border_symbol = "│"
+border_style  = { fg = "PYWAL_COLOR8" }
+
+[status]
+separator_open  = ""
+separator_close = ""
+separator_style = { fg = "PYWAL_COLOR8", bg = "PYWAL_COLOR8" }
+
+# Mode
+mode_normal = { fg = "PYWAL_COLOR0", bg = "PYWAL_COLOR4", bold = true }
+mode_select = { fg = "PYWAL_COLOR0", bg = "PYWAL_COLOR2", bold = true }
+mode_unset  = { fg = "PYWAL_COLOR0", bg = "PYWAL_COLOR1", bold = true }
+
+# Progress
+progress_label  = { fg = "PYWAL_COLOR7", bold = true }
+progress_normal = { fg = "PYWAL_COLOR4", bg = "PYWAL_COLOR8" }
+progress_error  = { fg = "PYWAL_COLOR1", bg = "PYWAL_COLOR8" }
+
+# Permissions
+permissions_t = { fg = "PYWAL_COLOR4" }
+permissions_r = { fg = "PYWAL_COLOR3" }
+permissions_w = { fg = "PYWAL_COLOR1" }
+permissions_x = { fg = "PYWAL_COLOR2" }
+permissions_s = { fg = "PYWAL_COLOR8" }
+
+[input]
+border   = { fg = "PYWAL_COLOR4" }
+title    = {}
+value    = {}
+selected = { reversed = true }
+
+[pick]
+border   = { fg = "PYWAL_COLOR4" }
+active   = { fg = "PYWAL_COLOR5" }
+inactive = {}
+
+[confirm]
+border     = { fg = "PYWAL_COLOR4" }
+title      = { fg = "PYWAL_COLOR4" }
+content    = {}
+list       = {}
+btn_yes    = { fg = "PYWAL_COLOR2", bold = true }
+btn_no     = { fg = "PYWAL_COLOR1", bold = true }
+btn_labels = true
+
+[completion]
+border   = { fg = "PYWAL_COLOR4" }
+active   = { bg = "PYWAL_COLOR8" }
+inactive = {}
+
+[tasks]
+border  = { fg = "PYWAL_COLOR4" }
+title   = {}
+hovered = { underline = true }
+
+[which]
+cols = 3
+mask = { bg = "PYWAL_COLOR0" }
+cand = { fg = "PYWAL_COLOR6" }
+rest = { fg = "PYWAL_COLOR8" }
+desc = { fg = "PYWAL_COLOR5" }
+separator = "  "
+separator_style = { fg = "PYWAL_COLOR8" }
+
+[help]
+on      = { fg = "PYWAL_COLOR5" }
+run     = { fg = "PYWAL_COLOR6" }
+desc    = { fg = "PYWAL_COLOR7" }
+hovered = { bg = "PYWAL_COLOR8", bold = true }
+footer  = { fg = "PYWAL_COLOR7", bg = "PYWAL_COLOR0" }
+
+[notify]
+title_info  = { fg = "PYWAL_COLOR2" }
+title_warn  = { fg = "PYWAL_COLOR3" }
+title_error = { fg = "PYWAL_COLOR1" }
+
+[filetype]
+rules = [
+  # Images
+  { mime = "image/*", fg = "PYWAL_COLOR6" },
+
+  # Media
+  { mime = "{audio,video}/*", fg = "PYWAL_COLOR5" },
+
+  # Archives
+  { mime = "application/*zip", fg = "PYWAL_COLOR3" },
+  { mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}", fg = "PYWAL_COLOR3" },
+
+  # Documents
+  { mime = "application/{pdf,doc,rtf}", fg = "PYWAL_COLOR2" },
+
+  # Fallback
+  { name = "*", fg = "PYWAL_COLOR7" },
+  { name = "*/", fg = "PYWAL_COLOR4" }
+]
