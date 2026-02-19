@@ -5,6 +5,16 @@
 
 CACHE_DIR="$HOME/.cache/wal"
 
+# Wait for pywal colors to be available (max 5 seconds)
+wait_for_colors() {
+    local max_wait=50  # 50 * 0.1s = 5 seconds
+    local count=0
+    while [ ! -f "$CACHE_DIR/colors-waybar.css" ] && [ $count -lt $max_wait ]; do
+        sleep 0.1
+        count=$((count + 1))
+    done
+}
+
 # Generate complete CSS files (GTK CSS doesn't support @import)
 generate_css() {
     local colors_file="$CACHE_DIR/colors-waybar.css"
@@ -35,7 +45,8 @@ generate_css() {
     fi
 }
 
-# Generate CSS files
+# Wait for pywal colors and generate CSS files
+wait_for_colors
 generate_css
 
 # Start waybar with generated CSS if it exists, otherwise use default

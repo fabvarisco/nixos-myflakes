@@ -8,6 +8,8 @@
  home.packages = with pkgs; [
    pywal
    pywalfox-native
+   gpu-screen-recorder
+   gpu-screen-recorder-gtk
  ];
 
  # Cursor Twilight
@@ -53,6 +55,17 @@
  home.file.".config/swaync".source = ./config/swaync;
  home.file.".config/zen".source = ./config/zen;
  home.file.".local/share/zen-startpage".source = ./config/zen/startpage;
+
+ # Pywalfox native messaging host for Zen browser (uses Mozilla path like Firefox)
+ home.file.".mozilla/native-messaging-hosts/pywalfox.json".text = ''
+   {
+     "name": "pywalfox",
+     "description": "Pywalfox native messaging host",
+     "path": "${pkgs.pywalfox-native}/bin/pywalfox",
+     "type": "stdio",
+     "allowed_extensions": ["pywalfox@frewacom.org"]
+   }
+ '';
 
  home.file.".config/kde".source = ./config/kde;
 
