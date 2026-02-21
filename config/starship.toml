@@ -13,7 +13,7 @@ $time\
 
 [directory]
 style = "fg:COLOR_SECONDARY"
-format = "[ $path ]($style)"
+format = "[  $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
 
@@ -26,34 +26,34 @@ truncation_symbol = "…/"
 [git_branch]
 symbol = ""
 style = "fg:COLOR_SECONDARY"
-format = '[ $symbol $branch ]($style)'
+format = '[│ $symbol $branch ]($style)'
 
 [git_status]
 style = "fg:COLOR_SECONDARY"
-format = '[($all_status$ahead_behind )]($style)'
+format = '[($all_status$ahead_behind)]($style)'
 
 [nodejs]
 symbol = ""
 style = "fg:COLOR_SECONDARY"
-format = '[ $symbol ($version) ]($style)'
+format = '[│ $symbol ($version) ]($style)'
 
 [rust]
 symbol = ""
 style = "fg:COLOR_SECONDARY"
-format = '[ $symbol ($version) ]($style)'
+format = '[│ $symbol ($version) ]($style)'
 
 [golang]
 symbol = ""
 style = "fg:COLOR_SECONDARY"
-format = '[ $symbol ($version) ]($style)'
+format = '[│ $symbol ($version) ]($style)'
 
 [php]
 symbol = ""
 style = "fg:COLOR_SECONDARY"
-format = '[ $symbol ($version) ]($style)'
+format = '[│ $symbol ($version) ]($style)'
 
 [time]
 disabled = false
 time_format = "%R"
 style = "fg:COLOR_TEXT"
-format = '[  $time ]($style)'
+format = '[│ 󰥔 $time ]($style)'
