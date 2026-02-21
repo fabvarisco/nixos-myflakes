@@ -1,23 +1,18 @@
 format = """
 ╭[](COLOR_PRIMARY)\
-[ \uf313  ](bg:COLOR_PRIMARY fg:#090c0c)\
-[](bg:COLOR_SECONDARY fg:COLOR_PRIMARY)\
+[ \uf313  ](fg:COLOR_PRIMARY)\
 $directory\
-[](fg:COLOR_SECONDARY bg:COLOR_BG1)\
 $git_branch\
 $git_status\
-[](fg:COLOR_BG1 bg:COLOR_BG2)\
 $nodejs\
 $rust\
 $golang\
 $php\
-[](fg:COLOR_BG2 bg:COLOR_BG3)\
 $time\
-[](fg:COLOR_BG3)\
 \n╰$character"""
 
 [directory]
-style = "fg:COLOR_TEXT bg:COLOR_SECONDARY"
+style = "fg:COLOR_SECONDARY"
 format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
@@ -30,35 +25,35 @@ truncation_symbol = "…/"
 
 [git_branch]
 symbol = ""
-style = "bg:COLOR_BG1"
-format = '[[ $symbol $branch ](fg:COLOR_SECONDARY bg:COLOR_BG1)]($style)'
+style = "fg:COLOR_SECONDARY"
+format = '[ $symbol $branch ]($style)'
 
 [git_status]
-style = "bg:COLOR_BG1"
-format = '[[($all_status$ahead_behind )](fg:COLOR_SECONDARY bg:COLOR_BG1)]($style)'
+style = "fg:COLOR_SECONDARY"
+format = '[($all_status$ahead_behind )]($style)'
 
 [nodejs]
 symbol = ""
-style = "bg:COLOR_BG2"
-format = '[[ $symbol ($version) ](fg:COLOR_SECONDARY bg:COLOR_BG2)]($style)'
+style = "fg:COLOR_SECONDARY"
+format = '[ $symbol ($version) ]($style)'
 
 [rust]
 symbol = ""
-style = "bg:COLOR_BG2"
-format = '[[ $symbol ($version) ](fg:COLOR_SECONDARY bg:COLOR_BG2)]($style)'
+style = "fg:COLOR_SECONDARY"
+format = '[ $symbol ($version) ]($style)'
 
 [golang]
 symbol = ""
-style = "bg:COLOR_BG2"
-format = '[[ $symbol ($version) ](fg:COLOR_SECONDARY bg:COLOR_BG2)]($style)'
+style = "fg:COLOR_SECONDARY"
+format = '[ $symbol ($version) ]($style)'
 
 [php]
 symbol = ""
-style = "bg:COLOR_BG2"
-format = '[[ $symbol ($version) ](fg:COLOR_SECONDARY bg:COLOR_BG2)]($style)'
+style = "fg:COLOR_SECONDARY"
+format = '[ $symbol ($version) ]($style)'
 
 [time]
-disabled = true
-time_format = "%R" # Hour:Minute Format
-style = "bg:COLOR_BG3"
-format = '[[  $time ](fg:COLOR_TEXT bg:COLOR_BG3)]($style)'
+disabled = false
+time_format = "%R"
+style = "fg:COLOR_TEXT"
+format = '[  $time ]($style)'

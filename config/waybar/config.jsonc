@@ -8,7 +8,7 @@
     "height": 54,
     "modules-left": ["custom/nixos","hyprland/workspaces","hyprland/window","mpris"],
     "modules-center": ["custom/weather","clock"],
-    "modules-right": ["cpu","network","battery","wireplumber","wireplumber#microphone","custom/notification","tray"],
+    "modules-right": ["cpu","network","battery","wireplumber","wireplumber#microphone","tray"],
     "hyprland/window": {
         "format": "{}"
     },
@@ -159,7 +159,8 @@
     "custom/nixos": {
         "format": "\ue843",
         "tooltip": false,
-        "on-click": "kitty --class floating -e yazi"
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw"
     },
 
     "custom/files": {

@@ -20,5 +20,10 @@ user_pref("browser.startup.homepage_welcome_url.additional", "");
 user_pref("zen.welcome-screen.seen", true);
 user_pref("zen.startup.page", "homepage");
 
+// Disable session restore (prevents opening multiple windows from previous session)
+user_pref("browser.sessionstore.resume_session_once", false);
+user_pref("browser.sessionstore.resume_from_crash", false);
+user_pref("browser.sessionstore.max_resumed_crashes", 0);
+
 // PywalZen configuration - required for theme to work
 user_pref("uc.pywalzen.darkness", "dark");
