@@ -1,6 +1,7 @@
 { config, pkgs, inputs, ... }:
 
 {
+ imports = [ inputs.vicinae.homeManagerModules.default ];
  home.username = "fabvarisco";
  home.homeDirectory = "/home/fabvarisco";
  home.stateVersion = "25.05";
@@ -47,7 +48,6 @@
  };
 
  home.file.".config/hypr".source = ./config/hypr;
- home.file.".config/wofi".source = ./config/wofi;
  home.file.".config/waybar".source = ./config/waybar;
  home.file.".config/kitty".source = ./config/kitty;
  home.file.".config/btop".source = ./config/btop;
@@ -78,5 +78,26 @@
  # Pics
  home.file.".config/profile-pics".source = ./config/profile-pics;
  home.file.".config/profile-pics".recursive = true;
+
+ # Vicinae launcher
+ services.vicinae = {
+   enable = true;
+   systemd = {
+     enable = true;
+     autoStart = true;
+     environment = {
+       USE_LAYER_SHELL = "1";
+     };
+   };
+   settings = {
+     close_on_focus_loss = true;
+     pop_to_root_on_close = true;
+     font.normal = {
+       size = 14;
+       family = "JetBrains Mono Nerd Font";
+     };
+     launcher_window.opacity = 0.9;
+   };
+ };
 
 }

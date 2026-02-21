@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Wallpaper selector using wofi
+# Wallpaper selector using Vicinae
 # Provides a graphical interface to select wallpapers
 
 WALLPAPER_DIR="$HOME/.config/walls"
@@ -44,20 +44,8 @@ MENU+="─────────────\n"
 MENU+="🔀 Random Wallpaper\n"
 MENU+="🔄 Reload swww"
 
-# Determine wofi style file (use cached if available, fallback to config)
-WOFI_STYLE="$CACHE_DIR/wofi-style.css"
-if [ ! -f "$WOFI_STYLE" ]; then
-    WOFI_STYLE="$HOME/.config/wofi/style.css"
-fi
-
-# Show wofi menu
-SELECTED=$(echo -e "$MENU" | wofi --dmenu \
-    --prompt "Select Wallpaper" \
-    --width 400 \
-    --height 350 \
-    --cache-file /dev/null \
-    --insensitive \
-    -s "$WOFI_STYLE")
+# Show Vicinae menu
+SELECTED=$(echo -e "$MENU" | vicinae dmenu --placeholder "Select Wallpaper")
 
 # Handle selection
 if [ -z "$SELECTED" ]; then
@@ -133,16 +121,11 @@ fi
 generate_css() {
     local colors_file="$CACHE_DIR/colors-waybar.css"
     local waybar_base="$HOME/.config/waybar/style.css"
-    local wofi_base="$HOME/.config/wofi/style.css"
 
     if [ -f "$colors_file" ]; then
         if [ -f "$waybar_base" ]; then
             cat "$colors_file" > "$CACHE_DIR/waybar-style.css"
             tail -n +2 "$waybar_base" >> "$CACHE_DIR/waybar-style.css"
-        fi
-        if [ -f "$wofi_base" ]; then
-            cat "$colors_file" > "$CACHE_DIR/wofi-style.css"
-            tail -n +2 "$wofi_base" >> "$CACHE_DIR/wofi-style.css"
         fi
     fi
 }

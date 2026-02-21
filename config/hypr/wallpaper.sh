@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Wallpaper selector with pywal integration
-# Selects wallpaper via wofi, applies with swww, generates colors with pywal
+# Selects wallpaper via Vicinae, applies with swww, generates colors with pywal
 
 WALLPAPER_DIR="$HOME/.config/walls"
 CACHE_FILE="$HOME/.cache/hypr/current_wallpaper"
@@ -16,18 +16,15 @@ if [ ! -d "$WALLPAPER_DIR" ]; then
 fi
 
 # Function to generate menu with image previews
+# Vicinae supports Quick Look for absolute file paths
 menu() {
-    find "${WALLPAPER_DIR}" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.webp" \) | while read -r file; do
-        echo "img:${file}"
-    done
+    find "${WALLPAPER_DIR}" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.webp" \)
 }
 
-# Generate complete CSS files for waybar and wofi (GTK CSS doesn't support @import)
+# Generate complete CSS files for waybar (GTK CSS doesn't support @import)
 generate_css() {
     local colors_file="$CACHE_DIR/colors-waybar.css"
     local waybar_base="$HOME/.config/waybar/style.css"
-    local wofi_base="$HOME/.config/wofi/style.css"
-    local wofi_wallpaper_base="$HOME/.config/wofi/style-wallpaper.css"
 
     mkdir -p "$CACHE_DIR"
 
@@ -36,18 +33,6 @@ generate_css() {
         if [ -f "$waybar_base" ]; then
             cat "$colors_file" > "$CACHE_DIR/waybar-style.css"
             tail -n +2 "$waybar_base" >> "$CACHE_DIR/waybar-style.css"
-        fi
-
-        # Generate wofi CSS (colors + styles without @import line)
-        if [ -f "$wofi_base" ]; then
-            cat "$colors_file" > "$CACHE_DIR/wofi-style.css"
-            tail -n +2 "$wofi_base" >> "$CACHE_DIR/wofi-style.css"
-        fi
-
-        # Generate wofi wallpaper selector CSS
-        if [ -f "$wofi_wallpaper_base" ]; then
-            cat "$colors_file" > "$CACHE_DIR/wofi-style-wallpaper.css"
-            tail -n +2 "$wofi_wallpaper_base" >> "$CACHE_DIR/wofi-style-wallpaper.css"
         fi
     fi
 }
@@ -223,27 +208,16 @@ apply_wallpaper() {
 
 # Main function
 main() {
-    # Determine wofi style file (use cached if available, fallback to config)
-    local wofi_style="$CACHE_DIR/wofi-style-wallpaper.css"
-    if [ ! -f "$wofi_style" ]; then
-        wofi_style="$HOME/.config/wofi/style-wallpaper.css"
-    fi
-
-    # Show wofi menu with image previews
-    choice=$(menu | wofi \
-        -c ~/.config/wofi/wallpaper \
-        -s "$wofi_style" \
-        --show dmenu \
-        --prompt "Select Wallpaper:" \
-        -n)
+    # Show Vicinae menu (supports Quick Look for file previews)
+    choice=$(menu | vicinae dmenu --placeholder "Select Wallpaper:")
 
     # Check if user made a selection
     if [ -z "$choice" ]; then
         exit 0
     fi
 
-    # Extract wallpaper path (remove img: prefix)
-    selected_wallpaper=$(echo "$choice" | sed 's/^img://')
+    # Selected wallpaper path (Vicinae returns the path directly)
+    selected_wallpaper="$choice"
 
     # Check if file exists
     if [ ! -f "$selected_wallpaper" ]; then

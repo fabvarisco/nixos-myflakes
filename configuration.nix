@@ -169,7 +169,6 @@
     git
     wget
     waybar
-    wofi
     kitty
     hyprpaper
     hyprlock

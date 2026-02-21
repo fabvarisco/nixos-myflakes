@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Clipboard manager with image preview, pin and delete support
-# Uses cliphist + wofi
+# Uses cliphist + Vicinae
 
 PINS_FILE="$HOME/.cache/cliphist-pins"
 THUMB_DIR="$HOME/.cache/cliphist-thumbs"
@@ -106,12 +106,7 @@ show_actions() {
         options="Preview\n$options"
     fi
 
-    local action=$(echo -e "$options" | \
-        wofi --dmenu \
-             --prompt "Action" \
-             --width 200 \
-             --height 180 \
-             --cache-file /dev/null)
+    local action=$(echo -e "$options" | vicinae dmenu --placeholder "Action")
 
     case "$action" in
         "Preview")
@@ -181,13 +176,8 @@ main() {
         exit 0
     fi
 
-    # Show wofi menu
-    local selected=$(printf '%s\n' "${display_lines[@]}" | \
-        wofi --dmenu \
-             --prompt "Clipboard" \
-             --width 600 \
-             --height 400 \
-             --cache-file /dev/null)
+    # Show Vicinae menu
+    local selected=$(printf '%s\n' "${display_lines[@]}" | vicinae dmenu --placeholder "Clipboard")
 
     [[ -z "$selected" ]] && exit 0
 

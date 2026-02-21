@@ -2,7 +2,7 @@
 
 options="󰌾 Lock\n󰤄 Suspend\n󰍃 Logout\n󰜉 Reboot\n󰐥 Shutdown"
 
-selected=$(echo -e "$options" | wofi --dmenu --prompt "Power Menu" --width 200 --height 230)
+selected=$(echo -e "$options" | vicinae dmenu --placeholder "Power Menu")
 
 case "$selected" in
     "󰌾 Lock")

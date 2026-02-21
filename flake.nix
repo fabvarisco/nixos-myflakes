@@ -14,9 +14,12 @@
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+   vicinae = {
+      url = "github:vicinaehq/vicinae";
+    };
   };
 
-  outputs = {nixpkgs, home-manager, silent-sddm, ... }@inputs:{
+  outputs = {nixpkgs, home-manager, silent-sddm, vicinae, ... }@inputs:{
    nixosConfigurations.thinkpad-hypr = nixpkgs.lib.nixosSystem {
      system = "x86_64-linux";
      specialArgs = { inherit inputs; };
