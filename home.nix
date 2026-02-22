@@ -11,6 +11,7 @@
    pywalfox-native
    gpu-screen-recorder
    gpu-screen-recorder-gtk
+   steam
  ];
 
  # Cursor Twilight
@@ -93,7 +94,7 @@
      close_on_focus_loss = true;
      pop_to_root_on_close = true;
      font.normal = {
-       size = 14;
+       size = 10;
        family = "JetBrains Mono Nerd Font";
      };
      launcher_window.opacity = 0.9;
