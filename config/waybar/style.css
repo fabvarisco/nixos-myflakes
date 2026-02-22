@@ -93,7 +93,11 @@ tooltip {
 #custom-nixos {
     color: @color4;
     padding: 0px 5px;
-    font-size: 18px;
+    font-size: 22px;
+}
+
+#custom-nixos:hover {
+    color: @color7;
 }
 
 /* Window */

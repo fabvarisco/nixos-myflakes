@@ -207,6 +207,9 @@
     kdePackages.breeze
     kdePackages.breeze-icons
 
+    # GTK icons (required for MPRIS media player icons in swaync)
+    adwaita-icon-theme
+
     # Audio
     wiremix
     pwvucontrol      # GUI audio control (PipeWire)
