@@ -138,7 +138,7 @@
     },
 
     "network": {
-        "format-wifi": "\uf1eb  {essid}",
+        "format-wifi": "\uf1eb {essid}",
         "format-ethernet": "{ipaddr}/{cidr} ",
         "tooltip-format": "{essid} - {ifname} via {gwaddr} ",
         "format-linked": "{ifname} (No IP) ",
