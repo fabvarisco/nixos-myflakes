@@ -97,7 +97,7 @@
        size = 10;
        family = "JetBrains Mono Nerd Font";
      };
-     launcher_window.opacity = 0.9;
+     launcher_window.opacity = 1.0;
    };
  };
 

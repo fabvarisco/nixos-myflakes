@@ -1,6 +1,6 @@
 {
     "$schema": "/etc/xdg/swaync/configSchema.json",
-    "positionX": "right",
+    "positionX": "left",
     "positionY": "top",
     "layer": "overlay",
     "control-center-layer": "top",
@@ -9,8 +9,8 @@
     "control-center-width": 350,
     "control-center-margin-top": 8,
     "control-center-margin-bottom": 8,
-    "control-center-margin-right": 8,
-    "control-center-margin-left": 0,
+    "control-center-margin-right": 0,
+    "control-center-margin-left": 8,
     "notification-2fa-action": true,
     "notification-inline-replies": true,
     "notification-window-width": 350,
@@ -68,11 +68,11 @@
                     "type": "toggle"
                 },
                 {
-                    "label": "",
+                    "label": "",
                     "command": "kitty --class floating -e impala"
                 },
                 {
-                    "label": "",
+                    "label": "󰂯",
                     "command": "blueman-manager"
                 },
                 {
@@ -85,23 +85,23 @@
                     "command": "~/.config/hypr/wallpaper.sh"
                 },
                 {
-                    "label": "",
+                    "label": "",
                     "command": "kitty --class floating -e yazi"
                 },
                 {
-                    "label": "",
+                    "label": "",
                     "command": "kitty --class floating -e btop"
                 },
                 {
-                    "label": "",
+                    "label": "",
                     "command": "hyprlock"
                 },
                 {
-                    "label": "",
+                    "label": "",
                     "command": "reboot"
                 },
                 {
-                    "label": "",
+                    "label": "",
                     "command": "shutdown now"
                 }
             ]

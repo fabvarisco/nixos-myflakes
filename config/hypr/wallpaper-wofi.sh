@@ -14,7 +14,7 @@ if [ ! -d "$WALLPAPER_DIR" ]; then
     exit 1
 fi
 
-# Build list of wallpapers with friendly names
+# Build list of wallpapers (full paths for quicklook support)
 WALLPAPERS=($(find "$WALLPAPER_DIR" \( -type f -o -type l \) \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) | sort))
 
 if [ ${#WALLPAPERS[@]} -eq 0 ]; then
@@ -22,73 +22,25 @@ if [ ${#WALLPAPERS[@]} -eq 0 ]; then
     exit 1
 fi
 
-# Get current wallpaper for marking
-CURRENT_WALL=""
-if [ -f "$CACHE_FILE" ]; then
-    CURRENT_WALL=$(cat "$CACHE_FILE")
-fi
-
-# Create menu entries
+# Create menu with full paths (enables quicklook preview)
 MENU=""
 for wall in "${WALLPAPERS[@]}"; do
-    name=$(basename "$wall")
-    if [ "$wall" = "$CURRENT_WALL" ]; then
-        MENU+="● $name\n"
-    else
-        MENU+="  $name\n"
-    fi
+    MENU+="$wall\n"
 done
 
-# Add special options
-MENU+="─────────────\n"
-MENU+="🔀 Random Wallpaper\n"
-MENU+="🔄 Reload swww"
-
-# Show Vicinae menu
-SELECTED=$(echo -e "$MENU" | vicinae dmenu --placeholder "Select Wallpaper")
+# Show Vicinae menu with quicklook for image preview
+SELECTED=$(echo -e "$MENU" | vicinae dmenu --placeholder "Select Wallpaper:" --quicklook)
 
 # Handle selection
 if [ -z "$SELECTED" ]; then
     exit 0
 fi
 
-# Check for special options
-if [[ "$SELECTED" == *"Random Wallpaper"* ]]; then
-    ~/.config/hypr/change-wallpaper.sh
-    exit 0
-fi
+# Vicinae returns the full path directly
+SELECTED_WALL="$SELECTED"
 
-if [[ "$SELECTED" == *"Reload swww"* ]]; then
-    killall swww-daemon 2>/dev/null
-    swww-daemon &
-    sleep 1
-    if [ -f "$CACHE_FILE" ]; then
-        LAST_WALL=$(cat "$CACHE_FILE")
-        swww img "$LAST_WALL" --transition-type fade --transition-duration 1
-    fi
-    notify-send "swww" "Reloaded successfully"
-    exit 0
-fi
-
-# Skip separator line
-if [[ "$SELECTED" == "─────────────" ]]; then
-    exit 0
-fi
-
-# Extract wallpaper name (remove the marker prefix)
-WALL_NAME=$(echo "$SELECTED" | sed 's/^[●  ] //')
-
-# Find the full path
-SELECTED_WALL=""
-for wall in "${WALLPAPERS[@]}"; do
-    if [ "$(basename "$wall")" = "$WALL_NAME" ]; then
-        SELECTED_WALL="$wall"
-        break
-    fi
-done
-
-if [ -z "$SELECTED_WALL" ]; then
-    notify-send "Wallpaper Error" "Could not find wallpaper: $WALL_NAME"
+if [ ! -f "$SELECTED_WALL" ]; then
+    notify-send "Wallpaper Error" "File not found: $SELECTED_WALL"
     exit 1
 fi
 
@@ -230,4 +182,4 @@ waybar -s "$CACHE_DIR/waybar-style.css" &
 echo "$SELECTED_WALL" > "$CACHE_FILE"
 source "$CACHE_DIR/colors.sh" && cp -r "$wallpaper" ~/wallpapers/pywallpaper.jpg 2>/dev/null
 
-notify-send "Wallpaper Changed" "$WALL_NAME"
+notify-send "Wallpaper Changed" "$(basename "$SELECTED_WALL")"

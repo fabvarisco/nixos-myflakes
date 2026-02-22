@@ -3,8 +3,8 @@
 @define-color mpris-album-art-overlay alpha(@background, 0.55);
 @define-color mpris-button-hover alpha(@background, 0.50);
 @define-color text @foreground;
-@define-color bg alpha(@background, 0.5);
-@define-color bg-hover alpha(@background, 0.8);
+@define-color bg @background;
+@define-color bg-hover @background;
 @define-color mycolor @color9;
 @define-color border-color alpha(@mycolor, 0.15);
 
@@ -142,7 +142,7 @@
     background: @bg;
     color: @text;
     border-radius: 10px;
-    border: none;
+    border: 2px solid @mycolor;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.65);
 }
 

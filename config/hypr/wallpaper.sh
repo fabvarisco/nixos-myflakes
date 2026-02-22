@@ -209,7 +209,7 @@ apply_wallpaper() {
 # Main function
 main() {
     # Show Vicinae menu (supports Quick Look for file previews)
-    choice=$(menu | vicinae dmenu --placeholder "Select Wallpaper:")
+    choice=$(menu | vicinae dmenu --placeholder "Select Wallpaper:" --quicklook)
 
     # Check if user made a selection
     if [ -z "$choice" ]; then
