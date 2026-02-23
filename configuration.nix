@@ -132,6 +132,14 @@
     };
   };
 
+  # Fingerprint reader
+  services.fprintd.enable = true;
+
+  # PAM - fingerprint authentication
+  security.pam.services.sddm.fprintAuth = true;
+  security.pam.services.sudo.fprintAuth = true;
+  security.pam.services.hyprlock.fprintAuth = true;
+
   # Enable sound with PipeWire
   security.rtkit.enable = true;
   services.pipewire = {
@@ -218,6 +226,9 @@
 
     # Bluetooth
     blueman          # Bluetooth manager GUI
+
+    # Fingerprint
+    fprintd          # CLI tools (fprintd-enroll, fprintd-verify)
     
     # Brightness control
     brightnessctl    # CLI brightness control

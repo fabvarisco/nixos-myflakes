@@ -29,7 +29,7 @@ for wall in "${WALLPAPERS[@]}"; do
 done
 
 # Show Vicinae menu with quicklook for image preview
-SELECTED=$(echo -e "$MENU" | vicinae dmenu --placeholder "Select Wallpaper:" --quicklook)
+SELECTED=$(echo -e "$MENU" | vicinae dmenu --placeholder "Select Wallpaper:")
 
 # Handle selection
 if [ -z "$SELECTED" ]; then
