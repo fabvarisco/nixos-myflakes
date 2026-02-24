@@ -17,6 +17,10 @@
    vicinae = {
       url = "github:vicinaehq/vicinae";
     };
+   hyprswitch = {
+      url = "github:H3rmt/hyprswitch";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {nixpkgs, home-manager, silent-sddm, vicinae, ... }@inputs:{

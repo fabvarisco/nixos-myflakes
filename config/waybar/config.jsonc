@@ -138,11 +138,11 @@
     },
 
     "network": {
-        "format-wifi": " \uf1eb  {essid}",
-        "format-ethernet": "{ipaddr}/{cidr} ",
-        "tooltip-format": "{essid} - {ifname} via {gwaddr} ",
+        "format-wifi": "󰤨  {essid}",
+        "format-ethernet": "󰈀  Ethernet",
+        "tooltip-format": "{ifname} ({ipaddr}/{cidr}) via {gwaddr}",
         "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "Disconnected ⚠",
+        "format-disconnected": "󰤭  Disconnected",
         "on-click": "kitty --class floating -e impala"
     },
 

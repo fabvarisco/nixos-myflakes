@@ -44,7 +44,7 @@
         "mpris": {
             "image-size": 80,
             "image-radius": 0,
-            "all-players": false
+            "blacklist": ["playerctld"]
         },
         "volume": {
             "label": "󰕾 ",
@@ -59,31 +59,12 @@
         "buttons-grid": {
             "actions": [
                 {
-                    "label": "󰝟",
-                    "command": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
-                    "type": "toggle"
-                },
-                {
-                    "label": "󰍭",
-                    "command": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
-                    "type": "toggle"
-                },
-                {
                     "label": "",
                     "command": "kitty --class floating -e impala"
                 },
                 {
                     "label": "󰂯",
                     "command": "blueman-manager"
-                },
-                {
-                    "label": "󰤄",
-                    "command": "swaync-client -d",
-                    "type": "toggle"
-                },
-                {
-                    "label": "󰸉",
-                    "command": "~/.config/hypr/wallpaper.sh"
                 },
                 {
                     "label": "",

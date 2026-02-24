@@ -12,6 +12,8 @@
    gpu-screen-recorder
    gpu-screen-recorder-gtk
    steam
+ ] ++ [
+   inputs.hyprswitch.packages.${pkgs.system}.default
  ];
 
  # Cursor Twilight
