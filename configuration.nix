@@ -267,8 +267,9 @@
     nerd-fonts.jetbrains-mono
   ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];   
-  
+  nix.settings = {
+      experimental-features = [ "nix-command" "flakes" ];   
+     
    substituters = [
     "https://cache.nixos.org"
     "https://hyprland.cachix.org"
@@ -282,15 +283,7 @@
   ];
 
 
-  # Limitar jobs paralelos para evitar OOM
-  nix.settings.max-jobs = 2;
-  nix.settings.cores = 2;
-  
-  # Habilitar swap se não tiver
-  swapDevices = [ 
-    { device = "/swapfile"; size = 8192; } # 8GB swap
-  ];
-
+  };
 
   system.stateVersion = "25.05";
 
