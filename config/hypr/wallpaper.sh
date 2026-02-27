@@ -18,7 +18,7 @@ fi
 # Function to generate menu with image previews
 # Vicinae supports Quick Look for absolute file paths
 menu() {
-    find "${WALLPAPER_DIR}" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.webp" \)
+    find -L "${WALLPAPER_DIR}" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.webp" \)
 }
 
 # Generate complete CSS files for waybar (GTK CSS doesn't support @import)

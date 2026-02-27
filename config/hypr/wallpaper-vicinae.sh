@@ -15,7 +15,7 @@ if [ ! -d "$WALLPAPER_DIR" ]; then
 fi
 
 # Build list of wallpapers (full paths for quicklook support)
-WALLPAPERS=($(find "$WALLPAPER_DIR" \( -type f -o -type l \) \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) | sort))
+WALLPAPERS=($(find -L "$WALLPAPER_DIR" \( -type f -o -type l \) \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) | sort))
 
 if [ ${#WALLPAPERS[@]} -eq 0 ]; then
     notify-send "Wallpaper Error" "No wallpapers found in $WALLPAPER_DIR"
