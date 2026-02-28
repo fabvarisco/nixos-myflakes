@@ -10,6 +10,10 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # ThinkPad touchpad - enable Synaptics RMI4/Intertouch mode for proper touchpad movement
+  boot.kernelParams = [ "psmouse.synaptics_intertouch=1" ];
+  boot.kernelModules = [ "rmi_smbus" ];
+
   networking.hostName = "nixos"; # Define your hostname.
 
   # Enable networking with iwd
