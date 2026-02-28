@@ -64,6 +64,9 @@
   home.file.".config/walls".source = ./config/walls;
   home.file.".config/profile-pics".source = ./config/profile-pics;
 
+  # Pywal templates
+  home.file.".config/wal/templates".source = ./config/wal/templates;
+
   # Pywalfox native messaging host
   home.file.".mozilla/native-messaging-hosts/pywalfox.json".text = ''
     {

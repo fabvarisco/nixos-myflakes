@@ -42,6 +42,17 @@
   # Configure console keymap
   console.keyMap = "br-abnt2";
 
+  # Touchpad support (libinput)
+  services.libinput = {
+    enable = true;
+    touchpad = {
+      tapping = true;
+      naturalScrolling = false;
+      middleEmulation = true;
+      disableWhileTyping = true;
+    };
+  };
+
   users.users.fabvarisco = {
     isNormalUser = true;
     description = "Fabricio Varisco Oliveira";
