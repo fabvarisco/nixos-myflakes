@@ -204,7 +204,7 @@
     gh    
     nodejs_24
     claude-code
-    
+    pcsx2
     # Browsers
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     
@@ -253,6 +253,7 @@
     avizo            # Visual feedback for volume/brightness
      
     #--- Utilities ---
+    gum              # TUI toolkit (menus, sliders, etc)
     yazi             # Terminal file manager
     unzip            # Extract zip files
     zip              # Create zip files

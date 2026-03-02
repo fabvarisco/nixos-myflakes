@@ -1,31 +1,39 @@
 #!/usr/bin/env bash
 
-# Get current sensitivity from hyprctl
+# Get current sensitivity
 current=$(hyprctl getoption input:sensitivity -j | jq -r '.float')
+current_display=$(printf "%.1f" "$current")
 
-# Convert from -1.0 to 1.0 range to 0-200 for zenity (with 100 being 0)
-current_scaled=$(echo "scale=0; ($current + 1) * 100" | bc)
+echo ""
+gum style --foreground 212 --bold "Mouse Sensitivity"
+echo ""
+echo "Current: $current_display"
+echo ""
 
-# Show zenity slider
-new_value=$(zenity --scale \
-    --title="Mouse Sensitivity" \
-    --text="Adjust mouse sensitivity:" \
-    --min-value=0 \
-    --max-value=200 \
-    --value="$current_scaled" \
-    --step=5 \
-    2>/dev/null)
+# Options from -1.0 to 1.0
+options="-1.0
+-0.8
+-0.6
+-0.4
+-0.2
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0"
+
+# Show selection menu
+selected=$(echo "$options" | gum choose --header "Select sensitivity:" --cursor.foreground 212)
 
 # Check if user cancelled
-if [ -z "$new_value" ]; then
+if [ -z "$selected" ]; then
     exit 0
 fi
 
-# Convert back to -1.0 to 1.0 range
-sensitivity=$(echo "scale=2; ($new_value / 100) - 1" | bc)
-
 # Apply sensitivity
-hyprctl keyword input:sensitivity "$sensitivity"
+hyprctl keyword input:sensitivity "$selected"
 
-# Show notification
-notify-send "Mouse Sensitivity" "Set to $sensitivity" -t 2000
+echo ""
+gum style --foreground 120 "Applied: $selected"
+sleep 1
