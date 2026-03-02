@@ -36,7 +36,7 @@
 
     vicinae = {
       url = "github:vicinaehq/vicinae";
-      inputs.nixpkgs.follows = "nixpkgs"; # evita segundo nixpkgs
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     hyprswitch = {

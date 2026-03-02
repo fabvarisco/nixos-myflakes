@@ -219,8 +219,7 @@
     
     # Network
     impala           # TUI WiFi manager
-    nwg-look
-    nwg-displays    # Monitor/display configuration GUI
+    hyprmon         # Monitor/display configuration GUI
     nwg-dock-hyprland  # Dock for Hyprland
 
     # Notifications
