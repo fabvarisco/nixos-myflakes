@@ -10,7 +10,8 @@
     "modules-center": ["custom/weather","clock"],
     "modules-right": ["cpu","network","battery","wireplumber","wireplumber#microphone","tray"],
     "hyprland/window": {
-        "format": "{}"
+        "format": "{}",
+        "max-length": 40
     },
 
     "mpris": {
