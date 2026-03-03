@@ -43,13 +43,13 @@
   };
   services.power-profiles-daemon.enable = false;
 
-  # Leitor de impressão digital
+  # Fingerprint reader
   services.fprintd.enable = true;
   security.pam.services.sddm.fprintAuth = true;
   security.pam.services.sudo.fprintAuth = true;
   security.pam.services.hyprlock.fprintAuth = true;
 
-  # SDDM: configura monitor externo + tela interna
+  # SDDM
   services.xserver.displayManager.setupCommands = ''
     EXTERNAL=$(${pkgs.xorg.xrandr}/bin/xrandr | ${pkgs.gnugrep}/bin/grep " connected" | ${pkgs.gnugrep}/bin/grep -v "eDP" | head -1 | cut -d' ' -f1)
     if [ -n "$EXTERNAL" ]; then

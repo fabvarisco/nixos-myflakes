@@ -8,10 +8,10 @@
 
   networking.hostName = "beelink";
 
-  # AMD Radeon 780M (GPU integrada do Ryzen 8745HS)
+  # AMD Radeon 780M (GPU Ryzen 8745HS)
   hardware.graphics.enable = true;
 
-  # SDDM: desktop sem tela interna, detecta monitor automaticamente
+  # SDDM
   services.xserver.displayManager.setupCommands = ''
     PRIMARY=$(${pkgs.xorg.xrandr}/bin/xrandr | ${pkgs.gnugrep}/bin/grep " connected" | head -1 | cut -d' ' -f1)
     if [ -n "$PRIMARY" ]; then

@@ -1,13 +1,4 @@
-# PLACEHOLDER - Este arquivo precisa ser gerado diretamente no Beelink SER8.
-#
-# Passos:
-#   1. Boot pelo ISO do NixOS no Beelink
-#   2. Execute: nixos-generate-config --show-hardware-config
-#   3. Substitua este arquivo pelo output gerado
-#
-# Alternativamente, após instalar o NixOS:
-#   sudo nixos-generate-config --root /mnt
-#   cat /mnt/etc/nixos/hardware-configuration.nix
+# PLACEHOLDER
 { config, lib, pkgs, modulesPath, ... }:
 
 {
@@ -21,7 +12,7 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  # SUBSTITUIR pelos UUIDs reais (obter com: lsblk -f)
+  # UPDATE WITH REAL UUIDS
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/SUBSTITUIR-UUID-ROOT";
       fsType = "ext4";
