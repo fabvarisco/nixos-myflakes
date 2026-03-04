@@ -9,5 +9,7 @@
     nodejs_24
     claude-code
     fastfetch
+    kitty
+    starship
   ];
 }

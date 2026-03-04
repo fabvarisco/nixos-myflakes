@@ -104,7 +104,6 @@ tooltip {
 #window {
     color: @color7;
     padding: 0px 5px;
-    max-width: 300px;
 }
 
 /* MPRIS */

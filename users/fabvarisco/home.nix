@@ -12,6 +12,15 @@
   home.stateVersion = "25.05";
 
   home.packages = with pkgs; [
+    # Hyprland
+    waybar
+    hyprlock
+    wlogout
+    hypridle
+    swww
+    hyprpaper
+    nwg-dock-hyprland
+    
     # Screen recording
     gpu-screen-recorder
     gpu-screen-recorder-gtk
@@ -37,6 +46,9 @@
 
     # Bluetooth
     blueman
+
+    # Network
+    impala
 
     # Brilho + OSD
     brightnessctl
