@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, silent-sddm, vicinae, ... } @inputs:
+{ self, nixpkgs, home-manager, silent-sddm, vicinae, ... } @inputs:
 
 let
   homeManagerModules = [
