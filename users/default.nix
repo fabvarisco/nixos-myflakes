@@ -1,0 +1,7 @@
+{ ... }:
+
+{
+  imports = [
+    ./fabvarisco/system.nix
+  ];
+}

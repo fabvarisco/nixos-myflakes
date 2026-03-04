@@ -9,6 +9,7 @@
     ./calendar.nix
     ./utils.nix
     ./fonts.nix
+    ../users/default.nix
   ];
 
   # Bootloader
@@ -40,14 +41,6 @@
 
   # libinput
   services.libinput.enable = true;
-
-  # user
-  users.users.fabvarisco = {
-    isNormalUser = true;
-    description = "Fabricio Varisco Oliveira";
-    extraGroups = [ "wheel" "bluetooth" "audio" ];
-    packages = with pkgs; [ tree ];
-  };
 
   # Bluetooth
   hardware.bluetooth.enable = true;
@@ -90,7 +83,7 @@
     jack.enable = true;
   };
 
-  # Tema GTK escuro
+  # GTK Dark
   nixpkgs.config.allowUnfree = true;
   environment.sessionVariables.GTK_THEME = "Adwaita:dark";
 
@@ -107,50 +100,6 @@
   };
 
   programs.firefox.enable = true;
-
-  # Packages shared between hosts
-  environment.systemPackages = with pkgs; [
-    waybar
-    kitty
-    hyprpaper
-    hyprlock
-    hypridle
-    starship
-    nautilus
-    swww
-    wlogout
-
-    # Network
-    impala
-    hyprmon
-    nwg-dock-hyprland
-
-    # Notifications
-    swaynotificationcenter
-    libnotify
-
-    # Qt/GTK theming
-    kdePackages.breeze
-    kdePackages.breeze-icons
-    adwaita-icon-theme
-
-    # Áudio
-    wiremix
-    pwvucontrol
-    pamixer
-    playerctl
-
-    # Bluetooth
-    blueman
-
-    # Brilho + OSD
-    brightnessctl
-    avizo
-
-    # Social / Browser
-    discord
-    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
-  ];
 
   # Nix settings
   nix.settings = {
