@@ -65,8 +65,11 @@
     enable = true;
     theme = "rei";
     backgrounds = {
-      "LoginScreen" = ../config/sddm-theme/backgrounds/red_wallpaper.mp4;
-      "LockScreen" = ../config/sddm-theme/backgrounds/red_wallpaper.mp4;
+      "red_wallpaper" = ../config/sddm-theme/backgrounds/red_wallpaper.mp4;
+    };
+    settings = {
+      "LoginScreen".background = "red_wallpaper.mp4";
+      "LockScreen".background = "red_wallpaper.mp4";
     };
     profileIcons = {
       "fabvarisco" = ../config/profile-pics/miku.jpg;
