@@ -34,6 +34,9 @@ fi
 # Apply sensitivity
 hyprctl keyword input:sensitivity "$selected"
 
+# Save for persistence across reboots
+echo "$selected" > ~/.config/hypr/.mouse-sensitivity
+
 echo ""
-gum style --foreground 120 "Applied: $selected"
+gum style --foreground 120 "Applied: $selected (saved)"
 sleep 1
