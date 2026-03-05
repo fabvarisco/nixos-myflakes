@@ -39,8 +39,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprswitch = {
-      url = "github:H3rmt/hyprswitch";
+    snappy-switcher = {
+      url = "github:OpalAayan/snappy-switcher";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

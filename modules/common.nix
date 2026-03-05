@@ -85,7 +85,11 @@
 
   # GTK Dark
   nixpkgs.config.allowUnfree = true;
-  environment.sessionVariables.GTK_THEME = "Adwaita:dark";
+  environment.sessionVariables = {
+    GTK_THEME = "Adwaita:dark";
+    # Electron apps (Discord, VSCode, etc) - native Wayland
+    NIXOS_OZONE_WL = "1";
+  };
 
   programs.dconf = {
     enable = true;

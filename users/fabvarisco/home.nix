@@ -19,6 +19,7 @@
     hypridle
     swww
     hyprpaper
+    hyprmon
     nwg-dock-hyprland
     
     # Screen recording
@@ -57,7 +58,7 @@
     # Social / Browser
     discord
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
-    inputs.hyprswitch.packages.${pkgs.system}.default
+    inputs.snappy-switcher.packages.${pkgs.system}.default
   ];
 
   programs.bash = {
