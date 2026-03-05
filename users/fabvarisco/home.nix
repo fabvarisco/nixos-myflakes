@@ -23,8 +23,7 @@
     nwg-dock-hyprland
     
     # Screen recording
-    gpu-screen-recorder
-    gpu-screen-recorder-gtk
+    simplescreenrecorder
 
     # Pywal
     pywal

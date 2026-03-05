@@ -59,6 +59,7 @@
 
   environment.systemPackages = with pkgs; [
     fprintd
+    cheese  # Webcam app
   ];
 
   system.stateVersion = "25.05";
