@@ -30,13 +30,13 @@
 }
 
 .notification {
-    background: alpha(@mycolor, 0.5);
+    background: alpha(@mycolor, 0.85);
 }
 
 .control-center .notification-row .notification-background .notification {
     margin-top: 0.150rem;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
-    background: alpha(@mycolor, 0.3);
+    background: alpha(@mycolor, 0.75);
 }
 
 .floating-notifications .notification {

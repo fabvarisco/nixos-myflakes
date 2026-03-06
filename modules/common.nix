@@ -72,7 +72,7 @@
       "LockScreen".background = "red_wallpaper.mp4";
     };
     profileIcons = {
-      "fabvarisco" = ../config/profile-pics/miku.jpg;
+      "fabvarisco" = ../config/profile-pics/profile_1.jpg;
     };
   };
 
