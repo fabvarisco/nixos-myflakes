@@ -11,5 +11,6 @@
     fastfetch
     kitty
     starship
+    godotPackages_4_5.godot
   ];
 }

@@ -55,7 +55,7 @@
     avizo
 
     # Social / Browser
-    discord
+    vesktop
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.snappy-switcher.packages.${pkgs.system}.default
   ];
