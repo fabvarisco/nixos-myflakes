@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Force C locale for consistent decimal formatting
+export LC_NUMERIC=C
+
 # Get current sensitivity
 current=$(hyprctl getoption input:sensitivity -j | jq -r '.float')
 current_display=$(printf "%.1f" "$current")
@@ -34,8 +37,9 @@ fi
 # Apply sensitivity
 hyprctl keyword input:sensitivity "$selected"
 
-# Save for persistence across reboots
-echo "$selected" > ~/.config/hypr/.mouse-sensitivity
+# Save for persistence across reboots (using writable location)
+mkdir -p ~/.local/state/hypr
+echo "$selected" > ~/.local/state/hypr/mouse-sensitivity
 
 echo ""
 gum style --foreground 120 "Applied: $selected (saved)"

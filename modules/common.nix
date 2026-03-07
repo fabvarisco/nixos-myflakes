@@ -59,6 +59,12 @@
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = lib.mkForce false;
+    settings = {
+      X11 = {
+        # DPI 144 = escala 1.5x (96 * 1.5)
+        ServerArguments = "-dpi 144";
+      };
+    };
   };
 
   programs.silentSDDM = {
@@ -68,8 +74,39 @@
       "red_wallpaper" = ../config/sddm-theme/backgrounds/red_wallpaper.mp4;
     };
     settings = {
+      # Escala 1.5x para 4K
+      "General".scale = 1.5;
+
+      # Background
       "LoginScreen".background = "red_wallpaper.mp4";
       "LockScreen".background = "red_wallpaper.mp4";
+
+      # Centralizar login
+      "LoginScreen.LoginArea".position = "center";
+
+      # Avatar circular
+      "LoginScreen.LoginArea.Avatar".shape = "circle";
+      "LoginScreen.LoginArea.Avatar".border-radius = 60;
+
+      # Posicionar menu à direita
+      "LoginScreen.MenuArea.Buttons".margin-right = 50;
+      "LoginScreen.MenuArea.Buttons".margin-bottom = 50;
+      "LoginScreen.MenuArea.Buttons".margin-left = 0;
+
+      "LoginScreen.MenuArea.Session".position = "bottom-right";
+      "LoginScreen.MenuArea.Layout".position = "bottom-right";
+      "LoginScreen.MenuArea.Keyboard".position = "bottom-right";
+      "LoginScreen.MenuArea.Power".position = "bottom-right";
+
+      # Logo NixOS na parte inferior (LockScreen)
+      "LockScreen.Message".display = true;
+      "LockScreen.Message".position = "bottom-center";
+      "LockScreen.Message".text = "󰀻 NixOS";
+      "LockScreen.Message".font-family = "JetBrainsMono Nerd Font";
+      "LockScreen.Message".font-size = 24;
+      "LockScreen.Message".font-weight = 600;
+      "LockScreen.Message".color = "#F5E6D3";
+      "LockScreen.Message".display-icon = false;
     };
     profileIcons = {
       "fabvarisco" = ../config/profile-pics/profile_1.jpg;
