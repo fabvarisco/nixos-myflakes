@@ -5,6 +5,7 @@ import SddmComponents 2.0
 
 Rectangle {
     id: root
+    anchors.fill: parent
     width: Screen.width
     height: Screen.height
 
@@ -48,131 +49,132 @@ Rectangle {
         Rectangle {
             id: loginBox
             width: 380 * scaleFactor
-            height: 340 * scaleFactor
+            height: loginContent.height + 60 * scaleFactor
             radius: 16 * scaleFactor
             color: backgroundColor
             opacity: 0.85
-            anchors.centerIn: parent
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
 
             // Subtle border
             border.color: Qt.darker(accentColor, 1.3)
             border.width: 2 * scaleFactor
-        }
 
-        // Content column inside the container
-        Column {
-            id: loginContent
-            anchors.centerIn: parent
-            spacing: 20 * scaleFactor
+            // Content column inside the container
+            Column {
+                id: loginContent
+                anchors.centerIn: parent
+                spacing: 20 * scaleFactor
 
-            // User avatar
-            Rectangle {
-                id: avatarContainer
-                width: 98 * scaleFactor
-                height: 98 * scaleFactor
-                radius: 60 * scaleFactor
-                color: backgroundColor
-                border.color: accentColor
-                border.width: 3 * scaleFactor
-                anchors.horizontalCenter: parent.horizontalCenter
+                // User avatar
+                Rectangle {
+                    id: avatarContainer
+                    width: 98 * scaleFactor
+                    height: 98 * scaleFactor
+                    radius: 60 * scaleFactor
+                    color: backgroundColor
+                    border.color: accentColor
+                    border.width: 3 * scaleFactor
+                    anchors.horizontalCenter: parent.horizontalCenter
 
-                Image {
-                    id: userAvatar
-                    anchors.fill: parent
-                    anchors.margins: 3 * scaleFactor
-                    source: config.Avatar || ""
-                    fillMode: Image.PreserveAspectCrop
-                    layer.enabled: true
-                    layer.effect: OpacityMask {
-                        maskSource: Rectangle {
-                            width: userAvatar.width
-                            height: userAvatar.height
-                            radius: width / 2
+                    Image {
+                        id: userAvatar
+                        anchors.fill: parent
+                        anchors.margins: 3 * scaleFactor
+                        source: config.Avatar || ""
+                        fillMode: Image.PreserveAspectCrop
+                        layer.enabled: true
+                        layer.effect: OpacityMask {
+                            maskSource: Rectangle {
+                                width: userAvatar.width
+                                height: userAvatar.height
+                                radius: width / 2
+                            }
                         }
                     }
                 }
-            }
 
-            // Username label
-            Text {
-                id: usernameLabel
-                text: userModel.lastUser || "User"
-                color: foregroundColor
-                font.pixelSize: 24 * scaleFactor
-                font.family: "JetBrainsMono Nerd Font"
-                font.bold: true
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-
-            // Login input container
-            Rectangle {
-                id: loginContainer
-                width: 320 * scaleFactor
-                height: 50 * scaleFactor
-                radius: 8 * scaleFactor
-                color: Qt.darker(backgroundColor, 1.2)
-                border.color: passwordField.focus ? accentColor : Qt.darker(accentColor, 1.5)
-                border.width: 2 * scaleFactor
-                anchors.horizontalCenter: parent.horizontalCenter
-
-                TextField {
-                    id: passwordField
-                    anchors.fill: parent
-                    anchors.margins: 5 * scaleFactor
-                    placeholderText: "Password..."
-                    placeholderTextColor: Qt.darker(foregroundColor, 1.5)
-                    echoMode: TextInput.Password
-                    color: foregroundColor
-                    font.pixelSize: 14 * scaleFactor
-                    font.family: "JetBrainsMono Nerd Font"
-                    background: Rectangle {
-                        color: "transparent"
-                    }
-
-                    Keys.onReturnPressed: {
-                        sddm.login(userModel.lastUser, passwordField.text, sessionModel.lastIndex)
-                    }
-                }
-            }
-
-            // Login button
-            Rectangle {
-                id: loginButton
-                width: 100 * scaleFactor
-                height: 40 * scaleFactor
-                radius: 8 * scaleFactor
-                color: mouseArea.containsMouse ? Qt.lighter(accentColor, 1.1) : accentColor
-                anchors.horizontalCenter: parent.horizontalCenter
-
+                // Username label
                 Text {
-                    anchors.centerIn: parent
-                    text: "Login"
-                    color: backgroundColor
-                    font.pixelSize: 14 * scaleFactor
+                    id: usernameLabel
+                    text: userModel.lastUser || "User"
+                    color: foregroundColor
+                    font.pixelSize: 24 * scaleFactor
                     font.family: "JetBrainsMono Nerd Font"
                     font.bold: true
+                    anchors.horizontalCenter: parent.horizontalCenter
                 }
 
-                MouseArea {
-                    id: mouseArea
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: {
-                        sddm.login(userModel.lastUser, passwordField.text, sessionModel.lastIndex)
+                // Login input container
+                Rectangle {
+                    id: loginContainer
+                    width: 320 * scaleFactor
+                    height: 50 * scaleFactor
+                    radius: 8 * scaleFactor
+                    color: Qt.darker(backgroundColor, 1.2)
+                    border.color: passwordField.focus ? accentColor : Qt.darker(accentColor, 1.5)
+                    border.width: 2 * scaleFactor
+                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    TextField {
+                        id: passwordField
+                        anchors.fill: parent
+                        anchors.margins: 5 * scaleFactor
+                        placeholderText: "Password..."
+                        placeholderTextColor: Qt.darker(foregroundColor, 1.5)
+                        echoMode: TextInput.Password
+                        color: foregroundColor
+                        font.pixelSize: 14 * scaleFactor
+                        font.family: "JetBrainsMono Nerd Font"
+                        background: Rectangle {
+                            color: "transparent"
+                        }
+
+                        Keys.onReturnPressed: {
+                            sddm.login(userModel.lastUser, passwordField.text, sessionModel.lastIndex)
+                        }
                     }
                 }
-            }
 
-            // Error message
-            Text {
-                id: errorMessage
-                text: ""
-                color: errorColor
-                font.pixelSize: 12 * scaleFactor
-                font.family: "JetBrainsMono Nerd Font"
-                anchors.horizontalCenter: parent.horizontalCenter
-                visible: text !== ""
+                // Login button
+                Rectangle {
+                    id: loginButton
+                    width: 100 * scaleFactor
+                    height: 40 * scaleFactor
+                    radius: 8 * scaleFactor
+                    color: mouseArea.containsMouse ? Qt.lighter(accentColor, 1.1) : accentColor
+                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: "Login"
+                        color: backgroundColor
+                        font.pixelSize: 14 * scaleFactor
+                        font.family: "JetBrainsMono Nerd Font"
+                        font.bold: true
+                    }
+
+                    MouseArea {
+                        id: mouseArea
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: {
+                            sddm.login(userModel.lastUser, passwordField.text, sessionModel.lastIndex)
+                        }
+                    }
+                }
+
+                // Error message
+                Text {
+                    id: errorMessage
+                    text: ""
+                    color: errorColor
+                    font.pixelSize: 12 * scaleFactor
+                    font.family: "JetBrainsMono Nerd Font"
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    visible: text !== ""
+                }
             }
         }
 
