@@ -7,7 +7,7 @@
     "gtk-layer-shell": true,
     "height": 54,
     "modules-left": ["custom/nixos","hyprland/workspaces","hyprland/window","mpris"],
-    "modules-center": ["custom/weather","clock"],
+    "modules-center": ["custom/weather", "clock"],
     "modules-right": ["cpu","network","battery","wireplumber","wireplumber#microphone","tray"],
     "hyprland/window": {
         "format": "{}",
