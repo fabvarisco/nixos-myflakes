@@ -52,7 +52,10 @@ swww img "$SELECTED_WALL" \
     --transition-pos center
 
 # Generate colors with pywal
-wal -i "$SELECTED_WALL" -n --cols16
+wal -i "$SELECTED_WALL" -n
+
+# Reload swaync styles
+swaync-client --reload-css 2>/dev/null
 
 # Update kitty theme
 if command -v kitty &>/dev/null && [ -f "$CACHE_DIR/colors-kitty.conf" ]; then
@@ -61,20 +64,80 @@ if command -v kitty &>/dev/null && [ -f "$CACHE_DIR/colors-kitty.conf" ]; then
     pkill -USR1 kitty 2>/dev/null
 fi
 
-# Reload swaync styles
-swaync-client --reload-css 2>/dev/null
-
-# Update pywalfox
+# Update pywalfox (Firefox/Zen Browser)
 if command -v pywalfox &>/dev/null; then
     pywalfox update 2>/dev/null
 fi
 
-# Generate complete CSS files (GTK CSS doesn't support @import)
+# Setup Zen Browser PywalZen theme
+setup_zen_browser() {
+    local zen_dir="$HOME/.zen"
+    local zen_config="$HOME/.config/zen"
+
+    if [ -d "$zen_dir" ] && [ -d "$zen_config" ]; then
+        for profile in "$zen_dir"/*; do
+            if [ -d "$profile" ] && [[ "$(basename "$profile")" != "Profile Groups" ]]; then
+                mkdir -p "$profile/chrome"
+                if [ -f "$zen_config/userChrome.css" ]; then
+                    rm -f "$profile/chrome/userChrome.css" 2>/dev/null
+                    cp "$zen_config/userChrome.css" "$profile/chrome/userChrome.css"
+                fi
+            fi
+        done
+    fi
+}
+setup_zen_browser
+
+
+# Update cava colors
+if [ -f "$HOME/.config/cava/config" ]; then
+    source "$CACHE_DIR/colors.sh"
+    cava_config="$HOME/.config/cava/config"
+    sed -i "s/^gradient_color_1 = .*/gradient_color_1 = '${color2}'/" "$cava_config" 2>/dev/null
+    sed -i "s/^gradient_color_2 = .*/gradient_color_2 = '${color3}'/" "$cava_config" 2>/dev/null
+    pkill -USR2 cava 2>/dev/null
+fi
+
+# Generate starship config with pywal colors
+generate_starship() {
+    local starship_base="$HOME/.config/starship.toml"
+    local colors_file="$CACHE_DIR/colors.sh"
+    local output="$CACHE_DIR/starship.toml"
+
+    if [ -f "$starship_base" ] && [ -f "$colors_file" ]; then
+        source "$colors_file"
+
+        # Create derived colors (darker variants for backgrounds)
+        # Extract RGB from color0 (background) and darken it
+        local bg_r=$((16#${color0:1:2}))
+        local bg_g=$((16#${color0:3:2}))
+        local bg_b=$((16#${color0:5:2}))
+
+        # Create darker background variants with good contrast
+        local bg1=$(printf "#%02x%02x%02x" $((bg_r*120/100 > 255 ? 255 : bg_r*120/100)) $((bg_g*120/100 > 255 ? 255 : bg_g*120/100)) $((bg_b*120/100 > 255 ? 255 : bg_b*120/100)))
+        local bg2=$(printf "#%02x%02x%02x" $((bg_r*90/100)) $((bg_g*90/100)) $((bg_b*90/100)))
+        local bg3=$(printf "#%02x%02x%02x" $((bg_r*70/100)) $((bg_g*70/100)) $((bg_b*70/100)))
+
+        # Replace placeholders with actual colors
+        sed -e "s/COLOR_PRIMARY/${color4}/g" \
+            -e "s/COLOR_SECONDARY/${color5}/g" \
+            -e "s/COLOR_BG1/${bg1}/g" \
+            -e "s/COLOR_BG2/${bg2}/g" \
+            -e "s/COLOR_BG3/${bg3}/g" \
+            -e "s/COLOR_TEXT/${color7}/g" \
+            "$starship_base" > "$output"
+    fi
+}
+
+# Generate complete CSS files for waybar (GTK CSS doesn't support @import)
 generate_css() {
     local colors_file="$CACHE_DIR/colors-waybar.css"
     local waybar_base="$HOME/.config/waybar/style.css"
 
+    mkdir -p "$CACHE_DIR"
+
     if [ -f "$colors_file" ]; then
+        # Generate waybar CSS (colors + styles without @import line)
         if [ -f "$waybar_base" ]; then
             cat "$colors_file" > "$CACHE_DIR/waybar-style.css"
             tail -n +2 "$waybar_base" >> "$CACHE_DIR/waybar-style.css"
@@ -170,6 +233,7 @@ generate_yazi_theme() {
 }
 
 generate_css
+generate_starship
 generate_btop_theme
 generate_yazi_theme
 
