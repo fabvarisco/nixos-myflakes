@@ -67,7 +67,7 @@
         export STARSHIP_CONFIG="$HOME/.cache/wal/starship.toml"
       fi
       eval "$(starship init bash)"
-      fastfetch
+      bash ~/.config/fastfetch/random-logo.sh
     '';
   };
 
@@ -79,6 +79,7 @@
   home.file.".config/starship.toml".source = ../../config/starship.toml;
   home.file.".config/swaync".source = ../../config/swaync;
   home.file.".config/kde".source = ../../config/kde;
+  home.file.".config/fastfetch".source = ../../config/fastfetch;
 
   # Wallpapers e avatares
   home.file.".config/walls".source = ../../config/walls;

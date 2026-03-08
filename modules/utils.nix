@@ -12,5 +12,7 @@
     imv
     mpv
     vlc
+    cava
+    cmatrix
   ];
 }
