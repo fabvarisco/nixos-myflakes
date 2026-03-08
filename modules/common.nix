@@ -42,6 +42,10 @@
   # libinput
   services.libinput.enable = true;
 
+  # USB auto mount
+  services.udisks2.enable = true;
+  services.gvfs.enable = true;
+
   # Bluetooth
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
