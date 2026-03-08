@@ -187,6 +187,14 @@ tooltip {
     color: alpha(@color7, 0.4);
 }
 
+/* Audio Visualizer */
+#custom-audio-viz {
+    color: @color5;
+    padding: 0px 3px;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
 /* Bluetooth */
 #bluetooth {
     color: @color4;

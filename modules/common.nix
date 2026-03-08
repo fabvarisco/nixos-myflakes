@@ -61,15 +61,21 @@
     wayland.enable = lib.mkForce false;
     settings = {
       General = {
-        # Habilita HiDPI
+        #  HiDPI for 4K
         EnableHiDPI = true;
-        GreeterEnvironment = "QT_SCREEN_SCALE_FACTORS=1.5,QT_FONT_DPI=144";
       };
       X11 = {
-        # DPI 144 = escala 1.5x (96 * 1.5)
+        # DPI 144 = 1.5x for 4K (96 * 1.5)
         ServerArguments = "-dpi 144 -nolisten tcp";
       };
     };
+    # Força escala 1.5x para temas Qt
+    extraPackages = with pkgs; [
+      (pkgs.writeTextDir "share/sddm/scripts/Xsetup" ''
+        #!/bin/sh
+        xrandr --dpi 144
+      '')
+    ];
   };
 
   programs.silentSDDM = {
