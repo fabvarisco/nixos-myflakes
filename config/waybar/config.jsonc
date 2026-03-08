@@ -8,7 +8,7 @@
     "height": 54,
     "modules-left": ["custom/nixos","hyprland/workspaces","hyprland/window","mpris"],
     "modules-center": ["custom/weather","clock"],
-    "modules-right": ["cpu","network","battery","wireplumber","custom/audio-viz","wireplumber#microphone","tray"],
+    "modules-right": ["cpu","network","battery","wireplumber","wireplumber#microphone","tray"],
     "hyprland/window": {
         "format": "{}",
         "max-length": 40
@@ -124,13 +124,6 @@
         "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%-",
         "scroll-step": 5
     },
-
-    //"temperature": {
-        //"thermal-zone": 1,
-        //"format": "{temperatureF}°F ",
-        //"critical-threshold": 80,
-        //"format-critical": "{temperatureC}°C "
-    //},
 
     "cpu": {
         "interval": 10,
