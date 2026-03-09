@@ -79,7 +79,7 @@
 .yasb-bar {
 	padding: 0 8px;
 	margin: 0;
-  background-color: var(--bg-bar);
+    background-color: var(--bg-bar);
 }
 .widget {
 	padding: 0 8px;
@@ -310,8 +310,8 @@
 .media-widget {
 	padding: 4px;
 	margin: 4px;
-  border-radius: 12px;
-  background-color: var(--bg-widget);
+    border-radius: 12px;
+    background-color: var(--bg-widget);
 }
 .media-widget .label {
 	background-color: rgba(0, 0, 0, 0.0);
@@ -320,14 +320,13 @@
 	color: #acb2c9;
 	padding: 0 3px;
 	margin: 4px 0;
-  font-weight: 500;
+    font-weight: 500;
 	font-family: Segoe Fluent Icons;
 }
 .media-widget .btn:hover {
 	color: var(--text-white);
 }
 .media-widget .btn.play {
-	background-color: var(--bg-widget);
 	border-radius: 14px;
 	font-size: 16px;
 }
@@ -336,6 +335,136 @@
 	color: #7d8297;
 	font-size: 12px;
 	background-color: rgba(0, 0, 0, 0);
+}
+
+/* MEDIA MENU POPUP */
+.media-menu {
+    min-width: 380px;
+    max-width: 380px;
+    border-radius: 16px;
+    background-color: var(--bg-bar);
+}
+.media-menu .title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-left: 10px;
+    font-family: 'Segoe UI';
+    color: var(--text-light);
+}
+.media-menu .artist {
+    font-size: 12px;
+    font-weight: 600;
+    margin-left: 10px;
+    font-family: 'Segoe UI';
+    color: #6c7086;
+    margin-top: 0px;
+}
+.media-menu .source {
+    font-size: 11px;
+    color: #000;
+    border-radius: 6px;
+    background-color: #bac2de;
+    padding: 2px 6px;
+    font-weight: 700;
+    font-family: 'Segoe UI';
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.media-menu .source.spotify {
+    background-color: #1db954;
+    color: #ffffff;
+}
+.media-menu .source.youtube-music {
+    background-color: #c51f1f;
+    color: #ffffff;
+}
+.media-menu .source.youtube {
+    background-color: #ff0000;
+    color: #ffffff;
+}
+.media-menu .source.firefox {
+    background-color: #ff7139;
+    color: #ffffff;
+}
+.media-menu .source.chrome {
+    background-color: #4285f4;
+    color: #ffffff;
+}
+.media-menu .source.edge {
+    background-color: #0078d4;
+    color: #ffffff;
+}
+.media-menu .source.media-player {
+    background-color: #0078d4;
+    color: #ffffff;
+}
+.media-menu .btn {
+    font-family: "Segoe Fluent Icons";
+    font-size: 14px;
+    font-weight: 400;
+    margin: 10px 2px 0px 2px;
+    min-width: 40px;
+    max-width: 40px;
+    min-height: 40px;
+    max-height: 40px;
+    border-radius: 20px;
+    color: #acb2c9;
+}
+.media-menu .btn.prev {
+    margin-left: 10px;
+}
+.media-menu .btn:hover {
+    color: var(--text-white);
+    background-color: var(--bg-hover-light);
+}
+.media-menu .btn.play {
+    background-color: var(--bg-hover-light);
+    font-size: 20px;
+}
+.media-menu .btn.play:hover {
+    background-color: var(--bg-hover-medium);
+}
+.media-menu .btn.disabled,
+.media-menu .btn.disabled:hover {
+    color: #4e525c;
+    background-color: transparent;
+}
+.media-menu .playback-time {
+    font-size: 12px;
+    font-family: 'Segoe UI';
+    color: #7f849c;
+    margin-top: 20px;
+    min-width: 100px;
+}
+.media-menu .progress-slider {
+    height: 10px;
+    margin: 5px 4px;
+    border-radius: 3px;
+}
+.media-menu .progress-slider::groove {
+    height: 2px;
+    border-radius: 3px;
+    background: var(--bg-hover-light);
+}
+.media-menu .progress-slider::groove:hover {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--bg-hover);
+}
+.media-menu .progress-slider::sub-page {
+    background: var(--text-primary);
+    border-radius: 3px;
+    height: 4px;
+}
+.media-menu .progress-slider::handle {
+    background: var(--text-primary);
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    margin-top: -4px;
+}
+.media-menu .progress-slider::handle:hover {
+    background: var(--text-white);
 }
 
 /* TASBAR WIDGET */
