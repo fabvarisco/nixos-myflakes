@@ -121,6 +121,32 @@ tooltip {
     background: transparent;
 }
 
+/* MPRIS Controls */
+#custom-mpris-prev,
+#custom-mpris-play,
+#custom-mpris-next {
+    color: @color7;
+    padding: 0px 3px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+#custom-mpris-prev:hover,
+#custom-mpris-play:hover,
+#custom-mpris-next:hover {
+    color: @color2;
+}
+
+#custom-mpris-play {
+    font-size: 16px;
+}
+
+/* Album Art */
+#image.album-art {
+    margin: 0px 5px;
+    border-radius: 5px;
+}
+
 /* Weather */
 #custom-weather {
     color: @color3;

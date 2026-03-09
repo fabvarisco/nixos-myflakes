@@ -25,9 +25,29 @@
         "on-scroll-down": "playerctl next"
     },
 
+    // "custom/mpris-prev": {
+    //     "format": "󰒮",
+    //     "tooltip": false,
+    //     "on-click": "playerctl previous"
+    // },
+
+    // "custom/mpris-play": {
+    //     "format": "{}",
+    //     "exec": "playerctl status 2>/dev/null | sed -e 's/Playing/󰏤/' -e 's/Paused/󰐊/' -e 's/Stopped/󰐊/'",
+    //     "interval": 1,
+    //     "tooltip": false,
+    //     "on-click": "playerctl play-pause"
+    // },
+
+    // "custom/mpris-next": {
+    //     "format": "󰒭",
+    //     "tooltip": false,
+    //     "on-click": "playerctl next"
+    // },
+
     "mpris": {
-        "format": "{player_icon} {dynamic}",
-        "format-paused": "{status_icon} <i>{dynamic}</i>",
+        "format": "{dynamic}",
+        "format-paused": "<i>{dynamic}</i>",
         "dynamic-order": ["title", "artist"],
         "dynamic-importance-order": ["title", "artist"],
         "dynamic-len": 40,
