@@ -6,12 +6,23 @@
     "passthrough": false,
     "gtk-layer-shell": true,
     "height": 54,
-    "modules-left": ["custom/nixos","hyprland/workspaces","hyprland/window","mpris"],
+    "modules-left": ["custom/nixos","hyprland/workspaces","hyprland/window","image#album-art","mpris"],
     "modules-center": ["custom/weather", "clock"],
     "modules-right": ["cpu","network","battery","wireplumber","wireplumber#microphone","tray"],
     "hyprland/window": {
         "format": "{}",
         "max-length": 40
+    },
+
+    "image#album-art": {
+        "exec": "~/.config/waybar/scripts/mpris-art.sh",
+        "size": 36,
+        "interval": 3,
+        "tooltip": true,
+        "on-click": "playerctl play-pause",
+        "on-click-right": "playerctl next",
+        "on-scroll-up": "playerctl previous",
+        "on-scroll-down": "playerctl next"
     },
 
     "mpris": {
