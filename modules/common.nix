@@ -35,6 +35,9 @@
     LC_TIME = "pt_BR.UTF-8";
   };
 
+ # onedrive
+ services.onedrive.enable = true;
+
   services.xserver.xkb.layout = "us";
   services.xserver.xkb.variant = "intl";
   console.keyMap = "us";
