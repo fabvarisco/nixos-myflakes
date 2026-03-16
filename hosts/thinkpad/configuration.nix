@@ -43,11 +43,22 @@
   };
   services.power-profiles-daemon.enable = false;
 
-  # Fingerprint reader
+  # Fingerprint reader (opcional - aceita senha OU fingerprint)
   services.fprintd.enable = true;
-  security.pam.services.sddm.fprintAuth = true;
-  security.pam.services.sudo.fprintAuth = true;
-  security.pam.services.hyprlock.fprintAuth = true;
+
+  # Configuração PAM para fingerprint opcional com timeout
+  security.pam.services.sddm = {
+    fprintAuth = true;
+    rules.auth.fprintd.control = "sufficient";
+  };
+  security.pam.services.sudo = {
+    fprintAuth = true;
+    rules.auth.fprintd.control = "sufficient";
+  };
+  security.pam.services.hyprlock = {
+    fprintAuth = true;
+    rules.auth.fprintd.control = "sufficient";
+  };
 
   # SDDM
   services.xserver.displayManager.setupCommands = ''
