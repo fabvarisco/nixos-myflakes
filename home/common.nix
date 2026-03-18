@@ -13,6 +13,9 @@
 
     # Screen recording
     simplescreenrecorder
+
+    # Social
+    vesktop
   ];
 
   # Shared configs

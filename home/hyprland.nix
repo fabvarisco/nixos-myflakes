@@ -31,10 +31,7 @@
 
     # Brightness control
     brightnessctl
-
-    # Discord (Wayland-optimized)
-    vesktop
-
+    
     # Audio
     pwvucontrol
     pamixer
