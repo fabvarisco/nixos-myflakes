@@ -35,8 +35,8 @@ let
 in {
   nixosConfigurations = {
     # Hyprland
-    thinkpad = mkHost { hostname = "thinkpad"; desktop = "hyprland"; };
-    beelink = mkHost { hostname = "beelink"; desktop = "hyprland"; };
+    thinkpad-hypr = mkHost { hostname = "thinkpad"; desktop = "hyprland"; };
+    beelink-hypr = mkHost { hostname = "beelink"; desktop = "hyprland"; };
 
     # Plasma
     thinkpad-plasma = mkHost { hostname = "thinkpad"; desktop = "plasma"; };
