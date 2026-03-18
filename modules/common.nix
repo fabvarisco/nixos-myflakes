@@ -4,8 +4,6 @@
   imports = [
     ./development.nix
     ./gaming.nix
-    ./screenshot.nix
-    ./clipboard.nix
     ./calendar.nix
     ./utils.nix
     ./fonts.nix
@@ -35,8 +33,8 @@
     LC_TIME = "pt_BR.UTF-8";
   };
 
- # onedrive
- services.onedrive.enable = true;
+  # onedrive
+  services.onedrive.enable = true;
 
   services.xserver.xkb.layout = "us";
   services.xserver.xkb.variant = "intl";
@@ -54,21 +52,13 @@
   hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable = true;
 
-  # Hyprland
-  programs.hyprland = {
-    enable = true;
-    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-    xwayland.enable = true;
-  };
-
-  # SDDM
+  # SDDM (base configuration)
   services.xserver.enable = true;
   services.displayManager.sddm = {
     enable = true;
-    wayland.enable = lib.mkForce false;
     settings = {
       General = {
-        #  HiDPI for 4K
+        # HiDPI for 4K
         EnableHiDPI = true;
       };
       X11 = {
@@ -76,7 +66,6 @@
         ServerArguments = "-dpi 144 -nolisten tcp";
       };
     };
-    # Força escala 1.5x para temas Qt
     extraPackages = with pkgs; [
       (pkgs.writeTextDir "share/sddm/scripts/Xsetup" ''
         #!/bin/sh
@@ -93,7 +82,7 @@
     };
   };
 
-  # Áudio
+  # Audio
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;

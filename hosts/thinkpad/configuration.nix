@@ -6,7 +6,7 @@
     ../../modules/common.nix
   ];
 
-  networking.hostName = "nixos";
+  networking.hostName = "thinkpad";
 
   # ThinkPad: touchpad Synaptics RMI4/Intertouch
   boot.kernelParams = [ "psmouse.synaptics_intertouch=1" ];

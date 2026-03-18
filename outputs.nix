@@ -1,29 +1,47 @@
 { self, nixpkgs, home-manager, silent-sddm, vicinae, ... } @inputs:
 
 let
-  homeManagerModules = [
-    silent-sddm.nixosModules.default
-    home-manager.nixosModules.home-manager
-    {
-      home-manager = {
-        useGlobalPkgs = true;
-        useUserPackages = true;
-        users.fabvarisco = import ./users/fabvarisco/home.nix;
-        backupFileExtension = "backup";
-        extraSpecialArgs = { inherit inputs; };
-      };
-    }
-  ];
+  mkHost = { hostname, desktop }:
+    nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = { inherit inputs; };
+      modules = [
+        ./hosts/${hostname}/configuration.nix
+        ./modules/desktop/${desktop}.nix
+        silent-sddm.nixosModules.default
+        home-manager.nixosModules.home-manager
+        {
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            users.fabvarisco = { ... }: {
+              imports = [
+                ./home/common.nix
+                ./home/${desktop}.nix
+                ./home/zen.nix
+                ./home/vicinae.nix
+                ./home/cursor/twilight.nix
+              ];
+              home.username = "fabvarisco";
+              home.homeDirectory = "/home/fabvarisco";
+              home.stateVersion = "25.05";
+            };
+            backupFileExtension = "backup";
+            extraSpecialArgs = { inherit inputs; };
+          };
+        }
+      ];
+    };
 in {
-  nixosConfigurations.thinkpad-hypr = nixpkgs.lib.nixosSystem {
-    system = "x86_64-linux";
-    specialArgs = { inherit inputs; };
-    modules = [ ./hosts/thinkpad/configuration.nix ] ++ homeManagerModules;
-  };
+  nixosConfigurations = {
+    # Hyprland
+    thinkpad = mkHost { hostname = "thinkpad"; desktop = "hyprland"; };
+    beelink = mkHost { hostname = "beelink"; desktop = "hyprland"; };
 
-  nixosConfigurations.beelink-hypr = nixpkgs.lib.nixosSystem {
-    system = "x86_64-linux";
-    specialArgs = { inherit inputs; };
-    modules = [ ./hosts/beelink/configuration.nix ] ++ homeManagerModules;
+    # Plasma
+    thinkpad-plasma = mkHost { hostname = "thinkpad"; desktop = "plasma"; };
+    beelink-plasma = mkHost { hostname = "beelink"; desktop = "plasma"; };
+
+    # TODO gnome
   };
 }
