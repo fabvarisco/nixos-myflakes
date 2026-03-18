@@ -1,14 +1,13 @@
 { self, nixpkgs, home-manager, silent-sddm, vicinae, ... } @inputs:
 
 let
-  mkHost = { hostname, desktop }:
+  mkHost = { hostname, desktop, extraModules ? [] }:
     nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
       modules = [
         ./hosts/${hostname}/configuration.nix
         ./modules/desktop/${desktop}.nix
-        silent-sddm.nixosModules.default
         home-manager.nixosModules.home-manager
         {
           home-manager = {
@@ -30,13 +29,21 @@ let
             extraSpecialArgs = { inherit inputs; };
           };
         }
-      ];
+      ] ++ extraModules;
     };
 in {
   nixosConfigurations = {
     # Hyprland
-    thinkpad-hypr = mkHost { hostname = "thinkpad"; desktop = "hyprland"; };
-    beelink-hypr = mkHost { hostname = "beelink"; desktop = "hyprland"; };
+    thinkpad-hypr = mkHost {
+      hostname = "thinkpad";
+      desktop = "hyprland";
+      extraModules = [ silent-sddm.nixosModules.default ];
+    };
+    beelink-hypr = mkHost {
+      hostname = "beelink";
+      desktop = "hyprland";
+      extraModules = [ silent-sddm.nixosModules.default ];
+    };
 
     # Plasma
     thinkpad-plasma = mkHost { hostname = "thinkpad"; desktop = "plasma"; };

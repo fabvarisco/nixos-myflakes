@@ -74,14 +74,6 @@
     ];
   };
 
-  programs.silentSDDM = {
-    enable = true;
-    theme = "rei";
-    profileIcons = {
-      "fabvarisco" = ../config/profile-pics/profile_1.jpg;
-    };
-  };
-
   # Audio
   security.rtkit.enable = true;
   services.pipewire = {
