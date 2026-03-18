@@ -58,20 +58,10 @@
     enable = true;
     settings = {
       General = {
-        # HiDPI for 4K
+        # HiDPI for 4K (works for both X11 and Wayland SDDM)
         EnableHiDPI = true;
       };
-      X11 = {
-        # DPI 144 = 1.5x for 4K (96 * 1.5)
-        ServerArguments = "-dpi 144 -nolisten tcp";
-      };
     };
-    extraPackages = with pkgs; [
-      (pkgs.writeTextDir "share/sddm/scripts/Xsetup" ''
-        #!/bin/sh
-        xrandr --dpi 144
-      '')
-    ];
   };
 
   # Audio

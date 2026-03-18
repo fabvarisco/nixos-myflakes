@@ -5,18 +5,28 @@
   programs.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
     xwayland.enable = true;
   };
 
-  # SDDM for Hyprland (X11 greeter for better compatibility)
-  services.displayManager.sddm.wayland.enable = lib.mkForce false;
-
-  # SilentSDDM theme
-  programs.silentSDDM = {
+  # XDG Portal for Hyprland (screen sharing, file dialogs, app communication)
+  xdg.portal = {
     enable = true;
-    theme = "rei";
-    profileIcons = {
-      "fabvarisco" = ../../config/profile-pics/profile_1.jpg;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    config.common.default = [ "hyprland" "gtk" ];
+  };
+
+  # Disable SDDM for Hyprland (using greetd instead)
+  services.displayManager.sddm.enable = lib.mkForce false;
+
+  # greetd TTY login manager
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --remember-session --cmd Hyprland";
+        user = "greeter";
+      };
     };
   };
 

@@ -8,6 +8,15 @@
 
   networking.hostName = "thinkpad";
 
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+    extraPackages = with pkgs; [
+      amdvlk
+      rocmPackages.clr.icd
+    ];
+  };
+
   # ThinkPad: touchpad Synaptics RMI4/Intertouch
   boot.kernelParams = [ "psmouse.synaptics_intertouch=1" ];
   boot.kernelModules = [ "rmi_smbus" ];
@@ -60,13 +69,6 @@
     rules.auth.fprintd.control = "sufficient";
   };
 
-  # SDDM
-  services.xserver.displayManager.setupCommands = ''
-    EXTERNAL=$(${pkgs.xorg.xrandr}/bin/xrandr | ${pkgs.gnugrep}/bin/grep " connected" | ${pkgs.gnugrep}/bin/grep -v "eDP" | head -1 | cut -d' ' -f1)
-    if [ -n "$EXTERNAL" ]; then
-      ${pkgs.xorg.xrandr}/bin/xrandr --output "$EXTERNAL" --primary --auto --output eDP-1 --auto
-    fi
-  '';
 
   environment.systemPackages = with pkgs; [
     fprintd

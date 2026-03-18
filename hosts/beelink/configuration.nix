@@ -9,7 +9,14 @@
   networking.hostName = "beelink";
 
   # AMD Radeon 780M (GPU Ryzen 8745HS)
-  hardware.graphics.enable = true;
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+    extraPackages = with pkgs; [
+      amdvlk
+      rocmPackages.clr.icd
+    ];
+  };
 
   # Steam
   programs.steam = {
