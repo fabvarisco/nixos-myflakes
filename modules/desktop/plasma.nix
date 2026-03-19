@@ -6,6 +6,12 @@
   services.displayManager.sddm.wayland.enable = true;
   services.displayManager.defaultSession = "plasma";
 
+  # NetworkManager for Plasma WiFi applet (uses iwd as backend)
+  networking.networkmanager = {
+    enable = true;
+    wifi.backend = "iwd";
+  };
+
   # Essential KDE apps
   environment.systemPackages = with pkgs; [
     kdePackages.spectacle    # screenshot

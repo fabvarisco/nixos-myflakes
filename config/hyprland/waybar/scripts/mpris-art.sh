@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 COVER_PATH="/tmp/mpris-cover.jpg"
 CACHE_URL="/tmp/mpris-cover-url.txt"

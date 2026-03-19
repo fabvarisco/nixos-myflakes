@@ -39,6 +39,10 @@
 
     # Bluetooth
     blueman
+
+    # Monitor auto-detection (for hyprmon-watch)
+    socat
+    jq
   ];
 
   # Hyprland configs
