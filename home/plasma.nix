@@ -1,6 +1,10 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
+  imports = [
+    ./plasma-theme.nix
+  ];
+
   home.packages = with pkgs; [
     kdePackages.kate
   ];
