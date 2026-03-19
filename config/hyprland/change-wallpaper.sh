@@ -228,9 +228,8 @@ generate_starship
 generate_btop_theme
 generate_yazi_theme
 
-# Restart waybar with generated CSS
-pkill waybar
-sleep 0.3
+# Reload waybar with new CSS (ensure only one instance)
+killall -q -w waybar 2>/dev/null  # -w waits for process to die
 waybar -s "$CACHE_DIR/waybar-style.css" &
 
 # Save current wallpaper

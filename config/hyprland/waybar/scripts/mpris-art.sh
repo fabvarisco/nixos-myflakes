@@ -23,7 +23,7 @@ if [[ "$art_url" != "$cached_url" ]]; then
         cp "$local_path" "$COVER_PATH" 2>/dev/null
     # Handle http(s):// URLs (YouTube, Spotify web, etc)
     elif [[ "$art_url" == http* ]]; then
-        curl -s -L "$art_url" -o "$COVER_PATH" 2>/dev/null
+        curl -s -m 3 -L "$art_url" -o "$COVER_PATH" 2>/dev/null
     fi
     echo "$art_url" > "$CACHE_URL"
 fi

@@ -7,7 +7,7 @@ CACHE_DIR="$HOME/.cache/wal"
 
 # Wait for pywal colors to be available (max 5 seconds)
 wait_for_colors() {
-    local max_wait=50  # 50 * 0.1s = 5 seconds
+    local max_wait=30  # 30 * 0.1s = 3 seconds
     local count=0
     while [ ! -f "$CACHE_DIR/colors-waybar.css" ] && [ $count -lt $max_wait ]; do
         sleep 0.1
