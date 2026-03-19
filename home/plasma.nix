@@ -1,14 +1,10 @@
 { config, pkgs, lib, ... }:
 
 {
-  imports = [
-    ./plasma-theme.nix
-  ];
-
   home.packages = with pkgs; [
     kdePackages.kate
   ];
 
-  # KDE config
-  home.file.".config/kdeglobals".source = ../config/plasma/kdeglobals;
+  # KDE default config - no custom theming
+  # The kdeglobals file is removed to let Plasma use its default settings
 }
