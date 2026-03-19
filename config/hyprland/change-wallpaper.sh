@@ -228,9 +228,8 @@ generate_starship
 generate_btop_theme
 generate_yazi_theme
 
-# Reload waybar with new CSS (ensure only one instance)
-killall -q -w waybar 2>/dev/null  # -w waits for process to die
-waybar -s "$CACHE_DIR/waybar-style.css" &
+# Reload waybar with new CSS
+~/.config/hypr/start-waybar.sh
 
 # Save current wallpaper
 echo "$RANDOM_WALL" > "$CACHE_FILE"
