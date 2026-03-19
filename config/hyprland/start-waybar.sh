@@ -1,19 +1,13 @@
 #!/usr/bin/env bash
 
 # Waybar startup script with pywal integration
-# Generates CSS from pywal colors before starting waybar
+# Uses default colors if pywal hasn't run yet, starts immediately
 
 CACHE_DIR="$HOME/.cache/wal"
 
-# Wait for pywal colors to be available (max 5 seconds)
-wait_for_colors() {
-    local max_wait=30  # 30 * 0.1s = 3 seconds
-    local count=0
-    while [ ! -f "$CACHE_DIR/colors-waybar.css" ] && [ $count -lt $max_wait ]; do
-        sleep 0.1
-        count=$((count + 1))
-    done
-}
+# Kill any existing waybar instances first
+killall -q waybar 2>/dev/null
+sleep 0.2
 
 # Generate complete CSS files (GTK CSS doesn't support @import)
 generate_css() {
@@ -22,22 +16,37 @@ generate_css() {
 
     mkdir -p "$CACHE_DIR"
 
-    if [ -f "$colors_file" ]; then
+    # If pywal colors don't exist yet, create default colors
+    if [ ! -f "$colors_file" ]; then
+        cat > "$colors_file" << 'EOF'
+/* Waybar colors - Default fallback */
+@define-color background #1a1a2e;
+@define-color foreground #eaeaea;
+@define-color color0 #1a1a2e;
+@define-color color1 #ff6b6b;
+@define-color color2 #4ecdc4;
+@define-color color3 #ffe66d;
+@define-color color4 #6c5ce7;
+@define-color color5 #fd79a8;
+@define-color color6 #74b9ff;
+@define-color color7 #dfe6e9;
+@define-color color8 #636e72;
+EOF
+    fi
+
+    if [ -f "$colors_file" ] && [ -f "$waybar_base" ]; then
         # Generate waybar CSS (colors + styles without @import line)
-        if [ -f "$waybar_base" ]; then
-            cat "$colors_file" > "$CACHE_DIR/waybar-style.css"
-            tail -n +2 "$waybar_base" >> "$CACHE_DIR/waybar-style.css"
-        fi
+        cat "$colors_file" > "$CACHE_DIR/waybar-style.css"
+        tail -n +2 "$waybar_base" >> "$CACHE_DIR/waybar-style.css"
     fi
 }
 
-# Wait for pywal colors and generate CSS files
-wait_for_colors
 generate_css
 
 # Start waybar with generated CSS if it exists, otherwise use default
 if [ -f "$CACHE_DIR/waybar-style.css" ]; then
-    exec waybar -s "$CACHE_DIR/waybar-style.css"
+    waybar -s "$CACHE_DIR/waybar-style.css" &
 else
-    exec waybar
+    waybar &
 fi
+disown
