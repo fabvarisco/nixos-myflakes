@@ -6,18 +6,19 @@
     ../../modules/common.nix
   ];
 
-  networking.hostName = "thinkpad";
+  boot.initrd.kernelModules = [ "amdgpu" ];
 
+  networking.hostName = "thinkpad";
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
-    extraPackages = with pkgs; [
-      amdvlk
-      rocmPackages.clr.icd
-    ];
   };
 
-  # ThinkPad: touchpad Synaptics RMI4/Intertouch
+  # ThinkPad
+  hardware.enableRedistributableFirmware = true;
+  hardware.cpu.amd.updateMicrocode = true;
+
+  #: touchpad Synaptics RMI4/Intertouch
   boot.kernelParams = [ "psmouse.synaptics_intertouch=1" ];
   boot.kernelModules = [ "rmi_smbus" ];
 

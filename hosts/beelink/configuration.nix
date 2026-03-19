@@ -6,17 +6,21 @@
     ../../modules/common.nix
   ];
 
+  boot.initrd.kernelModules = [ "amdgpu" ];
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  
   networking.hostName = "beelink";
 
-  # AMD Radeon 780M (GPU Ryzen 8745HS)
   hardware.graphics = {
     enable = true;
-    enable32Bit = true;
+    enable32Bit = true; 
+    
     extraPackages = with pkgs; [
-      amdvlk
-      rocmPackages.clr.icd
+      libva-utils
+      rocmPackages.clr.icd 
     ];
   };
+
 
   # Steam
   programs.steam = {
