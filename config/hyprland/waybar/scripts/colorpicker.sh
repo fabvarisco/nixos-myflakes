@@ -50,7 +50,7 @@ check wl-copy && {
 
 prevColors=$(head -n $((limit - 1)) "$loc/colors")
 
-source ~/.cache/wal/colors.sh && color_preview=$wallpaper
+color_preview=""
 check magick && {
   magick -size 64x64 canvas:"$color" "$loc/color_preview.png"
   color_preview="$loc/color_preview.png"

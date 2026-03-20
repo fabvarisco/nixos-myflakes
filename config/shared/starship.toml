@@ -1,6 +1,6 @@
 format = """
-╭[](COLOR_PRIMARY)\
-[ \uf313  ](fg:COLOR_PRIMARY)\
+╭[](fg:#666666)\
+[ \uf313  ](fg:#1a1a1a bg:#666666)\
 $directory\
 $git_branch\
 $git_status\
@@ -11,8 +11,25 @@ $php\
 $time\
 \n╰$character"""
 
+palette = "gray_mono"
+
+[palettes.gray_mono]
+background = "#1a1a1a"
+foreground = "#e0e0e0"
+gray_dark = "#505050"
+gray = "#666666"
+gray_medium = "#808080"
+gray_light = "#a0a0a0"
+text = "#d0d0d0"
+white = "#ffffff"
+red = "#cc6666"
+
+[character]
+success_symbol = "[](fg:#808080)"
+error_symbol = "[](fg:#cc6666)"
+
 [directory]
-style = "fg:COLOR_SECONDARY"
+style = "fg:#a0a0a0"
 format = "[  $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
@@ -25,35 +42,35 @@ truncation_symbol = "…/"
 
 [git_branch]
 symbol = ""
-style = "fg:COLOR_SECONDARY"
+style = "fg:#888888"
 format = '[│ $symbol $branch ]($style)'
 
 [git_status]
-style = "fg:COLOR_SECONDARY"
+style = "fg:#888888"
 format = '[($all_status$ahead_behind)]($style)'
 
 [nodejs]
 symbol = ""
-style = "fg:COLOR_SECONDARY"
+style = "fg:#808080"
 format = '[│ $symbol ($version) ]($style)'
 
 [rust]
 symbol = ""
-style = "fg:COLOR_SECONDARY"
+style = "fg:#808080"
 format = '[│ $symbol ($version) ]($style)'
 
 [golang]
 symbol = ""
-style = "fg:COLOR_SECONDARY"
+style = "fg:#808080"
 format = '[│ $symbol ($version) ]($style)'
 
 [php]
 symbol = ""
-style = "fg:COLOR_SECONDARY"
+style = "fg:#808080"
 format = '[│ $symbol ($version) ]($style)'
 
 [time]
 disabled = false
 time_format = "%R"
-style = "fg:COLOR_TEXT"
+style = "fg:#d0d0d0"
 format = '[│ 󰥔 $time ]($style)'
