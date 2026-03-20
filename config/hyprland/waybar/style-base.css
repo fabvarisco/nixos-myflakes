@@ -1,17 +1,3 @@
-/* Gray/black palette - no pywal */
-@define-color background #1a1a1a;
-@define-color foreground #e0e0e0;
-@define-color color0 #1a1a1a;
-@define-color color1 #cc6666;
-@define-color color2 #a0a0a0;
-@define-color color3 #b0b0b0;
-@define-color color4 #666666;
-@define-color color5 #888888;
-@define-color color6 #808080;
-@define-color color7 #d0d0d0;
-@define-color color8 #505050;
-@define-color color9 #ffffff;
-
 * {
     font-size: 15px;
     font-family: "JetBrainsMono Nerd Font";

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Wallpaper selector using Vicinae - no pywal
+# Wallpaper selector using Vicinae with pywal integration
 
 WALLPAPER_DIR="$HOME/.config/walls"
 CACHE_FILE="$HOME/.cache/hypr/current_wallpaper"
@@ -50,5 +50,8 @@ swww img "$SELECTED_WALL" \
 
 # Save current wallpaper
 echo "$SELECTED_WALL" > "$CACHE_FILE"
+
+# Apply pywal colors
+~/.config/hypr/apply-pywal.sh "$SELECTED_WALL"
 
 notify-send "Wallpaper Changed" "$(basename "$SELECTED_WALL")"
