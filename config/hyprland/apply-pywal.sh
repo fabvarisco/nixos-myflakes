@@ -4,9 +4,16 @@
 # Usage: apply-pywal.sh <wallpaper_path>
 
 WALLPAPER="$1"
-STYLE_BASE="$HOME/.config/waybar/style-base.css"
-COLORS_DEFAULT="$HOME/.config/wal/colors-waybar-default.css"
-GENERATED_CSS="$HOME/.cache/wal/waybar-style.css"
+
+# Waybar paths
+WAYBAR_STYLE_BASE="$HOME/.config/waybar/style-base.css"
+WAYBAR_COLORS_DEFAULT="$HOME/.config/wal/colors-waybar-default.css"
+WAYBAR_GENERATED_CSS="$HOME/.cache/wal/waybar-style.css"
+
+# SwayNC paths
+SWAYNC_STYLE_BASE="$HOME/.config/swaync/style-base.css"
+SWAYNC_COLORS_DEFAULT="$HOME/.config/wal/colors-swaync-default.css"
+SWAYNC_GENERATED_CSS="$HOME/.cache/wal/swaync-style.css"
 
 # Ensure cache directory exists
 mkdir -p "$HOME/.cache/wal"
@@ -21,13 +28,20 @@ wal -i "$WALLPAPER" -n -q
 
 # Check if pywal generated colors
 COLORS_WAYBAR="$HOME/.cache/wal/colors-waybar.css"
+COLORS_SWAYNC="$HOME/.cache/wal/colors-swaync.css"
 
+# Generate Waybar CSS
 if [ -f "$COLORS_WAYBAR" ]; then
-    # Combine pywal colors + base styles
-    cat "$COLORS_WAYBAR" "$STYLE_BASE" > "$GENERATED_CSS"
+    cat "$COLORS_WAYBAR" "$WAYBAR_STYLE_BASE" > "$WAYBAR_GENERATED_CSS"
 else
-    # Fallback to default colors + base styles
-    cat "$COLORS_DEFAULT" "$STYLE_BASE" > "$GENERATED_CSS"
+    cat "$WAYBAR_COLORS_DEFAULT" "$WAYBAR_STYLE_BASE" > "$WAYBAR_GENERATED_CSS"
+fi
+
+# Generate SwayNC CSS
+if [ -f "$COLORS_SWAYNC" ]; then
+    cat "$COLORS_SWAYNC" "$SWAYNC_STYLE_BASE" > "$SWAYNC_GENERATED_CSS"
+else
+    cat "$SWAYNC_COLORS_DEFAULT" "$SWAYNC_STYLE_BASE" > "$SWAYNC_GENERATED_CSS"
 fi
 
 # Reload waybar
@@ -43,10 +57,8 @@ if [ -f "$KITTY_COLORS" ]; then
     pkill -SIGUSR1 kitty 2>/dev/null
 fi
 
-# Optional: reload swaync if running
-if pgrep -x swaync >/dev/null; then
-    swaync-client -rs 2>/dev/null
-fi
+# Reload swaync with new colors
+~/.config/hypr/start-swaync.sh
 
 # Optional: reload pywalfox if installed
 if command -v pywalfox >/dev/null 2>&1; then

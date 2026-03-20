@@ -54,6 +54,10 @@
   # Pywal templates
   home.file.".config/wal/templates".source = ../config/shared/wal/templates;
 
+  # Pywal default colors (fallback when pywal hasn't generated colors yet)
+  home.file.".config/wal/colors-waybar-default.css".source = ../config/shared/wal/colors-waybar-default.css;
+  home.file.".config/wal/colors-swaync-default.css".source = ../config/shared/wal/colors-swaync-default.css;
+
   # Pywalfox native messaging host
   home.file.".mozilla/native-messaging-hosts/pywalfox.json".text = ''
     {
