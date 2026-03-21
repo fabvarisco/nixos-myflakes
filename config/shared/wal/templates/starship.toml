@@ -9,26 +9,29 @@ $php\
 $time\
 \n╰$character"""
 
-palette = "gray_mono"
+palette = "pywal"
 
-[palettes.gray_mono]
-background = "#1a1a1a"
-foreground = "#e0e0e0"
-gray_dark = "#505050"
-gray = "#666666"
-gray_medium = "#808080"
-gray_light = "#a0a0a0"
-text = "#d0d0d0"
-white = "#ffffff"
-red = "#cc6666"
+[palettes.pywal]
+background = "{background}"
+foreground = "{foreground}"
+color0 = "{color0}"
+color1 = "{color1}"
+color2 = "{color2}"
+color3 = "{color3}"
+color4 = "{color4}"
+color5 = "{color5}"
+color6 = "{color6}"
+color7 = "{color7}"
+color8 = "{color8}"
+color9 = "{color9}"
 
 [character]
-success_symbol = "[](fg:#808080)"
-error_symbol = "[](fg:#cc6666)"
+success_symbol = "[](fg:color4)"
+error_symbol = "[](fg:color1)"
 
 [directory]
-style = "fg:#a0a0a0"
-format = '[\uf313[  $path \]]($style)'
+style = "fg:color7"
+format = '[\uf313 [ \uf313 $path \]]($style)'
 truncation_length = 3
 truncation_symbol = "…/"
 
@@ -40,35 +43,35 @@ truncation_symbol = "…/"
 
 [git_branch]
 symbol = ""
-style = "fg:#888888"
+style = "fg:color5"
 format = '[\[$symbol $branch\]]($style)'
 
 [git_status]
-style = "fg:#888888"
+style = "fg:color5"
 format = '([\[$all_status$ahead_behind\]]($style))'
 
 [nodejs]
 symbol = ""
-style = "fg:#808080"
+style = "fg:color3"
 format = '[\[$symbol ($version)\]]($style)'
 
 [rust]
 symbol = ""
-style = "fg:#808080"
+style = "fg:color6"
 format = '[\[$symbol ($version)\]]($style)'
 
 [golang]
 symbol = ""
-style = "fg:#808080"
+style = "fg:color4"
 format = '[\[$symbol ($version)\]]($style)'
 
 [php]
 symbol = ""
-style = "fg:#808080"
+style = "fg:color5"
 format = '[\[$symbol ($version)\]]($style)'
 
 [time]
 disabled = false
 time_format = "%R"
-style = "fg:#d0d0d0"
+style = "fg:foreground"
 format = '[\[󰥔 $time\]]($style)'

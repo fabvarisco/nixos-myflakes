@@ -12,10 +12,8 @@ exec 200>"$LOCK_FILE"
 flock -n 200 || exit 0
 
 # Kill ALL waybar instances and wait for them to die
-killall -q waybar 2>/dev/null
-while pgrep -x waybar >/dev/null; do
-    sleep 0.05
-done
+pkill -9 -x waybar 2>/dev/null
+sleep 0.1
 
 # Ensure cache directory exists
 mkdir -p "$HOME/.cache/wal"

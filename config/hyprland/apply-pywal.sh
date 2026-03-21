@@ -44,6 +44,28 @@ else
     cat "$SWAYNC_COLORS_DEFAULT" "$SWAYNC_STYLE_BASE" > "$SWAYNC_GENERATED_CSS"
 fi
 
+# Generate Starship config with pywal colors
+STARSHIP_TEMPLATE="$HOME/.config/wal/templates/starship.toml"
+STARSHIP_GENERATED="$HOME/.cache/wal/starship.toml"
+if [ -f "$HOME/.cache/wal/colors.sh" ]; then
+    source "$HOME/.cache/wal/colors.sh"
+    if [ -f "$STARSHIP_TEMPLATE" ]; then
+        sed -e "s/{background}/$background/g" \
+            -e "s/{foreground}/$foreground/g" \
+            -e "s/{color0}/$color0/g" \
+            -e "s/{color1}/$color1/g" \
+            -e "s/{color2}/$color2/g" \
+            -e "s/{color3}/$color3/g" \
+            -e "s/{color4}/$color4/g" \
+            -e "s/{color5}/$color5/g" \
+            -e "s/{color6}/$color6/g" \
+            -e "s/{color7}/$color7/g" \
+            -e "s/{color8}/$color8/g" \
+            -e "s/{color9}/$color9/g" \
+            "$STARSHIP_TEMPLATE" > "$STARSHIP_GENERATED"
+    fi
+fi
+
 # Reload waybar
 ~/.config/hypr/start-waybar.sh
 
