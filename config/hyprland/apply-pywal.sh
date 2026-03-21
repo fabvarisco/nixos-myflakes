@@ -66,6 +66,28 @@ if [ -f "$HOME/.cache/wal/colors.sh" ]; then
     fi
 fi
 
+# Nautilus CSS generation
+NAUTILUS_TEMPLATE="$HOME/.config/wal/templates/nautilus-gtk.css"
+NAUTILUS_GENERATED="$HOME/.cache/wal/nautilus-gtk.css"
+GTK3_CSS_DIR="$HOME/.config/gtk-3.0"
+GTK3_CSS_FILE="$GTK3_CSS_DIR/gtk.css"
+
+mkdir -p "$GTK3_CSS_DIR"
+if [ -f "$NAUTILUS_TEMPLATE" ]; then
+    source "$HOME/.cache/wal/colors.sh"
+    sed -e "s/{background}/$background/g" \
+        -e "s/{foreground}/$foreground/g" \
+        -e "s/{color0}/$color0/g" \
+        -e "s/{color1}/$color1/g" \
+        -e "s/{color2}/$color2/g" \
+        -e "s/{color3}/$color3/g" \
+        -e "s/{color4}/$color4/g" \
+        -e "s/{color15}/$color15/g" \
+        "$NAUTILUS_TEMPLATE" > "$NAUTILUS_GENERATED"
+
+    ln -sf "$NAUTILUS_GENERATED" "$GTK3_CSS_FILE"
+fi
+
 # Reload waybar
 ~/.config/hypr/start-waybar.sh
 

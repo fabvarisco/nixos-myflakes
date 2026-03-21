@@ -1,6 +1,8 @@
 { config, pkgs, ... }:
 
 {
+  imports = [ ./nautilus.nix ];
+
   home.packages = with pkgs; [
     # Hyprland ecosystem
     waybar
