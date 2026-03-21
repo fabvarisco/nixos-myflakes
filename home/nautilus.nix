@@ -1,6 +1,27 @@
 { config, lib, pkgs, ... }:
 
 {
+  # GTK theme e configurações
+  gtk = {
+    enable = true;
+
+    theme = {
+      name = "Adwaita-dark";
+      package = pkgs.gnome-themes-extra;
+    };
+
+    iconTheme = {
+      name = "Papirus-Dark";
+      package = pkgs.papirus-icon-theme;
+    };
+
+    gtk3.bookmarks = [
+      "file:///home/fabvarisco/Downloads Downloads"
+      "file:///home/fabvarisco/Developer Developer"
+      "file:///home/fabvarisco/Documents Documents"
+    ];
+  };
+
   # Preferências do Nautilus via dconf
   dconf.settings = {
     "org/gnome/nautilus/preferences" = {
@@ -18,20 +39,13 @@
     };
 
     "org/gnome/nautilus/window-state" = {
-      initial-size = lib.gvariant.mkTuple [1200 700];
+      initial-size = lib.gvariant.mkTuple [(lib.gvariant.mkInt32 1200) (lib.gvariant.mkInt32 700)];
       maximized = false;
-      sidebar-width = 200;
+      sidebar-width = lib.gvariant.mkInt32 200;
     };
 
     "org/gnome/nautilus/icon-view" = {
       default-zoom-level = "small";
     };
   };
-
-  # Bookmarks para sidebar
-  gtk.gtk3.bookmarks = [
-    "file:///home/fabvarisco/Downloads Downloads"
-    "file:///home/fabvarisco/Developer Developer"
-    "file:///home/fabvarisco Home"
-  ];
 }

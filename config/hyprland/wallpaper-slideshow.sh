@@ -5,7 +5,7 @@
 
 WALLPAPER_DIR="$HOME/.config/walls"
 CACHE_FILE="$HOME/.cache/hypr/current_wallpaper"
-INTERVAL=300  # 5 minutes
+INTERVAL=43200  # 12 hours (12 * 60 * 60)
 
 mkdir -p "$(dirname "$CACHE_FILE")"
 

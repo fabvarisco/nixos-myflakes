@@ -29,7 +29,7 @@
     "script-fail-notify": true,
     "scripts": {
         "notification-sound": {
-            "exec": "canberra-gtk-play -i message-new-instant",
+            "exec": "canberra-gtk-play  -i message-new-instant",
             "run-on": "receive"
         },
         "critical-sound": {

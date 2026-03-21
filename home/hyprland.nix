@@ -27,7 +27,6 @@
 
     # Sound effects
     libcanberra-gtk3
-    kdePackages.cla-sound-theme
     sound-theme-freedesktop
 
     # Audio (Hyprland doesn't have built-in mixer)
@@ -75,4 +74,24 @@
       "allowed_extensions": ["pywalfox@frewacom.org"]
     }
   '';
+
+  # Wallpaper slideshow service
+  systemd.user.services.wallpaper-slideshow = {
+    Unit = {
+      Description = "Automatic wallpaper slideshow (changes every 12h)";
+      After = [ "graphical-session.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+
+    Service = {
+      Type = "simple";
+      ExecStart = "${pkgs.bash}/bin/bash ${config.home.homeDirectory}/.config/hypr/wallpaper-slideshow.sh";
+      Restart = "on-failure";
+      RestartSec = "10";
+    };
+
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
 }

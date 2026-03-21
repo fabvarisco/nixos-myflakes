@@ -101,8 +101,10 @@ if [ -f "$KITTY_COLORS" ]; then
     pkill -SIGUSR1 kitty 2>/dev/null
 fi
 
-# Reload swaync with new colors
-~/.config/hypr/start-swaync.sh
+# Reload swaync CSS without restarting
+if command -v swaync-client >/dev/null 2>&1; then
+    swaync-client --reload-css 2>/dev/null
+fi
 
 # Optional: reload pywalfox if installed
 if command -v pywalfox >/dev/null 2>&1; then
