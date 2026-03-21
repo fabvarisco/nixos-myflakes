@@ -28,7 +28,7 @@ error_symbol = "[](fg:#cc6666)"
 
 [directory]
 style = "fg:#a0a0a0"
-format = '[\uf313[  $path \]]($style)'
+format = '[  $path ]($style)'
 truncation_length = 3
 truncation_symbol = "…/"
 

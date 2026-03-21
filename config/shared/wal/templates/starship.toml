@@ -31,7 +31,7 @@ error_symbol = "[](fg:color1)"
 
 [directory]
 style = "fg:color7"
-format = '[\uf313 [ \uf313 $path \]]($style)'
+format = '[  $path ]($style)'
 truncation_length = 3
 truncation_symbol = "…/"
 

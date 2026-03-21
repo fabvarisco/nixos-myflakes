@@ -25,7 +25,7 @@
 
     # Sound effects
     libcanberra-gtk3
-    kdePackages.ocean-sound-theme
+    kdePackages.cla-sound-theme
     sound-theme-freedesktop
 
     # Audio (Hyprland doesn't have built-in mixer)
