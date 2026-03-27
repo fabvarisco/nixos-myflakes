@@ -4,6 +4,10 @@
   imports = [ ./nautilus.nix ];
 
   home.packages = with pkgs; [
+    # File managers (Hyprland exclusive)
+    nautilus
+    yazi
+
     # Hyprland ecosystem
     waybar
     hyprlock

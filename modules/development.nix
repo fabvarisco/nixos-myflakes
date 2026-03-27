@@ -13,5 +13,6 @@
     starship
     godotPackages_4_5.godot
     neovim
+    github-desktop
   ];
 }
