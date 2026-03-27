@@ -6,34 +6,24 @@
   services.displayManager.sddm.wayland.enable = true;
   services.displayManager.defaultSession = "plasma";
 
-  # SDDM with random wallpaper
+  # SDDM with lock.jpg wallpaper
   services.displayManager.sddm = {
     enable = true;
     theme = "where_is_my_sddm_theme";
-    package = pkgs.kdePackages.sddm;
-    extraPackages = [ pkgs.where-is-my-sddm-theme ];
-    settings = {
-      Theme = {
-        Background = "/var/lib/sddm/current-wallpaper";
-      };
-    };
+    extraPackages = [
+      (pkgs.where-is-my-sddm-theme.override {
+        themeConfig.General = {
+          background = "/var/lib/sddm/wallpaper.jpg";
+        };
+      })
+    ];
   };
 
-  # Script to select random wallpaper on boot (copies only one image)
-  system.activationScripts.sddm-random-wallpaper = lib.stringAfter [ "var" ] ''
-    # Use nix store path directly (more reliable during boot)
-    WALLS_DIR="${../.. + /config/walls}"
-    TARGET="/var/lib/sddm/current-wallpaper"
-
+  # Copy lock.jpg for SDDM
+  system.activationScripts.sddm-wallpaper = lib.stringAfter [ "var" ] ''
     mkdir -p /var/lib/sddm
-
-    if [ -d "$WALLS_DIR" ]; then
-      WALL=$(${pkgs.findutils}/bin/find "$WALLS_DIR" -type f \( -name "*.jpg" -o -name "*.png" -o -name "*.jpeg" \) | ${pkgs.coreutils}/bin/shuf -n 1)
-      if [ -n "$WALL" ]; then
-        cp "$WALL" "$TARGET"
-        chmod 644 "$TARGET"
-      fi
-    fi
+    cp "${../../config/walls/lock.jpg}" "/var/lib/sddm/wallpaper.jpg"
+    chmod 644 "/var/lib/sddm/wallpaper.jpg"
   '';
 
   # NetworkManager for Plasma WiFi applet (uses iwd as backend)
