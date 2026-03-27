@@ -6,10 +6,12 @@
   services.displayManager.sddm.wayland.enable = true;
   services.displayManager.defaultSession = "plasma";
 
-  # SDDM theme with random wallpaper
+  # SDDM with random wallpaper
   services.displayManager.sddm = {
     enable = true;
-    theme = "breeze";
+    theme = "where_is_my_sddm_theme";
+    package = pkgs.kdePackages.sddm;
+    extraPackages = [ pkgs.where-is-my-sddm-theme ];
     settings = {
       Theme = {
         Background = "/var/lib/sddm/current-wallpaper";
@@ -19,7 +21,8 @@
 
   # Script to select random wallpaper on boot (copies only one image)
   system.activationScripts.sddm-random-wallpaper = lib.stringAfter [ "var" ] ''
-    WALLS_DIR="/home/fabvarisco/.config/walls"
+    # Use nix store path directly (more reliable during boot)
+    WALLS_DIR="${../.. + /config/walls}"
     TARGET="/var/lib/sddm/current-wallpaper"
 
     mkdir -p /var/lib/sddm
