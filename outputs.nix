@@ -18,7 +18,7 @@ let
                 ./home/common.nix
                 ./home/${desktop}.nix
                 ./home/zen.nix
-                ./home/cursor/twilight.nix
+                ./home/cursor/miku.nix
               ];
               home.username = "fabvarisco";
               home.homeDirectory = "/home/fabvarisco";
