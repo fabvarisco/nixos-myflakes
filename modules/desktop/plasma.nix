@@ -6,25 +6,16 @@
   services.displayManager.sddm.wayland.enable = true;
   services.displayManager.defaultSession = "plasma";
 
-  # SDDM with lock.jpg wallpaper
+  # SDDM with Breeze theme and custom wallpaper
   services.displayManager.sddm = {
     enable = true;
-    theme = "where_is_my_sddm_theme";
-    extraPackages = [
-      (pkgs.where-is-my-sddm-theme.override {
-        themeConfig.General = {
-          background = "/var/lib/sddm/wallpaper.jpg";
-        };
-      })
-    ];
+    theme = "breeze";
+    settings = {
+      Theme = {
+        Background = "${../../config/walls/wallpaper-red.jpg}";
+      };
+    };
   };
-
-  # Copy lock.jpg for SDDM
-  system.activationScripts.sddm-wallpaper = lib.stringAfter [ "var" ] ''
-    mkdir -p /var/lib/sddm
-    cp "${../../config/walls/lock.jpg}" "/var/lib/sddm/wallpaper.jpg"
-    chmod 644 "/var/lib/sddm/wallpaper.jpg"
-  '';
 
   # NetworkManager for Plasma WiFi applet (uses iwd as backend)
   networking.networkmanager = {

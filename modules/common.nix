@@ -37,7 +37,7 @@
   services.onedrive.enable = true;
 
   services.xserver.xkb.layout = "us";
-  services.xserver.xkb.variant = "intl";
+  services.xserver.xkb.variant = "";
   console.keyMap = "us";
 
   # libinput

@@ -18,7 +18,6 @@ let
                 ./home/common.nix
                 ./home/${desktop}.nix
                 ./home/zen.nix
-                ./home/vicinae.nix
                 ./home/cursor/twilight.nix
               ];
               home.username = "fabvarisco";

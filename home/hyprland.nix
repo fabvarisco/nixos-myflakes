@@ -1,7 +1,10 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./nautilus.nix ];
+  imports = [
+    ./nautilus.nix
+    ./vicinae.nix
+  ];
 
   home.packages = with pkgs; [
     # File managers (Hyprland exclusive)
