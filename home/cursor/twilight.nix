@@ -17,7 +17,7 @@
         cp -r dist/* $out/share/icons/Twilight-cursors/
       '';
     };
-    size = 24;
+    size = 32;
     gtk.enable = true;
     x11.enable = true;
   };
