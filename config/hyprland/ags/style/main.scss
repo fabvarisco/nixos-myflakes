@@ -1,0 +1,29 @@
+@use "sass:color";
+
+// Import matugen colors if available, otherwise use defaults
+@import "colors";
+
+// Default colors (fallback)
+$bg: var(--bg, #1e1e2e);
+$bg-alt: var(--bg-alt, #313244);
+$fg: var(--fg, #cdd6f4);
+$primary: var(--primary, #89b4fa);
+$accent: var(--accent, #f5c2e7);
+$error: var(--error, #f38ba8);
+$success: var(--success, #a6e3a1);
+$warning: var(--warning, #f9e2af);
+
+$radius: 8px;
+$padding: 8px;
+
+* {
+    all: unset;
+    font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", monospace;
+    font-size: 13px;
+}
+
+@import "bar";
+@import "notifications";
+@import "osd";
+@import "powermenu";
+@import "quicksettings";

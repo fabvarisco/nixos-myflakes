@@ -1,0 +1,36 @@
+.OSD {
+    margin-bottom: 60px;
+
+    .container {
+        background: $bg;
+        border-radius: $radius;
+        padding: 16px;
+        min-width: 200px;
+
+        icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        levelbar {
+            border-radius: 4px;
+
+            trough {
+                background: $bg-alt;
+                min-height: 8px;
+                border-radius: 4px;
+            }
+
+            block.filled {
+                background: $primary;
+                border-radius: 4px;
+            }
+        }
+
+        label {
+            margin-top: 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    }
+}

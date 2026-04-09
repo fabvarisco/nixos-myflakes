@@ -1,0 +1,15 @@
+[config]
+reload_apps = true
+reload_apps_list = { ags = "ags quit; ags run &" }
+custom_colors = {}
+
+[config.custom_keywords]
+# Add custom keywords here if needed
+
+[templates.ags-colors]
+input_path = "~/.config/matugen/templates/ags-colors.scss"
+output_path = "~/.config/ags/style/_colors.scss"
+
+[templates.kitty]
+input_path = "~/.config/matugen/templates/kitty.conf"
+output_path = "~/.cache/matugen/kitty-colors.conf"

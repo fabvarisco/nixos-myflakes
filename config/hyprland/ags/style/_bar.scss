@@ -1,0 +1,145 @@
+.Bar {
+    background: transparent;
+
+    > centerbox {
+        background: $bg;
+        border-radius: 0 0 $radius $radius;
+        padding: 4px 12px;
+        margin: 0 8px;
+    }
+
+    .left, .center, .right {
+        spacing: 8px;
+    }
+
+    .Workspaces {
+        spacing: 4px;
+
+        button {
+            min-width: 28px;
+            min-height: 28px;
+            padding: 4px;
+            border-radius: $radius;
+            background: $bg-alt;
+            color: $fg;
+            transition: all 200ms;
+
+            &:hover {
+                background: color.adjust($bg-alt, $lightness: 10%);
+            }
+
+            &.focused {
+                background: $primary;
+                color: $bg;
+            }
+        }
+    }
+
+    .Taskbar {
+        spacing: 4px;
+
+        button {
+            padding: 4px;
+            border-radius: $radius;
+            transition: all 200ms;
+
+            &:hover {
+                background: $bg-alt;
+            }
+
+            &.focused {
+                background: $bg-alt;
+                border-bottom: 2px solid $primary;
+            }
+
+            icon {
+                font-size: 20px;
+            }
+        }
+    }
+
+    .Clock {
+        padding: 4px 8px;
+
+        .time {
+            font-size: 14px;
+            font-weight: bold;
+            color: $fg;
+        }
+
+        .date {
+            font-size: 10px;
+            color: color.adjust($fg, $alpha: -0.3);
+        }
+    }
+
+    .SystemTray {
+        spacing: 4px;
+
+        menubutton {
+            padding: 4px;
+            border-radius: $radius;
+
+            &:hover {
+                background: $bg-alt;
+            }
+        }
+    }
+
+    .Battery, .Audio, .Network {
+        padding: 4px 8px;
+        spacing: 4px;
+        border-radius: $radius;
+
+        &:hover {
+            background: $bg-alt;
+        }
+
+        icon {
+            font-size: 16px;
+        }
+
+        label {
+            font-size: 12px;
+        }
+    }
+
+    .Mpris {
+        padding: 4px 8px;
+        spacing: 8px;
+        border-radius: $radius;
+        background: $bg-alt;
+        max-width: 300px;
+
+        .cover {
+            min-width: 32px;
+            min-height: 32px;
+            border-radius: 4px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .title {
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .artist {
+            font-size: 10px;
+            color: color.adjust($fg, $alpha: -0.3);
+        }
+
+        .controls {
+            spacing: 4px;
+
+            button {
+                padding: 4px;
+                border-radius: 50%;
+
+                &:hover {
+                    background: color.adjust($bg-alt, $lightness: 10%);
+                }
+            }
+        }
+    }
+}

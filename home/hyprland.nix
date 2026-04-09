@@ -4,6 +4,7 @@
   imports = [
     ./nautilus.nix
     ./vicinae.nix
+    ./ags.nix
   ];
 
   home.packages = with pkgs; [
@@ -12,25 +13,14 @@
     yazi
 
     # Hyprland ecosystem
-    waybar
     hyprlock
     hypridle
-    wlogout
     swww
     hyprpaper
     hyprmon
-    nwg-dock-hyprland
 
-    # Notifications
-    swaynotificationcenter
+    # Notifications (libnotify for notify-send)
     libnotify
-
-    # OSD
-    avizo
-
-    # Pywal (theming)
-    pywal
-    pywalfox-native
 
     # Sound effects
     libcanberra-gtk3
@@ -42,9 +32,6 @@
     # Network TUI
     impala
 
-    # Brightness control
-    brightnessctl
-    
     # Audio
     pwvucontrol
     pamixer
@@ -60,27 +47,10 @@
 
   # Hyprland configs
   home.file.".config/hypr".source = ../config/hyprland;
-  home.file.".config/waybar".source = ../config/hyprland/waybar;
-  home.file.".config/swaync".source = ../config/hyprland/swaync;
-  home.file.".config/wlogout".source = ../config/hyprland/wlogout;
 
-  # Pywal templates
-  home.file.".config/wal/templates".source = ../config/shared/wal/templates;
-
-  # Pywal default colors (fallback when pywal hasn't generated colors yet)
-  home.file.".config/wal/colors-waybar-default.css".source = ../config/shared/wal/colors-waybar-default.css;
-  home.file.".config/wal/colors-swaync-default.css".source = ../config/shared/wal/colors-swaync-default.css;
-
-  # Pywalfox native messaging host
-  home.file.".mozilla/native-messaging-hosts/pywalfox.json".text = ''
-    {
-      "name": "pywalfox",
-      "description": "Pywalfox native messaging host",
-      "path": "${pkgs.pywalfox-native}/bin/pywalfox",
-      "type": "stdio",
-      "allowed_extensions": ["pywalfox@frewacom.org"]
-    }
-  '';
+  # Matugen config and templates
+  home.file.".config/matugen/config.toml".source = ../config/shared/matugen/config.toml;
+  home.file.".config/matugen/templates".source = ../config/shared/matugen/templates;
 
   # Wallpaper slideshow service
   systemd.user.services.wallpaper-slideshow = {

@@ -1,0 +1,43 @@
+.PowerMenu {
+    background: rgba(0, 0, 0, 0.5);
+
+    .container {
+        spacing: 24px;
+
+        .power-button {
+            padding: 32px;
+            border-radius: $radius * 2;
+            background: $bg;
+            transition: all 200ms;
+
+            &:hover {
+                background: $bg-alt;
+                transform: scale(1.05);
+            }
+
+            > box {
+                spacing: 8px;
+            }
+
+            icon {
+                font-size: 48px;
+                color: $fg;
+            }
+
+            label {
+                font-size: 14px;
+                color: $fg;
+            }
+
+            &.shutdown {
+                &:hover {
+                    background: $error;
+
+                    icon, label {
+                        color: $bg;
+                    }
+                }
+            }
+        }
+    }
+}

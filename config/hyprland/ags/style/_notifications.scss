@@ -1,0 +1,89 @@
+.NotificationPopups {
+    padding: 8px;
+
+    > box {
+        spacing: 8px;
+    }
+}
+
+.Notification {
+    background: $bg;
+    border-radius: $radius;
+    padding: $padding;
+    border: 1px solid $bg-alt;
+    min-width: 300px;
+    max-width: 400px;
+
+    &.low {
+        border-left: 3px solid $fg;
+    }
+
+    &.normal {
+        border-left: 3px solid $primary;
+    }
+
+    &.critical {
+        border-left: 3px solid $error;
+        background: color.adjust($error, $alpha: -0.9);
+    }
+
+    .header {
+        spacing: 8px;
+
+        .icon {
+            min-width: 48px;
+            min-height: 48px;
+            border-radius: $radius;
+            background-size: cover;
+            background-position: center;
+        }
+
+        > box {
+            spacing: 2px;
+        }
+
+        .title {
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .body {
+            font-size: 12px;
+            color: color.adjust($fg, $alpha: -0.2);
+        }
+
+        .close {
+            padding: 4px;
+            border-radius: 50%;
+            margin-left: auto;
+
+            &:hover {
+                background: $bg-alt;
+            }
+        }
+    }
+
+    .actions {
+        margin-top: 8px;
+        spacing: 4px;
+
+        button {
+            padding: 6px 12px;
+            border-radius: $radius;
+            background: $bg-alt;
+
+            &:hover {
+                background: color.adjust($bg-alt, $lightness: 10%);
+            }
+
+            &:first-child {
+                background: $primary;
+                color: $bg;
+
+                &:hover {
+                    background: color.adjust($primary, $lightness: 10%);
+                }
+            }
+        }
+    }
+}
