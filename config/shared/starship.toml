@@ -1,34 +1,41 @@
 format = """
-╭$directory\
+$username\
+$directory\
 $git_branch\
 $git_status\
 $nodejs\
 $rust\
 $golang\
 $php\
+$python\
 $time\
-\n╰$character"""
+\n$character"""
 
-palette = "gray_mono"
+palette = "dusk_blue"
 
-[palettes.gray_mono]
-background = "#1a1a1a"
-foreground = "#e0e0e0"
-gray_dark = "#505050"
-gray = "#666666"
-gray_medium = "#808080"
-gray_light = "#a0a0a0"
-text = "#d0d0d0"
-white = "#ffffff"
-red = "#cc6666"
+[palettes.dusk_blue]
+sky_blue = "#8a9ab4"
+lavender = "#b8c4d8"
+light_lavender = "#c5cfe0"
+dark_navy = "#1a1a2e"
+dark_purple = "#2d2d44"
+accent_green = "#7a9e7a"
+cream = "#e8dcc8"
+soft_gray = "#6b7a94"
 
 [character]
-success_symbol = "[](fg:#808080)"
-error_symbol = "[](fg:#cc6666)"
+success_symbol = "[❯](fg:#7a9e7a)"
+error_symbol = "[❯](fg:#cc8a8a)"
+
+[username]
+show_always = true
+style_user = "fg:#b8c4d8 bold"
+style_root = "fg:#cc8a8a bold"
+format = '[\[$user@nixos\]]($style_user) '
 
 [directory]
-style = "fg:#a0a0a0"
-format = '[  $path ]($style)'
+style = "fg:#8a9ab4"
+format = '[\[$path\]]($style) '
 truncation_length = 3
 truncation_symbol = "…/"
 
@@ -40,35 +47,40 @@ truncation_symbol = "…/"
 
 [git_branch]
 symbol = ""
-style = "fg:#888888"
-format = '[\[$symbol $branch\]]($style)'
+style = "fg:#7a9e7a"
+format = '[\[$symbol $branch\]]($style) '
 
 [git_status]
-style = "fg:#888888"
-format = '([\[$all_status$ahead_behind\]]($style))'
+style = "fg:#6b7a94"
+format = '([\[$all_status$ahead_behind\]]($style) )'
 
 [nodejs]
 symbol = ""
-style = "fg:#808080"
-format = '[\[$symbol ($version)\]]($style)'
+style = "fg:#b8c4d8"
+format = '[\[$symbol $version\]]($style) '
 
 [rust]
 symbol = ""
-style = "fg:#808080"
-format = '[\[$symbol ($version)\]]($style)'
+style = "fg:#c5cfe0"
+format = '[\[$symbol $version\]]($style) '
 
 [golang]
 symbol = ""
-style = "fg:#808080"
-format = '[\[$symbol ($version)\]]($style)'
+style = "fg:#8a9ab4"
+format = '[\[$symbol $version\]]($style) '
 
 [php]
 symbol = ""
-style = "fg:#808080"
-format = '[\[$symbol ($version)\]]($style)'
+style = "fg:#b8c4d8"
+format = '[\[$symbol $version\]]($style) '
+
+[python]
+symbol = ""
+style = "fg:#c5cfe0"
+format = '[\[$symbol $version\]]($style) '
 
 [time]
 disabled = false
 time_format = "%R"
-style = "fg:#d0d0d0"
+style = "fg:#e8dcc8"
 format = '[\[󰥔 $time\]]($style)'
