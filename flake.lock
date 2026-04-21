@@ -489,9 +489,30 @@
         "home-manager": "home-manager",
         "hyprland": "hyprland",
         "nixpkgs": "nixpkgs_2",
+        "silentSDDM": "silentSDDM",
         "snappy-switcher": "snappy-switcher",
         "vicinae": "vicinae",
         "zen-browser": "zen-browser"
+      }
+    },
+    "silentSDDM": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1775652648,
+        "narHash": "sha256-mLE7i9r9qenayJ8adWm22SbqUwLuopvRhyoizuZTtyo=",
+        "ref": "refs/heads/main",
+        "rev": "a0fb8a48de772c0340dd6639b331ebf6ec2eb554",
+        "revCount": 256,
+        "type": "git",
+        "url": "https://github.com/uiriansan/SilentSDDM"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://github.com/uiriansan/SilentSDDM"
       }
     },
     "snappy-switcher": {

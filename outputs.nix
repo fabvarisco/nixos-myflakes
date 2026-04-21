@@ -1,4 +1,4 @@
-{ self, nixpkgs, home-manager, vicinae, ... } @inputs:
+{ self, nixpkgs, home-manager, vicinae, silentSDDM, ... } @inputs:
 
 let
   mkHost = { hostname, desktop, extraModules ? [] }:
@@ -8,6 +8,7 @@ let
       modules = [
         ./hosts/${hostname}/configuration.nix
         ./modules/desktop/${desktop}.nix
+        silentSDDM.nixosModules.default
         home-manager.nixosModules.home-manager
         {
           home-manager = {

@@ -3,19 +3,9 @@
 {
   # KDE Plasma 6
   services.desktopManager.plasma6.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
   services.displayManager.defaultSession = "plasma";
 
-  # SDDM with Breeze theme and custom wallpaper
-  services.displayManager.sddm = {
-    enable = true;
-    theme = "breeze";
-    settings = {
-      Theme = {
-        Background = "${../../config/walls/wallpaper-red.jpg}";
-      };
-    };
-  };
+  # SDDM with SilentSDDM theme (configured in common.nix)
 
   # NetworkManager for Plasma WiFi applet (uses iwd as backend)
   networking.networkmanager = {

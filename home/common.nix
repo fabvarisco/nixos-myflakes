@@ -30,9 +30,6 @@
   programs.bash = {
     enable = true;
     initExtra = ''
-      if [ -f "$HOME/.cache/wal/starship.toml" ]; then
-        export STARSHIP_CONFIG="$HOME/.cache/wal/starship.toml"
-      fi
       eval "$(starship init bash)"
       bash ~/.config/fastfetch/random-logo.sh
     '';

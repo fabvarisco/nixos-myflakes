@@ -16,19 +16,7 @@
     config.common.default = [ "hyprland" "gtk" ];
   };
 
-  # Disable SDDM for Hyprland (using greetd instead)
-  services.displayManager.sddm.enable = lib.mkForce false;
-
-  # greetd TTY login manager
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --remember-session --cmd Hyprland";
-        user = "greeter";
-      };
-    };
-  };
+  # SDDM with SilentSDDM theme (configured in common.nix)
 
   # Wayland tools (screenshot, clipboard)
   environment.systemPackages = with pkgs; [

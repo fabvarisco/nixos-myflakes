@@ -52,16 +52,11 @@
   hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable = true;
 
-  # SDDM (base configuration)
+  # SDDM with SilentSDDM theme
   services.xserver.enable = true;
-  services.displayManager.sddm = {
+  programs.silentSDDM = {
     enable = true;
-    settings = {
-      General = {
-        # HiDPI for 4K (works for both X11 and Wayland SDDM)
-        EnableHiDPI = true;
-      };
-    };
+    theme = "rei";  # Options: rei, ken, silvia
   };
 
   # Audio

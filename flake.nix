@@ -38,6 +38,11 @@
       url = "github:OpalAayan/snappy-switcher";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    silentSDDM = {
+      url = "git+https://github.com/uiriansan/SilentSDDM";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs:  import ./outputs.nix inputs;
