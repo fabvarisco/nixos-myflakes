@@ -38,7 +38,7 @@ while true; do
     done
 
     # Set wallpaper with animation
-    swww img "$RANDOM_WALL" \
+    awww img "$RANDOM_WALL" \
         --transition-type fade \
         --transition-duration 2 \
         --transition-fps 60

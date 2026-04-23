@@ -12,6 +12,7 @@
     kitty
     starship
     godotPackages_4_5.godot
+    godot_4-mono
     neovim
     github-desktop
   ];

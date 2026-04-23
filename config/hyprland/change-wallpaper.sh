@@ -34,7 +34,7 @@ while [ "$RANDOM_WALL" = "$CURRENT_WALL" ] && [ $ATTEMPTS -lt 10 ] && [ ${#WALLP
 done
 
 # Set the wallpaper with animation
-swww img "$RANDOM_WALL" \
+awww img "$RANDOM_WALL" \
     --transition-type any \
     --transition-duration 0.5 \
     --transition-fps 60

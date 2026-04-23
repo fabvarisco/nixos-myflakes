@@ -24,8 +24,8 @@ if [ ! -f "$choice" ]; then
     exit 1
 fi
 
-# Apply wallpaper with swww
-swww img "$choice" \
+# Apply wallpaper with awww
+awww img "$choice" \
     --transition-type any \
     --transition-fps 60 \
     --transition-duration 0.5

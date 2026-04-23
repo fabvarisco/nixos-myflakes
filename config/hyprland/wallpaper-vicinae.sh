@@ -42,7 +42,7 @@ if [ ! -f "$SELECTED_WALL" ]; then
 fi
 
 # Set the wallpaper with animation
-swww img "$SELECTED_WALL" \
+awww img "$SELECTED_WALL" \
     --transition-type grow \
     --transition-duration 1.5 \
     --transition-fps 60 \

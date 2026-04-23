@@ -16,7 +16,7 @@
     hyprlock
     hypridle
     wlogout
-    swww
+    awww
     hyprpaper
     hyprmon
     nwg-dock-hyprland
@@ -34,7 +34,7 @@
 
     # Sound effects
     libcanberra-gtk3
-    sound-theme-freedesktop
+    kdePackages.oxygen-sounds
 
     # Audio (Hyprland doesn't have built-in mixer)
     wiremix
