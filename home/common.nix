@@ -11,6 +11,7 @@
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.snappy-switcher.packages.${pkgs.stdenv.hostPlatform.system}.default
 
+
     # Screen recording
     simplescreenrecorder
 

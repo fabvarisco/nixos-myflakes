@@ -39,6 +39,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+
     silentSDDM = {
       url = "git+https://github.com/uiriansan/SilentSDDM";
       inputs.nixpkgs.follows = "nixpkgs";

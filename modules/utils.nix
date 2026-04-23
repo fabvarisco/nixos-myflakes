@@ -12,5 +12,7 @@
     vlc
     cava
     cmatrix
+    tenki
+    krabby
   ];
 }
