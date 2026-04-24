@@ -85,10 +85,6 @@
           color-scheme = "prefer-dark";
           gtk-theme = "Adwaita-dark";
         };
-        "org/gnome/desktop/sound" = {
-          theme-name = "oxygen";
-          event-sounds = true;
-        };
       };
     }];
   };

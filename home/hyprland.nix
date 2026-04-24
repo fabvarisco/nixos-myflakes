@@ -32,8 +32,7 @@
     pywal
     pywalfox-native
 
-    # Sound effects
-    libcanberra-gtk3
+    # Sound effects (pw-play is provided by pipewire, already in system packages)
     kdePackages.oxygen-sounds
 
     # Audio (Hyprland doesn't have built-in mixer)

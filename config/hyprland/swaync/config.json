@@ -29,17 +29,17 @@
     "script-fail-notify": true,
     "scripts": {
         "sound-low": {
-            "exec": "canberra-gtk-play -i message-new-instant",
+            "exec": "pw-play /etc/profiles/per-user/fabvarisco/share/sounds/Oxygen-Sys-App-Positive.ogg",
             "urgency": "Low",
             "run-on": "receive"
         },
         "sound-normal": {
-            "exec": "canberra-gtk-play -i message-new-instant",
+            "exec": "pw-play /etc/profiles/per-user/fabvarisco/share/sounds/Oxygen-Sys-App-Positive.ogg",
             "urgency": "Normal",
             "run-on": "receive"
         },
         "sound-critical": {
-            "exec": "canberra-gtk-play -i dialog-error",
+            "exec": "pw-play /etc/profiles/per-user/fabvarisco/share/sounds/Oxygen-Sys-App-Error.ogg",
             "urgency": "Critical",
             "run-on": "receive"
         }
