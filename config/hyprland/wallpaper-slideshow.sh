@@ -14,6 +14,8 @@ if [ ! -d "$WALLPAPER_DIR" ]; then
     exit 1
 fi
 
+awww wait
+
 while true; do
     WALLPAPERS=($(find -L "$WALLPAPER_DIR" \( -type f -o -type l \) \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) | sort))
 

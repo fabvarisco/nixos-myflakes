@@ -28,16 +28,17 @@
     "hide-on-action": true,
     "script-fail-notify": true,
     "scripts": {
-        "notification-sound": {
+        "sound-low": {
             "exec": "canberra-gtk-play -i message-new-instant",
+            "urgency": "Low",
             "run-on": "receive"
         },
-        "warning-sound": {
-            "exec": "canberra-gtk-play -i dialog-warning",
+        "sound-normal": {
+            "exec": "canberra-gtk-play -i message-new-instant",
             "urgency": "Normal",
             "run-on": "receive"
         },
-        "critical-sound": {
+        "sound-critical": {
             "exec": "canberra-gtk-play -i dialog-error",
             "urgency": "Critical",
             "run-on": "receive"
