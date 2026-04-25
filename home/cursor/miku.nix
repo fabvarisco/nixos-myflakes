@@ -17,7 +17,7 @@
         cp -r miku-cursor-linux/* $out/share/icons/miku-cursor-linux/
       '';
     };
-    size = 32;
+    size = 38;
     gtk.enable = true;
     x11.enable = true;
   };
