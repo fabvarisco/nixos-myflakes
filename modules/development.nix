@@ -15,5 +15,6 @@
     godot_4-mono
     neovim
     github-desktop
+
   ];
 }
