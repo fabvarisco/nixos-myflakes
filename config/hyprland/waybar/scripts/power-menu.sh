@@ -12,7 +12,7 @@ case "$selected" in
         systemctl suspend
         ;;
     "󰍃 Logout")
-        hyprctl dispatch exit
+        loginctl terminate-session "$XDG_SESSION_ID"
         ;;
     "󰜉 Reboot")
         systemctl reboot

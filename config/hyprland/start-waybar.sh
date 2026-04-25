@@ -8,25 +8,22 @@ GENERATED_CSS="$HOME/.cache/wal/waybar-style.css"
 STYLE_BASE="$HOME/.config/waybar/style-base.css"
 COLORS_DEFAULT="$HOME/.config/wal/colors-waybar-default.css"
 
-# Prevent concurrent executions
+# Remove stale lock file from a previous session so re-login always gets a
+# clean slate. flock(1) holds the lock only for the lifetime of the fd, so
+# any lock left in /tmp after logout is always stale.
+rm -f "$LOCK_FILE"
+
+# Prevent concurrent executions within the same session
 exec 200>"$LOCK_FILE"
 flock -n 200 || exit 0
 
-# Check if waybar is already running with a valid PID
-if [ -f "$PID_FILE" ]; then
-    OLD_PID=$(cat "$PID_FILE")
-    if kill -0 "$OLD_PID" 2>/dev/null; then
-        # Waybar is running, just reload it via SIGUSR2 (reloads style)
-        # If CSS changed, we need to restart
-        kill "$OLD_PID" 2>/dev/null
-        sleep 0.1
-    fi
-fi
-
-# Kill any remaining waybar instances
-# NixOS wraps waybar as .waybar-wrapped
-killall -9 .waybar-wrapped waybar 2>/dev/null
-sleep 0.1
+# Kill any running waybar instances (NixOS wraps waybar as .waybar-wrapped)
+# The PID file is unreliable across re-logins, so always use killall.
+killall -q .waybar-wrapped waybar 2>/dev/null
+# Wait for them to actually die before spawning a new instance
+while pgrep -x waybar >/dev/null 2>&1 || pgrep -x .waybar-wrapped >/dev/null 2>&1; do
+    sleep 0.05
+done
 
 # Ensure cache directory exists
 mkdir -p "$HOME/.cache/wal"
@@ -38,8 +35,8 @@ if [ ! -f "$GENERATED_CSS" ]; then
     fi
 fi
 
-# Start waybar with generated CSS if available
-# Use subshell with closed FD 200 to prevent waybar from inheriting the lock
+# Start waybar with generated CSS if available.
+# Close fd 200 in the subshell so waybar doesn't inherit the lock fd.
 if [ -f "$GENERATED_CSS" ]; then
     (exec 200>&-; exec waybar -s "$GENERATED_CSS") &
 else
