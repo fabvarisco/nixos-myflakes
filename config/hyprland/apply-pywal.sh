@@ -88,7 +88,7 @@ if [ -f "$NAUTILUS_TEMPLATE" ]; then
     ln -sf "$NAUTILUS_GENERATED" "$GTK3_CSS_FILE"
 fi
 
-# Reload waybar
+# Restart waybar with updated CSS (SIGUSR2 crashes waybar v0.15 due to D-Bus re-registration)
 ~/.config/hypr/start-waybar.sh
 
 # Reload kitty colors
