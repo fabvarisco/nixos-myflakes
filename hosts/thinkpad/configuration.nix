@@ -18,11 +18,11 @@
   hardware.enableRedistributableFirmware = true;
   hardware.cpu.amd.updateMicrocode = true;
 
-  #: touchpad Synaptics RMI4/Intertouch
-  boot.kernelParams = [ "psmouse.synaptics_intertouch=1" ];
+  #: touchpad Synaptics RMI4/Intertouch — lid_init_state prevents inconsistent suspend on close
+  boot.kernelParams = [ "psmouse.synaptics_intertouch=1" "button.lid_init_state=open" ];
   boot.kernelModules = [ "rmi_smbus" ];
 
-  # Touchpad
+  # Touchpad settings
   services.libinput.touchpad = {
     tapping = true;
     naturalScrolling = false;
@@ -30,7 +30,7 @@
     disableWhileTyping = true;
   };
 
-  # Gerenciamento de energia (TLP para ThinkPad)
+  # Power management (TLP for ThinkPad)
   services.tlp = {
     enable = true;
     settings = {
@@ -53,22 +53,23 @@
   };
   services.power-profiles-daemon.enable = false;
 
-  # Fingerprint reader (opcional - aceita senha OU fingerprint)
+  # Thermal management — complements TLP for mixed workloads on ThinkPads
+  services.thermald.enable = true;
+
+  # Delegate lid switch to Hyprland; prevents unexpected suspend before compositor starts
+  services.logind = {
+    lidSwitch = "ignore";
+    lidSwitchExternalPower = "ignore";
+    powerKey = "poweroff";
+  };
+
+  # Fingerprint reader — accepts password OR fingerprint
   services.fprintd.enable = true;
 
-  # Configuração PAM para fingerprint opcional com timeout
-  security.pam.services.sddm = {
-    fprintAuth = true;
-    rules.auth.fprintd.control = "sufficient";
-  };
-  security.pam.services.sudo = {
-    fprintAuth = true;
-    rules.auth.fprintd.control = "sufficient";
-  };
-  security.pam.services.hyprlock = {
-    fprintAuth = true;
-    rules.auth.fprintd.control = "sufficient";
-  };
+  # PAM integration for fingerprint auth
+  security.pam.services.sddm.fprintAuth = true;
+  security.pam.services.sudo.fprintAuth = true;
+  security.pam.services.hyprlock.fprintAuth = true;
 
 
   environment.systemPackages = with pkgs; [
