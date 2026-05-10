@@ -58,6 +58,7 @@
   programs.silentSDDM = {
     enable = true;
     theme = "rei";  # Options: rei, ken, silvia
+    profileIcons.fabvarisco = ../config/profile-pics/profile_2.jpg;
   };
 
   # Audio

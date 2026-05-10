@@ -23,5 +23,6 @@
 
     # Library discovery for build systems
     pkg-config
+    sfml_2
   ];
 }
