@@ -26,6 +26,8 @@
   home.file.".config/fastfetch".source = ../config/shared/fastfetch;
   home.file.".config/walls".source = ../config/walls;
   home.file.".config/profile-pics".source = ../config/profile-pics;
+  home.file.".claude/agents".source = ../config/claude/agents;
+  home.file.".claude/skills".source = ../config/claude/skills;
 
   # Bash
   programs.bash = {
