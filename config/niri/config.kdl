@@ -154,6 +154,6 @@ binds {
 }
 
 // Startup applications
-spawn-at-startup "waybar"
+spawn-at-startup "noctalia-shell"
 spawn-at-startup "swaync"
 spawn-at-startup "swww-daemon"

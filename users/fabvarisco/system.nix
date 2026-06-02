@@ -24,11 +24,10 @@
       nautilus
       yazi
 
-      # Niri shell (waybar, notifications, launcher)
-      waybar
+      # Niri shell (noctalia, notifications, launcher)
+      noctalia-shell
       swaynotificationcenter
       libnotify
-      noctalia-shell
 
       # Theming
       pywal

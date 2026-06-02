@@ -15,6 +15,7 @@ in {
       ln -sfn ${d}/config/walls                  ${h}/.config/walls
       ln -sfn ${d}/config/profile-pics           ${h}/.config/profile-pics
       ln -sfn ${d}/config/niri                   ${h}/.config/niri
+      ln -sfn ${d}/config/noctalia               ${h}/.config/noctalia
       ln -sfn ${d}/config/claude/agents          ${h}/.claude/agents
       ln -sfn ${d}/config/claude/skills          ${h}/.claude/skills
     '';
