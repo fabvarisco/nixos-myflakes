@@ -1,10 +1,18 @@
-{ self, nixpkgs, silentSDDM, ... } @inputs:
+{ self, nixpkgs, silentSDDM, wrapper-modules, ... } @inputs:
 
 let
+  system = "x86_64-linux";
+  pkgs = nixpkgs.legacyPackages.${system};
+
+  myNoctalia = wrapper-modules.wrappers.noctalia-shell.wrap {
+    inherit pkgs;
+    settings = builtins.fromJSON (builtins.readFile ./config/noctalia/settings.json);
+  };
+
   mkHost = { hostname, desktop, extraModules ? [] }:
     nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = { inherit inputs; };
+      inherit system;
+      specialArgs = { inherit inputs myNoctalia; };
       modules = [
         ./hosts/${hostname}/configuration.nix
         ./modules/desktop/${desktop}.nix

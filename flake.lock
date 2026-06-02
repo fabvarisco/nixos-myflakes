@@ -1,0 +1,103 @@
+{
+  "nodes": {
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1780243769,
+        "narHash": "sha256-x5UQuRsH3MqI0U9afaXSNqzTPSeZlRLvFAav2Ux1pNw=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "331800de5053fcebacf6813adb5db9c9dca22a0c",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-unstable",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1779536132,
+        "narHash": "sha256-q+fF42iv/geEbHfgSzy3tS0FF/EyD6XTZ98E6yxiBO8=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "3d8f0f3f72a6cd4d93d0ad13203f2ea1cb7e1456",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "nixpkgs": "nixpkgs",
+        "silentSDDM": "silentSDDM",
+        "wrapper-modules": "wrapper-modules",
+        "zen-browser": "zen-browser"
+      }
+    },
+    "silentSDDM": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1780180566,
+        "narHash": "sha256-tfXlfIFWY+E/izmRb9Qd3to3guxhyIh9HyZAoTKqa9k=",
+        "ref": "refs/heads/main",
+        "rev": "0828621769acaa26ef131ed96255c7bd06038111",
+        "revCount": 265,
+        "type": "git",
+        "url": "https://github.com/uiriansan/SilentSDDM"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://github.com/uiriansan/SilentSDDM"
+      }
+    },
+    "wrapper-modules": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1779886850,
+        "narHash": "sha256-Udj+9DzeLccvPKoW9Q8xFdqIhrw2jhYMoqxBv+8iWzo=",
+        "owner": "BirdeeHub",
+        "repo": "nix-wrapper-modules",
+        "rev": "168fd6f514a9f8fa47df4fdcf9ecd61db10aec68",
+        "type": "github"
+      },
+      "original": {
+        "owner": "BirdeeHub",
+        "repo": "nix-wrapper-modules",
+        "type": "github"
+      }
+    },
+    "zen-browser": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1779946062,
+        "narHash": "sha256-M/2bCPYjiBTkDNV29J/00z10RM3yYnL9X74RqAHDme0=",
+        "owner": "youwen5",
+        "repo": "zen-browser-flake",
+        "rev": "2e2c38ba20a3d614d0196e0aa44851547306e861",
+        "type": "github"
+      },
+      "original": {
+        "owner": "youwen5",
+        "repo": "zen-browser-flake",
+        "type": "github"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

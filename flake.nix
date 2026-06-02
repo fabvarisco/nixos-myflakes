@@ -15,6 +15,8 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
 
+    wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
+
     zen-browser = {
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";

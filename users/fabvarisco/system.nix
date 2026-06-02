@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, myNoctalia, ... }:
 
 {
   users.users.fabvarisco = {
@@ -25,7 +25,7 @@
       yazi
 
       # Niri shell (noctalia, notifications, launcher)
-      noctalia-shell
+      myNoctalia
       swaynotificationcenter
       libnotify
 
