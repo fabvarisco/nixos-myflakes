@@ -26,7 +26,7 @@
     };
   };
 
-  # Dconf settings for Nautilus (previously managed by home-manager)
+  # Dconf settings for Nautilus
   programs.dconf.profiles.user.databases = [{
     settings = {
       "org/gnome/nautilus/preferences" = {
