@@ -49,6 +49,9 @@
       # Bluetooth
       blueman
 
+      # Lock screen
+      swaylock
+
       # Screenshots
       grim
       slurp
