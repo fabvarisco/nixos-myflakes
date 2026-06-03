@@ -15,9 +15,10 @@
 
   # Essential KDE apps
   environment.systemPackages = with pkgs; [
-    kdePackages.spectacle    # screenshot
-    kdePackages.dolphin      # file manager
-    kdePackages.ark          # archives
+    kdePackages.kate
+    kdePackages.spectacle
+    kdePackages.dolphin
+    kdePackages.ark
   ];
 
   # XDG portal for Plasma
@@ -25,4 +26,11 @@
     enable = true;
     extraPortals = [ pkgs.kdePackages.xdg-desktop-portal-kde ];
   };
+
+  # Plasma config symlinks
+  systemd.tmpfiles.rules = [
+    "L+ /home/fabvarisco/.config/kdeglobals - - - - ${../../config/plasma/kdeglobals}"
+    "L+ /home/fabvarisco/.config/ksplashrc - - - - ${../../config/plasma/ksplashrc}"
+    "L+ /home/fabvarisco/.config/kscreenlockerrc - - - - ${../../config/plasma/kscreenlockerrc}"
+  ];
 }

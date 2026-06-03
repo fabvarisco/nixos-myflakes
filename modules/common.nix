@@ -79,6 +79,11 @@
     NIXOS_OZONE_WL = "1";
   };
 
+  programs.bash.interactiveShellInit = ''
+    eval "$(starship init bash)"
+    bash ~/.config/fastfetch/random-logo.sh
+  '';
+
   programs.dconf = {
     enable = true;
     profiles.user.databases = [{
@@ -86,6 +91,9 @@
         "org/gnome/desktop/interface" = {
           color-scheme = "prefer-dark";
           gtk-theme = "Adwaita-dark";
+          icon-theme = "Papirus-Dark";
+          cursor-theme = "miku-cursor-linux";
+          cursor-size = 38;
         };
       };
     }];

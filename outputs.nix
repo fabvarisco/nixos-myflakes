@@ -1,4 +1,4 @@
-{ self, nixpkgs, home-manager, vicinae, silentSDDM, ... } @inputs:
+{ self, nixpkgs, silentSDDM, ... } @inputs:
 
 let
   mkHost = { hostname, desktop, extraModules ? [] }:
@@ -9,26 +9,6 @@ let
         ./hosts/${hostname}/configuration.nix
         ./modules/desktop/${desktop}.nix
         silentSDDM.nixosModules.default
-        home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.fabvarisco = { ... }: {
-              imports = [
-                ./home/common.nix
-                ./home/${desktop}.nix
-                ./home/zen.nix
-                ./home/cursor/miku.nix
-              ];
-              home.username = "fabvarisco";
-              home.homeDirectory = "/home/fabvarisco";
-              home.stateVersion = "25.05";
-            };
-            backupFileExtension = "backup";
-            extraSpecialArgs = { inherit inputs; };
-          };
-        }
       ] ++ extraModules;
     };
 in {
