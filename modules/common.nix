@@ -79,10 +79,6 @@
     NIXOS_OZONE_WL = "1";
   };
 
-  programs.bash.interactiveShellInit = ''
-    eval "$(starship init bash)"
-    bash ~/.config/fastfetch/random-logo.sh
-  '';
 
   programs.dconf = {
     enable = true;
@@ -93,7 +89,7 @@
           gtk-theme = "Adwaita-dark";
           icon-theme = "Papirus-Dark";
           cursor-theme = "miku-cursor-linux";
-          cursor-size = 38;
+          cursor-size = lib.gvariant.mkInt32 38;
         };
       };
     }];

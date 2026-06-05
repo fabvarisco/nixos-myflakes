@@ -8,7 +8,10 @@
 
   boot.initrd.kernelModules = [ "amdgpu" ];
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  
+  # Desbloqueia todos os power play features do amdgpu (necessário para o GameMode
+  # escrever amd_performance_level=high via DPM)
+  boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffffffff" ];
+
   networking.hostName = "beelink";
   programs.nix-ld.enable = true; 
   hardware.graphics = {
@@ -17,7 +20,9 @@
     
     extraPackages = with pkgs; [
       libva-utils
-      rocmPackages.clr.icd 
+      vaapiVdpau
+      libvdpau-va-gl
+      rocmPackages.clr.icd
     ];
   };
 

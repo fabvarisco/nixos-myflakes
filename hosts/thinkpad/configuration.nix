@@ -7,11 +7,18 @@
   ];
 
   boot.initrd.kernelModules = [ "amdgpu" ];
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "thinkpad";
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
+    extraPackages = with pkgs; [
+      libva-utils
+      vaapiVdpau
+      libvdpau-va-gl
+      rocmPackages.clr.icd
+    ];
   };
 
   # ThinkPad

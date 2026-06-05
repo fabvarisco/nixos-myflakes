@@ -55,7 +55,6 @@ in
     awww
     hyprpaper
     hyprmon
-    nwg-dock-hyprland
 
     # Notifications
     swaynotificationcenter
