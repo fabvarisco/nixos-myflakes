@@ -29,11 +29,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    snappy-switcher = {
-      url = "github:OpalAayan/snappy-switcher";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
 
     silentSDDM = {
       url = "git+https://github.com/uiriansan/SilentSDDM";

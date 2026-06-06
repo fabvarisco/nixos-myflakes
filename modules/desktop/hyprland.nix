@@ -40,7 +40,6 @@ in
 
     # Clipboard
     wl-clipboard
-    clipse
     imagemagick
 
     # File managers

@@ -15,7 +15,7 @@
     enable32Bit = true;
     extraPackages = with pkgs; [
       libva-utils
-      vaapiVdpau
+      libva-vdpau-driver
       libvdpau-va-gl
       rocmPackages.clr.icd
     ];
