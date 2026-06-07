@@ -26,20 +26,20 @@
     "transition-time": 200,
     "hide-on-clear": false,
     "hide-on-action": true,
-    "script-fail-notify": true,
+    "script-fail-notify": false,
     "scripts": {
         "sound-low": {
-            "exec": "pw-play /etc/profiles/per-user/fabvarisco/share/sounds/Oxygen-Sys-App-Positive.ogg",
+            "exec": "pw-play /run/current-system/sw/share/sounds/Oxygen-Sys-App-Positive.ogg",
             "urgency": "Low",
             "run-on": "receive"
         },
         "sound-normal": {
-            "exec": "pw-play /etc/profiles/per-user/fabvarisco/share/sounds/Oxygen-Sys-App-Positive.ogg",
+            "exec": "pw-play /run/current-system/sw/share/sounds/Oxygen-Sys-App-Positive.ogg",
             "urgency": "Normal",
             "run-on": "receive"
         },
         "sound-critical": {
-            "exec": "pw-play /etc/profiles/per-user/fabvarisco/share/sounds/Oxygen-Sys-App-Error.ogg",
+            "exec": "pw-play /run/current-system/sw/share/sounds/Oxygen-Sys-App-Error.ogg",
             "urgency": "Critical",
             "run-on": "receive"
         }

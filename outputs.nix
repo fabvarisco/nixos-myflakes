@@ -4,7 +4,7 @@ let
   mkHost = { hostname, desktop, extraModules ? [] }:
     nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      specialArgs = { inherit inputs; };
+      specialArgs = { inherit inputs self; };
       modules = [
         ./hosts/${hostname}/configuration.nix
         ./modules/desktop/${desktop}.nix

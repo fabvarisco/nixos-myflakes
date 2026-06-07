@@ -1,6 +1,25 @@
 { config, lib, pkgs, inputs, ... }:
 
+
 let
+  system = pkgs.stdenv.hostPlatform.system;
+
+  # Vicinae Extensions
+
+  nixExtension = inputs.vicinae.packages.${system}.mkVicinaeExtension {
+    pname = "nix";
+    version = "0";
+    src = "${inputs.vicinae-extensions}/extensions/nix";
+  };
+  
+  bluetoothExtension = inputs.vicinae.packages.${system}.mkVicinaeExtension {
+    pname = "bluetooth";
+    version = "0";
+    src = "${inputs.vicinae-extensions}/extensions/bluetooth";
+  };
+  # End Vicinae Extensions
+
+
   pywalfoxManifest = pkgs.writeText "pywalfox.json" (builtins.toJSON {
     name = "pywalfox";
     description = "Pywalfox native messaging host";
@@ -17,6 +36,13 @@ let
 in
 
 {
+  imports = [ ../vicinae.nix ];
+
+  services.vicinae-launcher = {
+    enable = true;
+    extensions = [ nixExtension bluetoothExtension ];
+  };
+
   # Hyprland
   programs.hyprland = {
     enable = true;
@@ -91,9 +117,6 @@ in
     # GTK theming
     gnome-themes-extra
     papirus-icon-theme
-
-    # Vicinae
-    inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   # Config symlinks
@@ -124,20 +147,6 @@ in
       ExecStart = "${pkgs.bash}/bin/bash /home/fabvarisco/.config/hypr/wallpaper-slideshow.sh";
       Restart = "on-failure";
       RestartSec = "10";
-    };
-  };
-
-  # Vicinae launcher service
-  systemd.user.services.vicinae = {
-    description = "Vicinae launcher/switcher";
-    wantedBy = [ "graphical-session.target" ];
-    after = [ "graphical-session.target" ];
-    environment = {
-      USE_LAYER_SHELL = "1";
-    };
-    serviceConfig = {
-      ExecStart = "${inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/vicinae";
-      Restart = "on-failure";
     };
   };
 

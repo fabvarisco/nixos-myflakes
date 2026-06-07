@@ -29,6 +29,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    vicinae-extensions = {
+      url = "github:vicinaehq/extensions";
+      flake = false;
+    };
 
     silentSDDM = {
       url = "git+https://github.com/uiriansan/SilentSDDM";

@@ -49,6 +49,7 @@ in
 
   systemd.tmpfiles.rules = [
     "L+ /home/fabvarisco/.config/kitty - - - - ${../../config/shared/kitty}"
+    "L+ /home/fabvarisco/.config/hypr - - - - ${../../config/hyprland}"
     "L+ /home/fabvarisco/.config/btop - - - - ${../../config/shared/btop}"
     "L+ /home/fabvarisco/.config/starship.toml - - - - ${../../config/shared/starship.toml}"
     "L+ /home/fabvarisco/.config/fastfetch - - - - ${../../config/shared/fastfetch}"
@@ -57,7 +58,9 @@ in
     "d /home/fabvarisco/.claude 0755 fabvarisco users -"
     "L+ /home/fabvarisco/.claude/agents - - - - ${../../config/claude/agents}"
     "L+ /home/fabvarisco/.claude/skills - - - - ${../../config/claude/skills}"
-    "L+ /home/fabvarisco/.config/zen - - - - ${../../config/zen}"
+    "d /home/fabvarisco/.config/zen 0755 fabvarisco users -"
+    "L+ /home/fabvarisco/.config/zen/userChrome.css - - - - ${../../config/zen/userChrome.css}"
+    "L+ /home/fabvarisco/.config/zen/user.js - - - - ${../../config/zen/user.js}"
     "d /home/fabvarisco/.local/share 0755 fabvarisco users -"
     "L+ /home/fabvarisco/.local/share/zen-startpage - - - - ${../../config/zen/startpage}"
   ];
