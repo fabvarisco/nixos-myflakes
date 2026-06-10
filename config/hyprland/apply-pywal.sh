@@ -5,10 +5,9 @@
 
 WALLPAPER="$1"
 
-# Waybar paths
-WAYBAR_STYLE_BASE="$HOME/.config/waybar/style-base.css"
-WAYBAR_COLORS_DEFAULT="$HOME/.config/wal/colors-waybar-default.css"
-WAYBAR_GENERATED_CSS="$HOME/.cache/wal/waybar-style.css"
+# EWW paths
+EWW_COLORS_DEFAULT="$HOME/.config/wal/colors-eww-default.scss"
+EWW_GENERATED_SCSS="$HOME/.cache/wal/eww-colors.scss"
 
 # SwayNC paths
 SWAYNC_STYLE_BASE="$HOME/.config/swaync/style-base.css"
@@ -27,14 +26,14 @@ fi
 wal -i "$WALLPAPER" -n -q
 
 # Check if pywal generated colors
-COLORS_WAYBAR="$HOME/.cache/wal/colors-waybar.css"
+COLORS_EWW="$HOME/.cache/wal/colors-eww.scss"
 COLORS_SWAYNC="$HOME/.cache/wal/colors-swaync.css"
 
-# Generate Waybar CSS
-if [ -f "$COLORS_WAYBAR" ]; then
-    cat "$COLORS_WAYBAR" "$WAYBAR_STYLE_BASE" > "$WAYBAR_GENERATED_CSS"
+# Generate EWW SCSS colors
+if [ -f "$COLORS_EWW" ]; then
+    cp "$COLORS_EWW" "$EWW_GENERATED_SCSS"
 else
-    cat "$WAYBAR_COLORS_DEFAULT" "$WAYBAR_STYLE_BASE" > "$WAYBAR_GENERATED_CSS"
+    cp "$EWW_COLORS_DEFAULT" "$EWW_GENERATED_SCSS"
 fi
 
 # Generate SwayNC CSS
@@ -88,8 +87,8 @@ if [ -f "$NAUTILUS_TEMPLATE" ]; then
     ln -sf "$NAUTILUS_GENERATED" "$GTK3_CSS_FILE"
 fi
 
-# Restart waybar with updated CSS (SIGUSR2 crashes waybar v0.15 due to D-Bus re-registration)
-~/.config/hypr/start-waybar.sh
+# Reload EWW styles
+eww reload 2>/dev/null
 
 # Reload kitty colors
 KITTY_COLORS="$HOME/.cache/wal/colors-kitty.conf"

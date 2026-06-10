@@ -1,0 +1,62 @@
+@import "/home/fabvarisco/.cache/wal/eww-colors.scss";
+
+* {
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 13px;
+  all: unset;
+}
+
+.bar {
+  background: rgba(0, 0, 0, 0.85);
+  color: $foreground;
+  padding: 0 12px;
+}
+
+.workspaces {
+  margin-right: 8px;
+}
+
+.ws-btn {
+  background: transparent;
+  color: $color8;
+  border: none;
+  padding: 2px 7px;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+
+  &.active {
+    background: $color2;
+    color: $background;
+  }
+
+  &:hover {
+    background: $color0;
+    color: $foreground;
+  }
+}
+
+.window-title {
+  color: $color7;
+  opacity: 0.65;
+}
+
+.clock {
+  color: $foreground;
+  font-weight: bold;
+}
+
+.date-label {
+  color: $color8;
+}
+
+.cpu {
+  color: $color6;
+}
+
+.vol {
+  color: $color4;
+}
+
+.bat {
+  color: $color2;
+}
