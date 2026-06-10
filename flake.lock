@@ -452,6 +452,7 @@
         "nixpkgs": "nixpkgs_2",
         "silentSDDM": "silentSDDM",
         "vicinae": "vicinae",
+        "vicinae-extensions": "vicinae-extensions",
         "zen-browser": "zen-browser"
       }
     },
@@ -523,6 +524,22 @@
       "original": {
         "owner": "vicinaehq",
         "repo": "vicinae",
+        "type": "github"
+      }
+    },
+    "vicinae-extensions": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1780780086,
+        "narHash": "sha256-npDIVN2g+V3dh2jTu77f9Hy4BPDAX6bPh+g1l1JJGPY=",
+        "owner": "vicinaehq",
+        "repo": "extensions",
+        "rev": "5640e08761c6d2e50277459e43bb9675c1da331a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vicinaehq",
+        "repo": "extensions",
         "type": "github"
       }
     },

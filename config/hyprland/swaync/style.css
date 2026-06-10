@@ -42,13 +42,13 @@
 }
 
 .notification {
-    background: alpha(@mycolor, 0.85);
+    background: alpha(@bg, 0.95);
 }
 
 .control-center .notification-row .notification-background .notification {
     margin-top: 0.150rem;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
-    background: alpha(@mycolor, 0.75);
+    background: alpha(@bg, 0.90);
 }
 
 .floating-notifications .notification {
@@ -109,6 +109,7 @@
 .floating-notifications.background .notification-background .notification .notification-content .summary {
     font-size: 0.9909rem;
     font-weight: 500;
+    color: @text;
 }
 
 .control-center .notification-row .notification-background .notification .notification-content .time,
@@ -116,6 +117,7 @@
     font-size: 0.8291rem;
     font-weight: 500;
     margin-right: 1rem;
+    color: @text;
 }
 
 .control-center .notification-row .notification-background .notification .notification-content .body,
