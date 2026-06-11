@@ -8,6 +8,14 @@
 
 (defpoll bat-icon :interval "10s" :initial "images/battery-100.svg" "scripts/battery icon")
 (defpoll bat-num :interval "10s" :initial "" "scripts/battery number")
+(defpoll has-battery :interval "1h" :initial "false" "compgen -G '/sys/class/power_supply/BAT*' >/dev/null && echo true || echo false")
+
+(defpoll wifi-ssid   :interval "10s" :initial ""    "scripts/wifi ssid")
+(defpoll wifi-state  :interval "10s" :initial "off" "scripts/wifi state")
+(defpoll bt-state    :interval "10s" :initial "off" "scripts/bluetooth state")
+(defpoll bt-device   :interval "10s" :initial ""    "scripts/bluetooth device")
+(defpoll night-light :interval "10s" :initial "off" "scripts/night-light state")
+(defpoll airplane    :interval "10s" :initial "off" "scripts/airplane state")
 
 (defpoll ram :interval "5s" "free | awk '/Mem/{printf \"%.0f\", $3/$2*100}'")
 (defpoll cpu :interval "5s" "scripts/cpu")

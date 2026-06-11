@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+state() {
+  if rfkill list all -o SOFT -n 2>/dev/null | grep -q blocked; then
+    echo on
+  else
+    echo off
+  fi
+}
+
+toggle() {
+  if [[ "$(state)" == "on" ]]; then
+    rfkill unblock all
+  else
+    rfkill block all
+  fi
+}
+
+case "$1" in
+  state)  state ;;
+  toggle) toggle ;;
+esac

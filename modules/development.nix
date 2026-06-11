@@ -1,4 +1,4 @@
-{ pkgs, self, ... }:
+{ pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
@@ -15,11 +15,5 @@
     godot_4-mono
     neovim
     github-desktop
-
   ];
-
-  programs.bash.interactiveShellInit = ''
-    ${self}/config/shared/fastfetch/random-logo.sh
-    eval "$(starship init bash)"
-  '';
 }

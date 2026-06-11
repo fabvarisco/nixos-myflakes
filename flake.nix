@@ -17,6 +17,11 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
 
+    home-manager = {
+      url = "git+https://github.com/nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
 
     zen-browser = {

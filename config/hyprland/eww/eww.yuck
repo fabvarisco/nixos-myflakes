@@ -6,27 +6,34 @@
     :class "tray"
     :halign "end"
     :space-evenly false
-    (box
-      :class "tray-item wifi"
-      :spacing 0
-      :space-evenly false
-      (image :class "icon wifi-icon" :path wifi-icon :image-height "20")
-      (label :class "text wifi-text" :text wifi-strength))
     (eventbox
       :cursor "pointer"
-      :onclick "pamixer --toggle-mute"
+      :onclick "scripts/qs-toggle"
+      (box
+        :class "tray-item wifi"
+        :spacing 0
+        :space-evenly false
+        (image :class "icon wifi-icon" :path wifi-icon :image-height "20")
+        (label :class "text wifi-text" :text wifi-strength)))
+    (eventbox
+      :cursor "pointer"
+      :onclick "scripts/qs-toggle"
       (box
         :class "tray-item vol"
         :spacing 0
         :space-evenly false
         (image :class "icon vol-icon" :path vol-icon :image-height "20")
         (label :class "text vol-text" :text "${vol-num == '' ? '--' : vol-num == 'muted' ? 'muted' : vol-num + '%'}")))
-    (box
-      :class "tray-item bat"
-      :spacing 0
-      :space-evenly false
-      (image :class "icon bat-icon" :path bat-icon :image-height "26")
-      (label :class "text bat-text" :text "${bat-num == '' ? '--' : bat-num}%"))
+    (eventbox
+      :cursor "pointer"
+      :onclick "scripts/qs-toggle"
+      :visible {has-battery == "true"}
+      (box
+        :class "tray-item bat"
+        :spacing 0
+        :space-evenly false
+        (image :class "icon bat-icon" :path bat-icon :image-height "26")
+        (label :class "text bat-text" :text "${bat-num == '' ? '--' : bat-num}%")))
     (box
       :class "tray-item br"
       :spacing 0
@@ -88,6 +95,59 @@
     :height "0%"
     :anchor "top left")
   (calendar-popup))
+
+; Quick Settings
+(defwidget qs-action [icon onclick]
+  (eventbox :cursor "pointer" :onclick onclick
+    (box :class "qs-action"
+      (image :path icon :image-width 18 :image-height 18))))
+
+(defwidget qs-slider [icon value onchange]
+  (box :class "qs-slider" :spacing 10 :space-evenly false
+    (image :path icon :image-width 18 :image-height 18)
+    (scale :hexpand true :orientation "h" :value value :min 0 :max 101
+           :onchange onchange :flipped false)))
+
+(defwidget qs-pill [icon label sublabel active onclick]
+  (eventbox :cursor "pointer" :onclick onclick :hexpand true
+    (box :class {active == "on" ? "qs-pill qs-pill-active" : "qs-pill"}
+         :spacing 10 :space-evenly false :hexpand true
+      (image :class "qs-pill-icon" :path icon :image-width 18 :image-height 18)
+      (box :orientation "v" :spacing 0 :space-evenly false :hexpand true
+        (label :class "qs-pill-title" :text label :halign "start")
+        (label :class "qs-pill-sub"   :text sublabel :halign "start"
+               :visible {sublabel != ""})))))
+
+(defwidget quick-settings-panel []
+  (box :class "qs-panel" :orientation "v" :spacing 14 :space-evenly false
+    (box :spacing 10 :space-evenly false
+      (box :class "qs-bat" :spacing 6 :space-evenly false :hexpand true :halign "start"
+        (image :path bat-icon :image-height 22)
+        (label :class "qs-bat-text" :text "${bat-num == '' ? '--' : bat-num}%"))
+      (qs-action :icon "images/lock.svg"     :onclick "hyprlock & scripts/qs-toggle")
+      (qs-action :icon "images/shutdown.svg" :onclick "scripts/qs-toggle; eww update center-option=powermenu reveal-option=powermenu"))
+    (qs-slider :icon "images/volume-high.svg" :value vol-num :onchange "pamixer --set-volume {}")
+    (qs-slider :icon "images/brightness.svg"  :value br      :onchange "scripts/brightness set {}")
+    (box :orientation "v" :spacing 8 :space-evenly false
+      (box :spacing 8 :space-evenly true
+        (qs-pill :icon wifi-icon                 :label "Wi-Fi"       :sublabel wifi-ssid :active wifi-state  :onclick "scripts/wifi toggle")
+        (qs-pill :icon "images/bluetooth.svg"    :label "Bluetooth"   :sublabel bt-device :active bt-state    :onclick "scripts/bluetooth toggle"))
+      (box :spacing 8 :space-evenly true
+        (qs-pill :icon "images/night-light.svg"  :label "Night Light" :sublabel ""        :active night-light :onclick "scripts/night-light toggle")
+        (qs-pill :icon "images/airplane.svg"     :label "Airplane"    :sublabel ""        :active airplane    :onclick "scripts/airplane toggle")))))
+
+(defwindow quick-settings
+  :stacking "overlay"
+  :monitor "0"
+  :exclusive false
+  :namespace "quick-settings"
+  :geometry (geometry
+    :x "10px"
+    :y "40px"
+    :width "340px"
+    :height "0%"
+    :anchor "top right")
+  (quick-settings-panel))
 
 ; Workspaces
 (defwidget workspaces []

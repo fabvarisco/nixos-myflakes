@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+state() {
+  if bluetoothctl show 2>/dev/null | grep -q "Powered: yes"; then
+    echo on
+  else
+    echo off
+  fi
+}
+
+device() {
+  bluetoothctl devices Connected 2>/dev/null | head -n1 | cut -d' ' -f3-
+}
+
+toggle() {
+  if [[ "$(state)" == "on" ]]; then
+    bluetoothctl power off >/dev/null
+  else
+    bluetoothctl power on >/dev/null
+  fi
+}
+
+case "$1" in
+  state)  state ;;
+  device) device ;;
+  toggle) toggle ;;
+esac

@@ -71,6 +71,26 @@
         "type": "github"
       }
     },
+    "home-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1781129616,
+        "narHash": "sha256-Hl0Pz/QIKpePSU7SdK3BMe5VNmUhFvfWyg57GyawxzE=",
+        "ref": "refs/heads/master",
+        "rev": "7dbd305f8b81050f223f00bcfbc8a6b74e048806",
+        "revCount": 6881,
+        "type": "git",
+        "url": "https://github.com/nix-community/home-manager"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://github.com/nix-community/home-manager"
+      }
+    },
     "hyprcursor": {
       "inputs": {
         "hyprlang": [
@@ -448,6 +468,7 @@
     },
     "root": {
       "inputs": {
+        "home-manager": "home-manager",
         "hyprland": "hyprland",
         "nixpkgs": "nixpkgs_2",
         "silentSDDM": "silentSDDM",

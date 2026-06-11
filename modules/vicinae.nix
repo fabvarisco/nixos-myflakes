@@ -23,19 +23,17 @@ in {
   config = lib.mkIf cfg.enable {
     environment.systemPackages = [ pkg ];
 
-    systemd.tmpfiles.rules = [
-      "d /home/fabvarisco/.local/share/vicinae 0755 fabvarisco users -"
-      "d /home/fabvarisco/.local/share/vicinae/extensions 0755 fabvarisco users -"
-    ]
-    ++ lib.optionals (cfg.settings != {}) [
-      "d /home/fabvarisco/.config/vicinae 0755 fabvarisco users -"
-      "L+ /home/fabvarisco/.config/vicinae/nix.json - - - - ${
-        jsonFormat.generate "vicinae-settings.json" cfg.settings
-      }"
-    ]
-    ++ map (ext:
-      "L+ /home/fabvarisco/.local/share/vicinae/extensions/${ext.pname} - - - - ${ext}"
-    ) cfg.extensions;
+    home-manager.users.fabvarisco = {
+      xdg.configFile = lib.mkIf (cfg.settings != {}) {
+        "vicinae/nix.json".source =
+          jsonFormat.generate "vicinae-settings.json" cfg.settings;
+      };
+
+      home.file = lib.listToAttrs (map (ext: {
+        name  = ".local/share/vicinae/extensions/${ext.pname}";
+        value.source = ext;
+      }) cfg.extensions);
+    };
 
     systemd.user.services.vicinae = {
       description = "Vicinae launcher/switcher";

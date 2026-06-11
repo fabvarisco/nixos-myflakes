@@ -198,3 +198,83 @@ calendar button:hover {
   background-color: rgba($accent, 0.2);
   border-radius: $rad;
 }
+
+.qs-panel {
+  background-color: $background;
+  border: 2px solid rgba($foreground, 0.1);
+  border-radius: $rad;
+  padding: 14px;
+  color: $foreground;
+}
+
+.qs-bat-text {
+  color: $foreground;
+  font-weight: bold;
+  padding-left: 4px;
+}
+
+.qs-action {
+  background-color: rgba($foreground, 0.08);
+  border-radius: 999px;
+  padding: 8px;
+  margin-left: 4px;
+}
+
+.qs-action:hover {
+  background-color: rgba($accent, 0.3);
+}
+
+.qs-slider scale {
+  color: $foreground;
+}
+
+.qs-slider scale trough {
+  background-color: rgba($foreground, 0.1);
+  min-height: 8px;
+  border-radius: 999px;
+}
+
+.qs-slider scale trough highlight {
+  background-color: $accent;
+  border-radius: 999px;
+  margin: 0px;
+}
+
+.qs-slider scale slider {
+  background-color: $accent;
+  border: 0;
+  border-radius: 999px;
+  min-width: 14px;
+  min-height: 14px;
+  margin: -4px;
+}
+
+.qs-pill {
+  background-color: rgba($foreground, 0.08);
+  border-radius: 999px;
+  padding: 8px 14px;
+  color: $foreground;
+}
+
+.qs-pill:hover {
+  background-color: rgba($foreground, 0.14);
+}
+
+.qs-pill-active {
+  background-color: $accent;
+  color: $background;
+}
+
+.qs-pill-active:hover {
+  background-color: $accent;
+}
+
+.qs-pill-title {
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.qs-pill-sub {
+  font-size: 11px;
+  opacity: 0.75;
+}

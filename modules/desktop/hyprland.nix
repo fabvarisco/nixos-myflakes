@@ -107,6 +107,9 @@ in
     # Brightness control
     brightnessctl
 
+    # Night light (EWW quick-settings)
+    hyprshade
+
     # Bluetooth
     blueman
 
@@ -126,22 +129,19 @@ in
     papirus-icon-theme
   ];
 
-  # Config symlinks
-  systemd.tmpfiles.rules = [
-    "L+ /home/fabvarisco/.config/hypr - - - - ${../../config/hyprland}"
-    "L+ /home/fabvarisco/.config/eww - - - - ${../../config/hyprland/eww}"
-    "L+ /home/fabvarisco/.config/swaync - - - - ${../../config/hyprland/swaync}"
-    "L+ /home/fabvarisco/.config/wlogout - - - - ${../../config/hyprland/wlogout}"
-    "d /home/fabvarisco/.config/wal 0755 fabvarisco users -"
-    "L+ /home/fabvarisco/.config/wal/templates - - - - ${../../config/shared/wal/templates}"
-    "L+ /home/fabvarisco/.config/wal/colors-eww-default.scss - - - - ${../../config/shared/wal/colors-eww-default.scss}"
-    "L+ /home/fabvarisco/.config/wal/colors-swaync-default.css - - - - ${../../config/shared/wal/colors-swaync-default.css}"
-    "d /home/fabvarisco/.mozilla 0755 fabvarisco users -"
-    "d /home/fabvarisco/.mozilla/native-messaging-hosts 0755 fabvarisco users -"
-    "L+ /home/fabvarisco/.mozilla/native-messaging-hosts/pywalfox.json - - - - ${pywalfoxManifest}"
-    "d /home/fabvarisco/.config/gtk-3.0 0755 fabvarisco users -"
-    "L+ /home/fabvarisco/.config/gtk-3.0/bookmarks - - - - ${gtkBookmarks}"
-  ];
+  # Config symlinks via home-manager
+  home-manager.users.fabvarisco = {
+    xdg.configFile = {
+      "eww".source    = ../../config/hyprland/eww;
+      "swaync".source = ../../config/hyprland/swaync;
+      "wlogout".source = ../../config/hyprland/wlogout;
+      "wal/templates".source                 = ../../config/shared/wal/templates;
+      "wal/colors-eww-default.scss".source   = ../../config/shared/wal/colors-eww-default.scss;
+      "wal/colors-swaync-default.css".source = ../../config/shared/wal/colors-swaync-default.css;
+      "gtk-3.0/bookmarks".source = gtkBookmarks;
+    };
+    home.file.".mozilla/native-messaging-hosts/pywalfox.json".source = pywalfoxManifest;
+  };
 
   # Wallpaper slideshow service
   systemd.user.services.wallpaper-slideshow = {

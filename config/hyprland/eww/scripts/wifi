@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
+iface() {
+  ls /sys/class/net 2>/dev/null | grep -E '^wl' | head -n1
+}
+
 strength=`iwconfig 2>/dev/null | grep "Link Quality=" | awk -F'=' '{ print $2 }' | awk -F'/' '{ print $1 }'`
-state=`iwconfig 2>/dev/null | grep ESSID | awk -F':' '{ print $2 }' | xargs`
 wf=`echo "${strength:-0}*100/70" | bc 2>/dev/null || echo 0`
 
 icon() {
@@ -26,8 +29,35 @@ percentage() {
   fi
 }
 
-if [[ $1 == icon ]]; then
-  icon
-elif [[ $1 == percentage ]]; then
-  percentage
-fi
+ssid() {
+  iwconfig 2>/dev/null | grep ESSID | awk -F'ESSID:' '{print $2}' | tr -d '"' | xargs
+}
+
+state() {
+  local i; i=$(iface)
+  [[ -z "$i" ]] && { echo off; return; }
+  if [[ "$(cat /sys/class/net/$i/operstate 2>/dev/null)" == "up" ]] \
+     || iwconfig "$i" 2>/dev/null | grep -q "ESSID:\"."; then
+    echo on
+  else
+    echo off
+  fi
+}
+
+toggle() {
+  local i; i=$(iface)
+  [[ -z "$i" ]] && exit 0
+  if [[ "$(state)" == "on" ]]; then
+    iwctl device "$i" set-property Powered off
+  else
+    iwctl device "$i" set-property Powered on
+  fi
+}
+
+case "$1" in
+  icon)       icon ;;
+  percentage) percentage ;;
+  ssid)       ssid ;;
+  state)      state ;;
+  toggle)     toggle ;;
+esac
