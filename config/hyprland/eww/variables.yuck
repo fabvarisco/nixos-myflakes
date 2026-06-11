@@ -1,0 +1,25 @@
+(deflisten br :initial "0" "scripts/brightness")
+
+(deflisten vol-num :initial "0" "scripts/volume number")
+(deflisten vol-icon :initial "images/volume-high.svg" "scripts/volume icon")
+
+(defpoll wifi-icon :interval "10s" :initial "images/wifi-off.svg" "scripts/wifi icon")
+(defpoll wifi-strength :interval "10s" :initial "0%" "scripts/wifi percentage")
+
+(defpoll bat-icon :interval "10s" :initial "images/battery-100.svg" "scripts/battery icon")
+(defpoll bat-num :interval "10s" :initial "" "scripts/battery number")
+
+(defpoll ram :interval "5s" "free | awk '/Mem/{printf \"%.0f\", $3/$2*100}'")
+(defpoll cpu :interval "5s" "scripts/cpu")
+
+(defpoll time :interval "1s" "date '+%I:%M%P'")
+(defpoll date :interval "1h" "date '+%A %d %B, %Y'")
+
+(deflisten numworkspaces "scripts/workspaces")
+
+(defvar center-option "workspaces")
+(defvar reveal-option "workspaces")
+(defvar screenshot-option 1)
+(defvar screenshot-reveal 0)
+(defvar power-option 0)
+(defvar power-reveal 0)

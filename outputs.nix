@@ -21,11 +21,5 @@ in {
       hostname = "beelink";
       desktop = "hyprland";
     };
-
-    # Plasma
-    thinkpad-plasma = mkHost { hostname = "thinkpad"; desktop = "plasma"; };
-    beelink-plasma = mkHost { hostname = "beelink"; desktop = "plasma"; };
-
-    # TODO gnome
   };
 }

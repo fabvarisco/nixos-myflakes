@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+brightness_pct() {
+  current=$(brightnessctl get)
+  max=$(brightnessctl max)
+  echo $((current * 100 / max))
+}
+
+brightness_pct
+inotifywait -m -e modify /sys/class/backlight/*/brightness 2>/dev/null \
+  | while read -r _; do brightness_pct; done

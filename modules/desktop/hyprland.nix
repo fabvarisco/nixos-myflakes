@@ -114,6 +114,13 @@ in
     socat
     jq
 
+    # EWW widget dependencies
+    upower
+    inotify-tools
+    wirelesstools
+    bc
+    python3
+
     # GTK theming
     gnome-themes-extra
     papirus-icon-theme

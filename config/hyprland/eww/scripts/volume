@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+icon() {
+  muted=$(pamixer --get-mute 2>/dev/null || echo "true")
+  lvl=$(pamixer --get-volume 2>/dev/null || echo "0")
+  if [[ $muted == "true" ]]; then
+    echo "images/volume-off.svg"
+  elif [[ $lvl -le 33 ]]; then
+    echo "images/volume-low.svg"
+  elif [[ $lvl -le 66 ]]; then
+    echo "images/volume-medium.svg"
+  else
+    echo "images/volume-high.svg"
+  fi
+}
+
+number() {
+  muted=$(pamixer --get-mute 2>/dev/null || echo "true")
+  if [[ $muted == "true" ]]; then
+    echo "muted"
+  else
+    pamixer --get-volume 2>/dev/null || echo "0"
+  fi
+}
+
+if [[ $1 == number ]]; then
+  while true; do
+    number
+    sleep 1
+  done
+elif [[ $1 == icon ]]; then
+  while true; do
+    icon
+    sleep 1
+  done
+fi

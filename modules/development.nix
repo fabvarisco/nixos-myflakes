@@ -5,7 +5,7 @@
     git
     wget
     gh
-    vscode
+    (vscode.override { commandLineArgs = "--password-store=gnome-libsecret"; })
     nodejs_24
     claude-code
     fastfetch

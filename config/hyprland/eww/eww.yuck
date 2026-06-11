@@ -1,60 +1,440 @@
-(defpoll clock :interval "1s"
-  `date '+%H:%M'`)
+(include "variables.yuck")
 
-(defpoll date-str :interval "60s"
-  `date '+%d/%m/%Y'`)
+; Tray
+(defwidget tray []
+  (box
+    :class "tray"
+    :halign "end"
+    :space-evenly false
+    (box
+      :class "tray-item wifi"
+      :spacing 0
+      :space-evenly false
+      (image :class "icon wifi-icon" :path wifi-icon :image-height "20")
+      (label :class "text wifi-text" :text wifi-strength))
+    (eventbox
+      :cursor "pointer"
+      :onclick "pamixer --toggle-mute"
+      (box
+        :class "tray-item vol"
+        :spacing 0
+        :space-evenly false
+        (image :class "icon vol-icon" :path vol-icon :image-height "20")
+        (label :class "text vol-text" :text "${vol-num == '' ? '--' : vol-num == 'muted' ? 'muted' : vol-num + '%'}")))
+    (box
+      :class "tray-item bat"
+      :spacing 0
+      :space-evenly false
+      (image :class "icon bat-icon" :path bat-icon :image-height "26")
+      (label :class "text bat-text" :text "${bat-num == '' ? '--' : bat-num}%"))
+    (box
+      :class "tray-item br"
+      :spacing 0
+      :space-evenly false
+      (image :class "icon br-icon" :path "images/brightness.svg" :image-height "20")
+      (label :class "text vol-text" :text "${br == '' ? '--' : br}%"))
+    (box
+      :class "tray-item ram"
+      :spacing 0
+      :space-evenly false
+      (label :class "icon ram-icon" :text " ")
+      (label :class "text ram-text" :text "${ram}%"))
+    (box
+      :class "tray-item cpu"
+      :spacing 0
+      :space-evenly false
+      (label :class "icon cpu-icon" :text " ")
+      (label :class "text cpu-text" :text "${cpu}%"))
+    (box
+      :class "tray-item"
+      :spacing 0
+      :space-evenly false
+      (image :class "icon systray-icon" :path "images/tray.svg" :image-height "20")
+      (systray
+        :spacing 10
+        :orientation "h"
+        :space-evenly true
+        :icon-size "20"))
+    (eventbox
+      :cursor "pointer"
+      :onclick "bash -c 'opt=$(eww get center-option); if [ \"$opt\" = \"powermenu\" ]; then eww update center-option=workspaces reveal-option=workspaces power-reveal=0; else eww update center-option=powermenu reveal-option=powermenu; fi'"
+      (box
+        :class "tray-item pwr-toggle"
+        :spacing 0
+        :space-evenly false
+        (image :class "icon" :path "images/shutdown.svg" :image-height "20")))
+    ))
 
-(defpoll cpu-usage :interval "3s"
-  `top -bn1 | grep "Cpu(s)" | awk '{print int($2)}'`)
+; Calendar popup
+(defwidget calendar-popup []
+  (box
+    :class "calendar-popup"
+    :orientation "v"
+    (calendar
+      :show-details false
+      :show-day-names true
+      :show-heading true
+      :show-week-numbers false)))
 
-(defpoll volume :interval "2s"
-  `pamixer --get-volume 2>/dev/null || echo "0"`)
+(defwindow calendar
+  :stacking "overlay"
+  :monitor "0"
+  :exclusive false
+  :namespace "calendar"
+  :geometry (geometry
+    :x "10px"
+    :y "40px"
+    :width "230px"
+    :height "0%"
+    :anchor "top left")
+  (calendar-popup))
 
-(defpoll battery :interval "30s"
-  `cat /sys/class/power_supply/BAT*/capacity 2>/dev/null | head -1 || echo ""`)
-
-(deflisten workspaces :initial "[]"
-  `hyprctl workspaces -j | jq '[.[] | {id:.id}] | sort_by(.id)'`)
-
-(deflisten active-ws :initial 1
-  `socat -u UNIX-CONNECT:/tmp/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock - | stdbuf -o0 grep 'workspace>>' | stdbuf -o0 sed 's/workspace>>//' | stdbuf -o0 tr -d '\n'`)
-
-(deflisten active-window :initial ""
-  `socat -u UNIX-CONNECT:/tmp/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock - | stdbuf -o0 grep 'activewindowtitle>>' | stdbuf -o0 sed 's/activewindowtitle>>//'`)
-
+; Workspaces
 (defwidget workspaces []
-  (box :class "workspaces" :spacing 4 :halign "start"
-    (for ws in workspaces
-      (button
-        :class {ws.id == active-ws ? "ws-btn active" : "ws-btn"}
-        :onclick "hyprctl dispatch workspace ${ws.id}"
-        "${ws.id}"))))
+  (box
+    :class "workspaces"
+    :halign "center"
+    :hexpand false
+    (literal :content numworkspaces)))
+
+(defwidget time []
+  (box
+    :class "time"
+    :space-evenly false
+    :spacing 0
+    (label :class "text" :text "")
+    (image :class "icon clock-icon" :path "images/clock.svg" :image-width "20" :image-height "20")
+    (label :class "text" :text time)))
+
+(defwidget date []
+  (eventbox
+    :cursor "pointer"
+    :onclick "bash scripts/toggle-calendar"
+    (box
+      :class "date"
+      :halign "start"
+      :spacing 0
+      :space-evenly false
+      (image :class "icon date-icon" :path "images/calendar.svg" :image-width "20" :image-height "20")
+      (label :class "text" :text date))))
 
 (defwidget left []
-  (box :halign "start" :spacing 8
-    (workspaces)
-    (label :class "window-title" :text active-window :truncate true :limit-width 40)))
+  (box
+    :class "left"
+    :halign "start"
+    :space-evenly false
+    :spacing 0
+    (time)
+    (date)))
+
+(defwidget lock []
+  (eventbox
+    :cursor "pointer"
+    :onclick {power-option == 1 ? "scripts/powermenu; eww update power-option=1 power-reveal=0 center-option=workspaces reveal-option=workspaces" : "eww update power-option=1 power-reveal=1"}
+    (box
+      :class {power-option == 1 ? "pwr-active pwr-widget" : "pwr-inactive pwr-widget"}
+      :orientation "h"
+      :spacing 10
+      :space-evenly false
+      (image :path {power-option == 1 ? "images/lock-selected.svg" : "images/lock.svg"} :image-width 20 :image-height 20)
+      (revealer
+        :transition "slideright"
+        :reveal {power-reveal == 1 ? true : false}
+        :duration "250ms"
+      (label :text "Lock")))))
+
+(defwidget suspend []
+  (eventbox
+    :cursor "pointer"
+    :onclick {power-option == 2 ? "scripts/powermenu; eww update power-option=1 power-reveal=0 center-option=workspaces reveal-option=workspaces" : "eww update power-option=2 power-reveal=2"}
+    (box
+      :class {power-option == 2 ? "pwr-active pwr-widget" : "pwr-inactive pwr-widget"}
+      :orientation "h"
+      :spacing 10
+      :space-evenly false
+      (image :path {power-option == 2 ? "images/suspend-selected.svg" : "images/suspend.svg"} :image-width 20 :image-height 20)
+      (revealer
+        :transition "slideright"
+        :reveal {power-reveal == 2 ? true : false}
+        :duration "250ms"
+      (label :text "Suspend")))))
+
+(defwidget logout []
+  (eventbox
+    :cursor "pointer"
+    :onclick {power-option == 3 ? "scripts/powermenu; eww update power-option=1 power-reveal=0 center-option=workspaces reveal-option=workspaces" : "eww update power-option=3 power-reveal=3"}
+    (box
+      :class {power-option == 3 ? "pwr-active pwr-widget" : "pwr-inactive pwr-widget"}
+      :orientation "h"
+      :spacing 10
+      :space-evenly false
+      (image :path {power-option == 3 ? "images/logout-selected.svg" : "images/logout.svg"} :image-width 20 :image-height 20)
+      (revealer
+        :transition "slideright"
+        :reveal {power-reveal == 3 ? true : false}
+        :duration "250ms"
+      (label :text "Logout")))))
+
+(defwidget reboot []
+  (eventbox
+    :cursor "pointer"
+    :onclick {power-option == 4 ? "scripts/powermenu; eww update power-option=1 power-reveal=0 center-option=workspaces reveal-option=workspaces" : "eww update power-option=4 power-reveal=4"}
+    (box
+      :class {power-option == 4 ? "pwr-active pwr-widget" : "pwr-inactive pwr-widget"}
+      :orientation "h"
+      :spacing 10
+      :space-evenly false
+      (image :path {power-option == 4 ? "images/reboot-selected.svg" : "images/reboot.svg"} :image-width 20 :image-height 20)
+      (revealer
+        :transition "slideright"
+        :reveal {power-reveal == 4 ? true : false}
+        :duration "250ms"
+      (label :text "Reboot")))))
+
+(defwidget shutdown []
+  (eventbox
+    :cursor "pointer"
+    :onclick {power-option == 5 ? "scripts/powermenu; eww update power-option=1 power-reveal=0 center-option=workspaces reveal-option=workspaces" : "eww update power-option=5 power-reveal=5"}
+    (box
+      :class {power-option == 5 ? "pwr-active pwr-widget" : "pwr-inactive pwr-widget"}
+      :orientation "h"
+      :spacing 10
+      :space-evenly false
+      (image :path {power-option == 5 ? "images/shutdown-selected.svg" : "images/shutdown.svg"} :image-width 20 :image-height 20)
+      (revealer
+        :transition "slideright"
+        :reveal {power-reveal == 5 ? true : false}
+        :duration "250ms"
+      (label :text "Shutdown")))))
+
+(defwidget powermenu []
+  (box
+    :class "powermenu"
+    :spacing 25
+    :space-evenly false
+    :orientation "h"
+    (lock)
+    (suspend)
+    (logout)
+    (reboot)
+    (shutdown)))
+
+(defwidget fullscreen []
+  (eventbox
+    :cursor "pointer"
+    :onclick {screenshot-option == 1 ? "scripts/screenshooter; eww update screenshot-option=1 screenshot-reveal=0 center-option=workspaces reveal-option=workspaces" : "eww update screenshot-option=1 screenshot-reveal=1"}
+    (box
+      :class {screenshot-option == 1 ? "ss-active ss-widget" : "ss-inactive ss-widget"}
+      :spacing 10
+      :space-evenly false
+      :orientation "h"
+      (image :path {screenshot-option == 1 ? "images/screenshot-selected.svg" : "images/screenshot.svg"} :image-width 20 :image-height 20)
+      (revealer
+        :transition "slideright"
+        :reveal {screenshot-reveal == 1 ? true : false}
+        :duration "250ms"
+        (label :text "Fullscreen")))))
+
+(defwidget delay []
+  (eventbox
+    :cursor "pointer"
+    :onclick {screenshot-option == 2 ? "scripts/screenshooter; eww update screenshot-option=1 screenshot-reveal=0 center-option=workspaces reveal-option=workspaces" : "eww update screenshot-option=2 screenshot-reveal=2"}
+    (box
+      :class {screenshot-option == 2 ? "ss-active ss-widget" : "ss-inactive ss-widget"}
+      :spacing 10
+      :space-evenly false
+      :orientation "h"
+      (image :path {screenshot-option == 2 ? "images/alarm-selected.svg" : "images/alarm.svg"} :image-width 20 :image-height 20)
+      (revealer
+        :transition "slideright"
+        :reveal {screenshot-reveal == 2 ? true : false}
+        :duration "250ms"
+        (label :text "3s")))))
+
+(defwidget region []
+  (eventbox
+    :cursor "pointer"
+    :onclick {screenshot-option == 3 ? "scripts/screenshooter; eww update screenshot-option=1 screenshot-reveal=0 center-option=workspaces reveal-option=workspaces" : "eww update screenshot-option=3 screenshot-reveal=3"}
+    (box
+      :class {screenshot-option == 3 ? "ss-active ss-widget" : "ss-inactive ss-widget"}
+      :spacing 10
+      :space-evenly false
+      :orientation "h"
+      (image :path {screenshot-option == 3 ? "images/crop-selected.svg" : "images/crop.svg"} :image-width 20 :image-height 20)
+      (revealer
+        :transition "slideright"
+        :reveal {screenshot-reveal == 3 ? true : false}
+        :duration "250ms"
+        (label :text "Region")))))
+
+(defwidget screenshooter []
+  (box
+    :class "screenshooter"
+    :spacing 25
+    :space-evenly false
+    :orientation "h"
+    (fullscreen)
+    (delay)
+    (region)))
 
 (defwidget center []
-  (box :halign "center" :spacing 10
-    (label :class "clock" :text clock)
-    (label :class "date-label" :text date-str)))
+  (box
+    :spacing 0
+    :space-evenly false
+    (box
+      :visible {center-option == "screenshooter" ? true : false}
+      (revealer
+        :transition "crossfade"
+        :reveal {reveal-option == "screenshooter" ? true : false}
+        :duration "500ms"
+        (screenshooter)))
+    (box
+      :visible {center-option == "workspaces" ? true : false}
+      (workspaces))
+    (box
+      :visible {center-option == "powermenu" ? true : false}
+      (revealer
+        :transition "crossfade"
+        :reveal {reveal-option == "powermenu" ? true : false}
+        :duration "500ms"
+        (powermenu)))))
 
-(defwidget right []
-  (box :halign "end" :spacing 14
-    (label :class "cpu" :text "  ${cpu-usage}%")
-    (label :class "vol" :text "  ${volume}%")
-    (label :class "bat" :visible {battery != ""} :text "  ${battery}%")))
-
-(defwidget bar-widget []
-  (centerbox :class "bar"
+(defwidget bar []
+  (centerbox
+    :orientation "h"
+    :class "bar"
     (left)
     (center)
-    (right)))
+    (tray)))
 
 (defwindow bar
-  :monitor 0
-  :geometry (geometry :x 0 :y 0 :width "100%" :height "32px" :anchor "top center")
-  :stacking "fg"
+  :stacking "bg"
+  :monitor "0"
   :exclusive true
-  (bar-widget))
+  :namespace "bar"
+  :geometry (geometry
+    :x "0px"
+    :y "0%"
+    :width "100%"
+    :height "0%"
+    :anchor "top center")
+  (bar))
+
+(defwidget corners []
+  (box
+    :class "corners-box"
+    (box
+      :class "corners-left"
+      :hexpand false
+      :halign "start")
+    (box
+      :class "corners-right"
+      :hexpand false
+      :halign "end")))
+
+(defwidget corners-alt []
+  (box
+    :class "corners-box-alt"
+    (box
+      :class "corners-left-alt"
+      :hexpand false
+      :halign "start")
+    (box
+      :class "corners-right-alt"
+      :hexpand false
+      :halign "end")))
+
+(defwindow corners
+  :stacking "bg"
+  :monitor "0"
+  :exclusive false
+  :namespace "corners"
+  :geometry (geometry
+    :x "0px"
+    :y "0px"
+    :width "100%"
+    :height "0%"
+    :anchor "top center")
+  (corners))
+
+(defwindow corners_alt
+  :stacking "bg"
+  :monitor "0"
+  :exclusive false
+  :namespace "corners"
+  :geometry (geometry
+    :x "0px"
+    :y "0px"
+    :width "100%"
+    :height "0%"
+    :anchor "bottom center")
+  (corners-alt))
+
+; OSD
+(defwidget volume-osd []
+  (box
+    :class "osd volume-osd"
+    :spacing 0
+    :space-evenly false
+    :orientation "h"
+    :hexpand true
+    (image :class "osd-icon" :path vol-icon :image-height "45")
+    (scale
+      :flipped false
+      :orientation "h"
+      :value vol-num
+      :draw-value true
+      :min 0
+      :max 101
+    )
+  )
+)
+
+(defwindow volume_osd
+  :stacking "overlay"
+  :monitor "0"
+  :exclusive false
+  :namespace "volume-osd"
+  :geometry (geometry
+    :x "0px"
+    :y "5%"
+    :width "15%"
+    :height "5%"
+    :anchor "bottom center"
+  )
+  (volume-osd)
+)
+
+(defwidget brightness-osd []
+  (box
+    :class "osd brightness-osd"
+    :spacing 0
+    :space-evenly false
+    :orientation "h"
+    :hexpand true
+    (image :class "osd-icon" :path "images/brightness.svg" :image-height "45")
+    (scale
+      :flipped false
+      :orientation "h"
+      :value br
+      :draw-value true
+      :min 0
+      :max 101
+    )
+  )
+)
+
+(defwindow brightness_osd
+  :stacking "overlay"
+  :monitor "0"
+  :exclusive false
+  :namespace "brightness-osd"
+  :geometry (geometry
+    :x "0px"
+    :y "5%"
+    :width "15%"
+    :height "5%"
+    :anchor "bottom center"
+  )
+  (brightness-osd)
+)

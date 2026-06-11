@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+(eww active-windows | grep -q "^calendar:" && eww close calendar) || eww open calendar

@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+dc="fully-charged"
+nc="not charging"
+batno="discharging"
+batyes="charging"
+
+icon() {
+  state=$(upower -d 2>/dev/null | grep "state" | awk -F":" 'NR==1{ print $2 }' | xargs)
+  batlvl=$(upower -d 2>/dev/null | grep "percentage" | awk -F":" 'NR==1{ print $2 }' | awk -F"%" '{ print $1 }' | xargs)
+  if [[ -z "$state" ]]; then
+    echo "images/battery-100.svg"
+    return
+  fi
+  if [ "$state" == "$nc" ] || [ "$state" == "$dc" ] || [ "$state" == "$batyes" ]; then
+    echo "images/battery-charging.svg"
+  elif [ "$state" == "$batno" ]; then
+    if [[ $batlvl -lt 20 ]]; then
+      echo "images/battery-20.svg"
+    elif [[ $batlvl -lt 40 ]]; then
+      echo "images/battery-40.svg"
+    elif [[ $batlvl -lt 60 ]]; then
+      echo "images/battery-60.svg"
+    elif [[ $batlvl -lt 80 ]]; then
+      echo "images/battery-80.svg"
+    else
+      echo "images/battery-100.svg"
+    fi
+  else
+    echo "images/battery-100.svg"
+  fi
+}
+
+number() {
+  upower -d 2>/dev/null | grep "percentage" | awk -F":" 'NR==1{ print $2 }' | awk -F"%" '{ print $1 }' | xargs
+}
+
+if [[ $1 == icon ]]; then
+  icon
+elif [[ $1 == number ]]; then
+  number
+fi
