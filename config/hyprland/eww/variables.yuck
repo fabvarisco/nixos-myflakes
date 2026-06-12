@@ -3,6 +3,18 @@
 (deflisten vol-num :initial "0" "scripts/volume number")
 (deflisten vol-icon :initial "images/volume-high.svg" "scripts/volume icon")
 
+(deflisten mic-num  :initial "0" "scripts/mic number")
+(deflisten mic-icon :initial "images/microphone.svg" "scripts/mic icon")
+
+(defpoll sink-name      :interval "5s"  :initial "" "scripts/audio-sink current")
+(defpoll source-name    :interval "5s"  :initial "" "scripts/audio-source current")
+
+(defpoll power-profile  :interval "10s" :initial "balanced" "scripts/power-profile current")
+(defpoll power-profile-label :interval "10s" :initial "Balanced" "scripts/power-profile label")
+(defpoll power-profile-icon  :interval "10s" :initial "images/power-profile-balanced.svg" "scripts/power-profile icon")
+
+(defpoll net-mode :interval "10s" :initial "wifi" "scripts/wifi mode")
+
 (defpoll wifi-icon :interval "10s" :initial "images/wifi-off.svg" "scripts/wifi icon")
 (defpoll wifi-strength :interval "10s" :initial "0%" "scripts/wifi percentage")
 
@@ -11,7 +23,6 @@
 (defpoll has-battery :interval "1h" :initial "false" "compgen -G '/sys/class/power_supply/BAT*' >/dev/null && echo true || echo false")
 
 (defpoll wifi-ssid   :interval "10s" :initial ""    "scripts/wifi ssid")
-(defpoll wifi-state  :interval "10s" :initial "off" "scripts/wifi state")
 (defpoll bt-state    :interval "10s" :initial "off" "scripts/bluetooth state")
 (defpoll bt-device   :interval "10s" :initial ""    "scripts/bluetooth device")
 (defpoll night-light :interval "10s" :initial "off" "scripts/night-light state")
@@ -24,6 +35,8 @@
 (defpoll date :interval "1h" "date '+%A %d %B, %Y'")
 
 (deflisten numworkspaces "scripts/workspaces")
+
+(deflisten notif :initial "{}" "scripts/notification-daemon")
 
 (defvar center-option "workspaces")
 (defvar reveal-option "workspaces")

@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Dismiss the current notification via DBus CloseNotification.
+# Bound to super+N in hyprland.conf.
+
+id=$(eww get notif 2>/dev/null | grep -oE '"id"[[:space:]]*:[[:space:]]*[0-9]+' | grep -oE '[0-9]+$')
+[[ -z "$id" || "$id" == "0" ]] && exit 0
+
+dbus-send --session \
+  --dest=org.freedesktop.Notifications \
+  --type=method_call \
+  /org/freedesktop/Notifications \
+  org.freedesktop.Notifications.CloseNotification \
+  "uint32:$id"

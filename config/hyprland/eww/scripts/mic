@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+icon() {
+  muted=$(pamixer --default-source --get-mute 2>/dev/null || echo "true")
+  if [[ $muted == "true" ]]; then
+    echo "images/microphone-muted.svg"
+  else
+    echo "images/microphone.svg"
+  fi
+}
+
+number() {
+  muted=$(pamixer --default-source --get-mute 2>/dev/null || echo "true")
+  if [[ $muted == "true" ]]; then
+    echo "muted"
+  else
+    pamixer --default-source --get-volume 2>/dev/null || echo "0"
+  fi
+}
+
+case "$1" in
+  number)
+    while true; do number; sleep 1; done ;;
+  icon)
+    while true; do icon; sleep 1; done ;;
+  toggle)
+    pamixer --default-source -t ;;
+  set)
+    pamixer --default-source --set-volume "$2" ;;
+esac

@@ -1,0 +1,164 @@
+#!/usr/bin/env python3
+"""
+Notification daemon for eww.
+
+Owns org.freedesktop.Notifications on the session bus and prints one JSON line
+per state change to stdout. eww `deflisten` reads this stream and renders the
+top-center notification widget.
+
+Single-slot policy: a new notification replaces the previous one. Critical
+urgency notifications never time out; normal=5s, low=3s, unless the client
+provides a non-default expire_timeout.
+"""
+import asyncio
+import json
+import os
+import sys
+from typing import Optional
+
+from dbus_next.aio import MessageBus
+from dbus_next.service import ServiceInterface, method, signal
+from dbus_next import BusType, Variant
+from dbus_next.constants import RequestNameReply
+
+
+URGENCY = {0: "low", 1: "normal", 2: "critical"}
+DEFAULT_TIMEOUT_MS = {0: 3000, 1: 5000, 2: 0}  # 0 = never
+
+CLOSE_REASON = {
+    "expired": 1,
+    "dismissed": 2,
+    "closed": 3,
+}
+
+
+def emit(state: Optional[dict]) -> None:
+    sys.stdout.write(json.dumps(state or {}) + "\n")
+    sys.stdout.flush()
+
+
+def pick_icon(app_icon: str, hints: dict) -> str:
+    if app_icon and (app_icon.startswith("/") or app_icon.startswith("file://")):
+        return app_icon.removeprefix("file://")
+    image_path = hints.get("image-path") or hints.get("image_path")
+    if image_path and isinstance(image_path, Variant):
+        v = image_path.value
+        if isinstance(v, str) and (v.startswith("/") or v.startswith("file://")):
+            return v.removeprefix("file://")
+    return ""
+
+
+class Daemon(ServiceInterface):
+    def __init__(self):
+        super().__init__("org.freedesktop.Notifications")
+        self._next_id = 1
+        self._current: Optional[dict] = None
+        self._timeout_task: Optional[asyncio.Task] = None
+
+    @method()
+    def GetCapabilities(self) -> "as":  # noqa: F722
+        return ["body", "body-markup", "icon-static", "actions", "persistence"]
+
+    @method()
+    def GetServerInformation(self) -> "ssss":  # noqa: F722
+        return ["eww-notifd", "fabvarisco", "1.0", "1.2"]
+
+    @method()
+    def Notify(
+        self,
+        app_name: "s",          # noqa: F722
+        replaces_id: "u",       # noqa: F722
+        app_icon: "s",          # noqa: F722
+        summary: "s",           # noqa: F722
+        body: "s",              # noqa: F722
+        actions: "as",          # noqa: F722
+        hints: "a{sv}",         # noqa: F722
+        expire_timeout: "i",    # noqa: F722
+    ) -> "u":                   # noqa: F722
+        if replaces_id != 0:
+            nid = replaces_id
+        else:
+            nid = self._next_id
+            self._next_id += 1
+
+        urg_var = hints.get("urgency")
+        urgency_lvl = urg_var.value if isinstance(urg_var, Variant) else 1
+        urgency_lvl = max(0, min(2, int(urgency_lvl)))
+
+        if expire_timeout < 0:
+            expire_timeout = DEFAULT_TIMEOUT_MS[urgency_lvl]
+
+        state = {
+            "id": nid,
+            "app": app_name or "",
+            "summary": summary or "",
+            "body": body or "",
+            "icon": pick_icon(app_icon, hints),
+            "urgency": URGENCY[urgency_lvl],
+            "timeout": expire_timeout,
+        }
+
+        # Replace previous notification (single-slot policy)
+        if self._timeout_task and not self._timeout_task.done():
+            self._timeout_task.cancel()
+        if self._current and self._current["id"] != nid:
+            self.NotificationClosed(self._current["id"], CLOSE_REASON["closed"])
+
+        self._current = state
+        emit(state)
+
+        if expire_timeout > 0:
+            self._timeout_task = asyncio.create_task(
+                self._expire(nid, expire_timeout / 1000.0)
+            )
+        return nid
+
+    @method()
+    def CloseNotification(self, id: "u"):  # noqa: F722, A002
+        if self._current and self._current["id"] == id:
+            self._current = None
+            emit(None)
+            if self._timeout_task and not self._timeout_task.done():
+                self._timeout_task.cancel()
+        self.NotificationClosed(id, CLOSE_REASON["closed"])
+
+    @signal()
+    def NotificationClosed(self, id, reason) -> "uu":  # noqa: F722, A002
+        return [id, reason]
+
+    @signal()
+    def ActionInvoked(self, id, action_key) -> "us":  # noqa: F722, A002
+        return [id, action_key]
+
+    async def _expire(self, nid: int, seconds: float) -> None:
+        try:
+            await asyncio.sleep(seconds)
+        except asyncio.CancelledError:
+            return
+        if self._current and self._current["id"] == nid:
+            self._current = None
+            emit(None)
+            self.NotificationClosed(nid, CLOSE_REASON["expired"])
+
+
+async def main() -> None:
+    bus = await MessageBus(bus_type=BusType.SESSION).connect()
+    daemon = Daemon()
+    bus.export("/org/freedesktop/Notifications", daemon)
+    reply = await bus.request_name("org.freedesktop.Notifications")
+    # Another daemon (swaync, dunst, ...) already owns the name → bail out so
+    # eww doesn't spawn us in a loop.
+    if reply not in (RequestNameReply.PRIMARY_OWNER, RequestNameReply.ALREADY_OWNER):
+        sys.stderr.write(
+            f"notification-daemon: name taken (reply={reply}); exiting\n"
+        )
+        sys.exit(1)
+    emit(None)
+    await asyncio.Future()
+
+
+if __name__ == "__main__":
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        pass

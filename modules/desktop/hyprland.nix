@@ -51,6 +51,11 @@ in
     xwayland.enable = true;
   };
 
+  # Power profile daemon (eww quick-settings cycle pill).
+  # mkDefault so hosts using TLP (e.g. ThinkPad) can disable it — the two
+  # are mutually exclusive.
+  services.power-profiles-daemon.enable = lib.mkDefault true;
+
   # XDG Portal for Hyprland (screen sharing, file dialogs, app communication)
   xdg.portal = {
     enable = true;
@@ -81,9 +86,9 @@ in
     hyprpaper
     hyprmon
 
-    # Notifications
-    swaynotificationcenter
+    # Notifications (custom eww-based daemon; see config/hyprland/eww/scripts/notification-daemon)
     libnotify
+    (python3.withPackages (ps: with ps; [ dbus-next ]))
 
     # OSD
     avizo
@@ -100,6 +105,10 @@ in
     pwvucontrol
     pamixer
     playerctl
+    wireplumber
+
+    # Power profile
+    power-profiles-daemon
 
     # Network TUI
     impala
@@ -122,7 +131,6 @@ in
     inotify-tools
     wirelesstools
     bc
-    python3
 
     # GTK theming
     gnome-themes-extra
@@ -133,11 +141,9 @@ in
   home-manager.users.fabvarisco = {
     xdg.configFile = {
       "eww".source    = ../../config/hyprland/eww;
-      "swaync".source = ../../config/hyprland/swaync;
       "wlogout".source = ../../config/hyprland/wlogout;
       "wal/templates".source                 = ../../config/shared/wal/templates;
       "wal/colors-eww-default.scss".source   = ../../config/shared/wal/colors-eww-default.scss;
-      "wal/colors-swaync-default.css".source = ../../config/shared/wal/colors-swaync-default.css;
       "gtk-3.0/bookmarks".source = gtkBookmarks;
     };
     home.file.".mozilla/native-messaging-hosts/pywalfox.json".source = pywalfoxManifest;

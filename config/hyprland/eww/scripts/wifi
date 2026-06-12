@@ -54,10 +54,30 @@ toggle() {
   fi
 }
 
+eth_iface() {
+  for i in /sys/class/net/e*; do
+    [[ -e "$i" ]] || continue
+    if [[ "$(cat $i/operstate 2>/dev/null)" == "up" ]]; then
+      basename "$i"
+      return
+    fi
+  done
+}
+
+mode() {
+  if [[ -n "$(eth_iface)" ]]; then
+    echo ethernet
+  elif [[ "$(state)" == "on" ]]; then
+    echo wifi
+  else
+    echo off
+  fi
+}
+
 case "$1" in
   icon)       icon ;;
   percentage) percentage ;;
   ssid)       ssid ;;
-  state)      state ;;
   toggle)     toggle ;;
+  mode)       mode ;;
 esac

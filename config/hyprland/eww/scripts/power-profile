@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# Manage system power profile via powerprofilesctl.
+# Profiles: performance | balanced | power-saver
+
+current() {
+  if command -v powerprofilesctl >/dev/null 2>&1; then
+    powerprofilesctl get 2>/dev/null || echo balanced
+  else
+    echo balanced
+  fi
+}
+
+cycle() {
+  command -v powerprofilesctl >/dev/null 2>&1 || exit 0
+  now=$(current)
+  case "$now" in
+    performance) next=balanced ;;
+    balanced)    next=power-saver ;;
+    *)           next=performance ;;
+  esac
+  powerprofilesctl set "$next" 2>/dev/null
+}
+
+set_profile() {
+  command -v powerprofilesctl >/dev/null 2>&1 || exit 0
+  powerprofilesctl set "$1" 2>/dev/null
+}
+
+label() {
+  case "$(current)" in
+    performance) echo Performance ;;
+    balanced)    echo Balanced ;;
+    power-saver) echo Saver ;;
+    *)           echo Balanced ;;
+  esac
+}
+
+icon() {
+  case "$(current)" in
+    performance) echo "images/power-profile-performance.svg" ;;
+    power-saver) echo "images/power-profile-saver.svg" ;;
+    *)           echo "images/power-profile-balanced.svg" ;;
+  esac
+}
+
+case "$1" in
+  current) current ;;
+  label)   label ;;
+  icon)    icon ;;
+  cycle)   cycle ;;
+  set)     set_profile "$2" ;;
+esac

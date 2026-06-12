@@ -9,11 +9,6 @@ WALLPAPER="$1"
 EWW_COLORS_DEFAULT="$HOME/.config/wal/colors-eww-default.scss"
 EWW_GENERATED_SCSS="$HOME/.cache/wal/eww-colors.scss"
 
-# SwayNC paths
-SWAYNC_STYLE_BASE="$HOME/.config/swaync/style-base.css"
-SWAYNC_COLORS_DEFAULT="$HOME/.config/wal/colors-swaync-default.css"
-SWAYNC_GENERATED_CSS="$HOME/.cache/wal/swaync-style.css"
-
 # Ensure cache directory exists
 mkdir -p "$HOME/.cache/wal"
 
@@ -27,20 +22,12 @@ wal -i "$WALLPAPER" -n -q
 
 # Check if pywal generated colors
 COLORS_EWW="$HOME/.cache/wal/colors-eww.scss"
-COLORS_SWAYNC="$HOME/.cache/wal/colors-swaync.css"
 
 # Generate EWW SCSS colors
 if [ -f "$COLORS_EWW" ]; then
     cp "$COLORS_EWW" "$EWW_GENERATED_SCSS"
 else
     cp "$EWW_COLORS_DEFAULT" "$EWW_GENERATED_SCSS"
-fi
-
-# Generate SwayNC CSS
-if [ -f "$COLORS_SWAYNC" ]; then
-    cat "$COLORS_SWAYNC" "$SWAYNC_STYLE_BASE" > "$SWAYNC_GENERATED_CSS"
-else
-    cat "$SWAYNC_COLORS_DEFAULT" "$SWAYNC_STYLE_BASE" > "$SWAYNC_GENERATED_CSS"
 fi
 
 # Generate Starship config with pywal colors (disabled - using fixed colors)
@@ -98,11 +85,6 @@ if [ -f "$KITTY_COLORS" ]; then
     cp "$KITTY_COLORS" "$KITTY_THEME"
     # Send SIGUSR1 to all kitty instances to reload config
     pkill -SIGUSR1 kitty 2>/dev/null
-fi
-
-# Reload swaync CSS without restarting
-if command -v swaync-client >/dev/null 2>&1; then
-    swaync-client --reload-css 2>/dev/null
 fi
 
 # Optional: reload pywalfox if installed
