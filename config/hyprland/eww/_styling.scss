@@ -278,3 +278,64 @@ calendar button:hover {
   font-size: 11px;
   opacity: 0.75;
 }
+
+.media-popup {
+  background-color: $background;
+  border: 2px solid rgba($foreground, 0.1);
+  border-radius: $rad;
+  padding: 14px;
+  color: $foreground;
+}
+
+.media-art {
+  border-radius: $rad;
+}
+
+.media-art-placeholder {
+  min-width: 80px;
+  min-height: 80px;
+  background-color: rgba($foreground, 0.08);
+  border-radius: $rad;
+}
+
+.media-art-icon {
+  font-size: 36px;
+  padding: 0px;
+  color: rgba($foreground, 0.4);
+}
+
+.media-info {
+  padding-left: 4px;
+}
+
+.media-title {
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.media-artist {
+  font-size: 11px;
+  opacity: 0.75;
+}
+
+.media-btn {
+  font-size: 22px;
+  padding: 6px 8px;
+  border-radius: 999px;
+  background-color: rgba($foreground, 0.08);
+}
+
+.media-btn:hover {
+  background-color: rgba($foreground, 0.14);
+}
+
+.media-btn-play {
+  font-size: 26px;
+  background-color: $accent;
+  color: $background;
+  padding: 6px 10px;
+}
+
+.media-btn-play:hover {
+  background-color: $accent;
+}

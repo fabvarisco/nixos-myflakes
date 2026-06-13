@@ -17,6 +17,11 @@
 (defpoll night-light :interval "10s" :initial "off" "scripts/night-light state")
 (defpoll airplane    :interval "10s" :initial "off" "scripts/airplane state")
 
+(deflisten media-status :initial "Stopped" "playerctl --follow status 2>/dev/null || echo Stopped")
+(deflisten media-title  :initial "" "playerctl --follow metadata --format '{{title}}' 2>/dev/null || echo ''")
+(deflisten media-artist :initial "" "playerctl --follow metadata --format '{{artist}}' 2>/dev/null || echo ''")
+(defpoll   media-art    :interval "3s" :initial "" "scripts/media art")
+
 (defpoll ram :interval "5s" "free | awk '/Mem/{printf \"%.0f\", $3/$2*100}'")
 (defpoll cpu :interval "5s" "scripts/cpu")
 

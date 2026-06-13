@@ -17,6 +17,12 @@ let
     version = "0";
     src = "${inputs.vicinae-extensions}/extensions/bluetooth";
   };
+
+  agendaExtension = inputs.vicinae.packages.${system}.mkVicinaeExtension {
+    pname = "agenda";
+    version = "0";
+    src = "${inputs.vicinae-extensions}/extensions/agenda";
+  };
   # End Vicinae Extensions
 
 
@@ -33,6 +39,18 @@ let
     file:///home/fabvarisco/Developer Developer
     file:///home/fabvarisco/Documents Documents
   '';
+
+  hostname = config.networking.hostName;
+
+  hostConfigYuck = pkgs.writeText "host-config.yuck" ''
+    (defvar has-backlight "${if hostname == "thinkpad" then "true" else "false"}")
+  '';
+
+  ewwWithHostConfig = pkgs.runCommand "eww-config" {} ''
+    cp -r ${../../config/hyprland/eww}/. $out/
+    chmod -R u+w $out
+    cp ${hostConfigYuck} $out/host-config.yuck
+  '';
 in
 
 {
@@ -40,7 +58,7 @@ in
 
   services.vicinae-launcher = {
     enable = true;
-    extensions = [ nixExtension bluetoothExtension ];
+    extensions = [ nixExtension bluetoothExtension agendaExtension ];
   };
 
   # Hyprland
@@ -132,7 +150,7 @@ in
   # Config symlinks via home-manager
   home-manager.users.fabvarisco = {
     xdg.configFile = {
-      "eww".source    = ../../config/hyprland/eww;
+      "eww".source    = ewwWithHostConfig;
       "swaync".source = ../../config/hyprland/swaync;
       "wlogout".source = ../../config/hyprland/wlogout;
       "wal/templates".source                 = ../../config/shared/wal/templates;

@@ -1,4 +1,5 @@
 (include "variables.yuck")
+(include "host-config.yuck")
 
 ; Tray
 (defwidget tray []
@@ -6,24 +7,6 @@
     :class "tray"
     :halign "end"
     :space-evenly false
-    (eventbox
-      :cursor "pointer"
-      :onclick "scripts/qs-toggle"
-      (box
-        :class "tray-item wifi"
-        :spacing 0
-        :space-evenly false
-        (image :class "icon wifi-icon" :path wifi-icon :image-height "20")
-        (label :class "text wifi-text" :text wifi-strength)))
-    (eventbox
-      :cursor "pointer"
-      :onclick "scripts/qs-toggle"
-      (box
-        :class "tray-item vol"
-        :spacing 0
-        :space-evenly false
-        (image :class "icon vol-icon" :path vol-icon :image-height "20")
-        (label :class "text vol-text" :text "${vol-num == '' ? '--' : vol-num == 'muted' ? 'muted' : vol-num + '%'}")))
     (eventbox
       :cursor "pointer"
       :onclick "scripts/qs-toggle"
@@ -36,22 +19,22 @@
         (label :class "text bat-text" :text "${bat-num == '' ? '--' : bat-num}%")))
     (box
       :class "tray-item br"
+      :visible {has-backlight == "true"}
       :spacing 0
       :space-evenly false
       (image :class "icon br-icon" :path "images/brightness.svg" :image-height "20")
       (label :class "text vol-text" :text "${br == '' ? '--' : br}%"))
-    (box
-      :class "tray-item ram"
-      :spacing 0
-      :space-evenly false
-      (label :class "icon ram-icon" :text " ")
-      (label :class "text ram-text" :text "${ram}%"))
-    (box
-      :class "tray-item cpu"
-      :spacing 0
-      :space-evenly false
-      (label :class "icon cpu-icon" :text " ")
-      (label :class "text cpu-text" :text "${cpu}%"))
+    (eventbox
+      :cursor "pointer"
+      :onclick "scripts/media-toggle"
+      :visible {media-status != "Stopped"}
+      (box :class "tray-item media-toggle" :spacing 0 :space-evenly false
+        (label :class "icon" :text "󰝚")))
+    (eventbox
+      :cursor "pointer"
+      :onclick "scripts/qs-toggle"
+      (box :class "tray-item qs-toggle" :spacing 0 :space-evenly false
+        (label :class "icon" :text "󰍜")))
     (box
       :class "tray-item"
       :spacing 0
@@ -96,6 +79,42 @@
     :anchor "top left")
   (calendar-popup))
 
+; Media Player
+(defwidget mediaplayer-popup []
+  (box :class "media-popup" :orientation "v" :spacing 12 :space-evenly false
+    (box :spacing 12 :space-evenly false
+      (box :visible {media-art != ""}
+        (image :class "media-art" :path media-art :image-width 80 :image-height 80))
+      (box :class "media-art-placeholder" :visible {media-art == ""}
+        (label :class "icon media-art-icon" :text "󰝚"))
+      (box :class "media-info" :orientation "v" :spacing 4 :space-evenly false
+           :valign "center" :hexpand true
+        (label :class "media-title" :text media-title :halign "start"
+               :ellipsize "end" :limit-width 28)
+        (label :class "media-artist" :text media-artist :halign "start"
+               :ellipsize "end" :limit-width 28 :visible {media-artist != ""})))
+    (box :class "media-controls" :spacing 24 :halign "center" :space-evenly false
+      (eventbox :cursor "pointer" :onclick "scripts/media prev"
+        (label :class "media-btn" :text "󰒮"))
+      (eventbox :cursor "pointer" :onclick "scripts/media toggle"
+        (label :class "media-btn media-btn-play"
+               :text {media-status == "Playing" ? "󰏤" : "󰐎"}))
+      (eventbox :cursor "pointer" :onclick "scripts/media next"
+        (label :class "media-btn" :text "󰒭")))))
+
+(defwindow mediaplayer
+  :stacking "overlay"
+  :monitor "0"
+  :exclusive false
+  :namespace "mediaplayer"
+  :geometry (geometry
+    :x "10px"
+    :y "40px"
+    :width "340px"
+    :height "0%"
+    :anchor "top right")
+  (mediaplayer-popup))
+
 ; Quick Settings
 (defwidget qs-action [icon onclick]
   (eventbox :cursor "pointer" :onclick onclick
@@ -127,14 +146,19 @@
       (qs-action :icon "images/lock.svg"     :onclick "hyprlock & scripts/qs-toggle")
       (qs-action :icon "images/shutdown.svg" :onclick "scripts/qs-toggle; eww update center-option=powermenu reveal-option=powermenu"))
     (qs-slider :icon "images/volume-high.svg" :value vol-num :onchange "pamixer --set-volume {}")
-    (qs-slider :icon "images/brightness.svg"  :value br      :onchange "scripts/brightness set {}")
+    (box :visible {has-backlight == "true"}
+      (qs-slider :icon "images/brightness.svg" :value br :onchange "scripts/brightness set {}"))
     (box :orientation "v" :spacing 8 :space-evenly false
       (box :spacing 8 :space-evenly true
         (qs-pill :icon wifi-icon                 :label "Wi-Fi"       :sublabel wifi-ssid :active wifi-state  :onclick "scripts/wifi toggle")
         (qs-pill :icon "images/bluetooth.svg"    :label "Bluetooth"   :sublabel bt-device :active bt-state    :onclick "scripts/bluetooth toggle"))
-      (box :spacing 8 :space-evenly true
-        (qs-pill :icon "images/night-light.svg"  :label "Night Light" :sublabel ""        :active night-light :onclick "scripts/night-light toggle")
-        (qs-pill :icon "images/airplane.svg"     :label "Airplane"    :sublabel ""        :active airplane    :onclick "scripts/airplane toggle")))))
+      (box :class "qs-sysinfo" :spacing 20 :space-evenly true
+        (box :spacing 6 :space-evenly false
+          (label :class "icon" :text " ")
+          (label :class "text" :text "${cpu}%"))
+        (box :spacing 6 :space-evenly false
+          (label :class "icon" :text " ")
+          (label :class "text" :text "${ram}%")))))
 
 (defwindow quick-settings
   :stacking "overlay"
@@ -184,8 +208,7 @@
     :halign "start"
     :space-evenly false
     :spacing 0
-    (time)
-    (date)))
+    (workspaces)))
 
 (defwidget lock []
   (eventbox
@@ -350,7 +373,11 @@
         (screenshooter)))
     (box
       :visible {center-option == "workspaces" ? true : false}
-      (workspaces))
+      (box
+        :space-evenly false
+        :spacing 0
+        (time)
+        (date)))
     (box
       :visible {center-option == "powermenu" ? true : false}
       (revealer

@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+(eww active-windows | grep -q "^mediaplayer:" && eww close mediaplayer) || eww open mediaplayer
