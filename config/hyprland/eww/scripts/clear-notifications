@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+HISTORY_FILE="${XDG_CACHE_HOME:-$HOME/.cache}/eww-notif-history.json"
+echo "[]" > "$HISTORY_FILE"

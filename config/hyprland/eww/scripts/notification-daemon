@@ -22,6 +22,24 @@ from dbus_next import BusType, Variant
 from dbus_next.constants import RequestNameReply
 
 
+HISTORY_FILE = os.path.join(
+    os.environ.get("XDG_CACHE_HOME", os.path.expanduser("~/.cache")),
+    "eww-notif-history.json",
+)
+
+
+def write_history(state: dict) -> None:
+    try:
+        with open(HISTORY_FILE) as f:
+            history = json.load(f)
+    except Exception:
+        history = []
+    history.insert(0, state)
+    history = history[:50]
+    with open(HISTORY_FILE, "w") as f:
+        json.dump(history, f)
+
+
 URGENCY = {0: "low", 1: "normal", 2: "critical"}
 DEFAULT_TIMEOUT_MS = {0: 3000, 1: 5000, 2: 0}  # 0 = never
 
@@ -106,6 +124,7 @@ class Daemon(ServiceInterface):
 
         self._current = state
         emit(state)
+        write_history(state)
 
         if expire_timeout > 0:
             self._timeout_task = asyncio.create_task(

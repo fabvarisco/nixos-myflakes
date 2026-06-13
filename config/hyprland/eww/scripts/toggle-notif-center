@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+(eww active-windows | grep -q "^notif-center:" && eww close notif-center) || eww open notif-center

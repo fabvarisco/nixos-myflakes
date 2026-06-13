@@ -45,39 +45,7 @@
         :orientation "h"
         :space-evenly true
         :icon-size "20"))
-    (eventbox
-      :cursor "pointer"
-      :onclick "bash -c 'opt=$(eww get center-option); if [ \"$opt\" = \"powermenu\" ]; then eww update center-option=workspaces reveal-option=workspaces power-reveal=0; else eww update center-option=powermenu reveal-option=powermenu; fi'"
-      (box
-        :class "tray-item pwr-toggle"
-        :spacing 0
-        :space-evenly false
-        (image :class "icon" :path "images/shutdown.svg" :image-height "20")))
     ))
-
-; Calendar popup
-(defwidget calendar-popup []
-  (box
-    :class "calendar-popup"
-    :orientation "v"
-    (calendar
-      :show-details false
-      :show-day-names true
-      :show-heading true
-      :show-week-numbers false)))
-
-(defwindow calendar
-  :stacking "overlay"
-  :monitor "0"
-  :exclusive false
-  :namespace "calendar"
-  :geometry (geometry
-    :x "10px"
-    :y "40px"
-    :width "230px"
-    :height "0%"
-    :anchor "top left")
-  (calendar-popup))
 
 ; Media Player
 (defwidget mediaplayer-popup []
@@ -158,7 +126,7 @@
           (label :class "text" :text "${cpu}%"))
         (box :spacing 6 :space-evenly false
           (label :class "icon" :text " ")
-          (label :class "text" :text "${ram}%")))))
+          (label :class "text" :text "${ram}%"))))))
 
 (defwindow quick-settings
   :stacking "overlay"
@@ -193,7 +161,7 @@
 (defwidget date []
   (eventbox
     :cursor "pointer"
-    :onclick "bash scripts/toggle-calendar"
+    :onclick "scripts/toggle-notif-center"
     (box
       :class "date"
       :halign "start"
@@ -386,6 +354,60 @@
         :duration "500ms"
         (powermenu)))))
 
+; Notification Center
+(defwidget notif-history-pane []
+  (box :class "notif-history-pane" :orientation "v" :spacing 10 :space-evenly false
+    (box :space-evenly false :spacing 0
+      (label :class "notif-history-title" :text "Notificações" :hexpand true :halign "start")
+      (eventbox :cursor "pointer" :onclick "scripts/clear-notifications"
+        (label :class "notif-clear-btn" :text "Limpar" :visible {notif-history != "[]"})))
+    (box :class "notif-empty-state" :orientation "v" :valign "center" :vexpand true
+         :visible {notif-history == "[]"}
+      (label :class "notif-empty-icon" :text "")
+      (label :class "notif-empty-text" :text "Sem notificações"))
+    (scroll :vscroll true :vexpand true :visible {notif-history != "[]"}
+      (box :orientation "v" :spacing 6 :space-evenly false
+        (for item in notif-history
+          (box :class "notif-item" :spacing 8 :space-evenly false :hexpand true
+            (box :visible {item.icon != ""}
+              (image :class "notif-icon" :path {item.icon} :image-width 28 :image-height 28))
+            (box :class "notif-item-content" :orientation "v" :spacing 2 :space-evenly false :hexpand true
+              (label :class "notif-summary" :text {item.summary} :halign "start"
+                     :ellipsize "end" :limit-width 24)
+              (label :class "notif-body" :text {item.body} :halign "start"
+                     :ellipsize "end" :limit-width 28 :visible {item.body != ""}))
+            (eventbox :cursor "pointer" :onclick "scripts/dismiss-from-history {item.id}"
+              (label :class "notif-dismiss" :text ""))))))))
+
+(defwidget notif-calendar-pane []
+  (box :class "notif-calendar-pane" :orientation "v" :spacing 8 :space-evenly false
+    (label :class "notif-cal-day"  :text date-day  :halign "start")
+    (label :class "notif-cal-date" :text date-full :halign "start")
+    (calendar
+      :show-details false
+      :show-day-names true
+      :show-heading true
+      :show-week-numbers false)))
+
+(defwidget notif-center-panel []
+  (box :class "notif-center" :spacing 0 :space-evenly false
+    (notif-history-pane)
+    (box :class "notif-center-sep")
+    (notif-calendar-pane)))
+
+(defwindow notif-center
+  :stacking "overlay"
+  :monitor "0"
+  :exclusive false
+  :namespace "notif-center"
+  :geometry (geometry
+    :x "0px"
+    :y "40px"
+    :width "640px"
+    :height "420px"
+    :anchor "top center")
+  (notif-center-panel))
+
 (defwidget bar []
   (centerbox
     :orientation "h"
@@ -525,3 +547,29 @@
   )
   (brightness-osd)
 )
+
+; Notification
+(defwidget notification-popup []
+  (box :class "notif-popup" :orientation "v" :spacing 6 :space-evenly false
+    :visible {notif != "{}"}
+    (box :spacing 10 :space-evenly false
+      (box :visible {notif.icon != ""}
+        (image :class "notif-icon" :path {notif.icon} :image-width 32 :image-height 32))
+      (box :orientation "v" :spacing 2 :space-evenly false
+        (label :class "notif-summary" :text {notif.summary} :halign "start"
+               :ellipsize "end" :limit-width 36)
+        (label :class "notif-body" :text {notif.body} :halign "start"
+               :ellipsize "end" :limit-width 40 :visible {notif.body != ""})))))
+
+(defwindow notification
+  :stacking "overlay"
+  :monitor "0"
+  :exclusive false
+  :namespace "notification"
+  :geometry (geometry
+    :x "0px"
+    :y "40px"
+    :width "360px"
+    :height "0%"
+    :anchor "top center")
+  (notification-popup))

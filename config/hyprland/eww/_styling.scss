@@ -165,11 +165,81 @@ tooltip {
   padding-left: 12px;
 }
 
-.calendar-popup {
+.notif-center {
   background-color: $background;
   border: 2px solid rgba($foreground, 0.1);
   border-radius: $rad;
-  padding: 8px;
+  min-height: 400px;
+}
+
+.notif-history-pane {
+  padding: 14px;
+  min-width: 320px;
+}
+
+.notif-history-title {
+  font-weight: bold;
+  font-size: 14px;
+  color: $foreground;
+  margin-bottom: 4px;
+}
+
+.notif-clear-btn {
+  font-size: 12px;
+  color: rgba($foreground, 0.5);
+}
+
+.notif-clear-btn:hover { color: $accent; }
+
+.notif-empty-state { padding: 20px 0px; }
+
+.notif-empty-icon {
+  font-size: 48px;
+  color: rgba($foreground, 0.15);
+}
+
+.notif-empty-text {
+  font-size: 13px;
+  color: rgba($foreground, 0.4);
+  margin-top: 8px;
+}
+
+.notif-item {
+  background-color: rgba($foreground, 0.05);
+  border-radius: $rad;
+  padding: 8px 10px;
+}
+
+.notif-item:hover { background-color: rgba($foreground, 0.08); }
+
+.notif-dismiss {
+  color: rgba($foreground, 0.3);
+  padding: 0px 4px;
+}
+
+.notif-dismiss:hover { color: $foreground; }
+
+.notif-center-sep {
+  background-color: rgba($foreground, 0.1);
+  min-width: 1px;
+  margin: 14px 0px;
+}
+
+.notif-calendar-pane {
+  padding: 14px;
+  min-width: 280px;
+}
+
+.notif-cal-day {
+  font-size: 13px;
+  color: rgba($foreground, 0.6);
+}
+
+.notif-cal-date {
+  font-size: 22px;
+  font-weight: bold;
+  color: $foreground;
+  margin-bottom: 6px;
 }
 
 calendar {
@@ -338,4 +408,26 @@ calendar button:hover {
 
 .media-btn-play:hover {
   background-color: $accent;
+}
+
+.notif-popup {
+  background-color: $background;
+  border: 2px solid rgba($foreground, 0.1);
+  border-radius: $rad;
+  padding: 12px 14px;
+}
+
+.notif-icon {
+  border-radius: $rad;
+}
+
+.notif-summary {
+  font-weight: bold;
+  font-size: 13px;
+  color: $foreground;
+}
+
+.notif-body {
+  font-size: 12px;
+  color: rgba($foreground, 0.75);
 }

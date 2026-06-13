@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+ID="$1"
+HISTORY_FILE="${XDG_CACHE_HOME:-$HOME/.cache}/eww-notif-history.json"
+python3 - "$ID" "$HISTORY_FILE" <<'EOF'
+import json, sys
+nid, path = sys.argv[1], sys.argv[2]
+try:
+    with open(path) as f: h = json.load(f)
+    h = [n for n in h if str(n.get("id", "")) != nid]
+    with open(path, "w") as f: json.dump(h, f)
+except: pass
+EOF

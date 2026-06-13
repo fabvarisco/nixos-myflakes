@@ -100,7 +100,6 @@ in
     hyprmon
 
     # Notifications
-    swaynotificationcenter
     libnotify
 
     # OSD
@@ -140,7 +139,7 @@ in
     inotify-tools
     wirelesstools
     bc
-    python3
+    (python3.withPackages (ps: [ ps.dbus-next ]))
 
     # GTK theming
     gnome-themes-extra
@@ -151,11 +150,9 @@ in
   home-manager.users.fabvarisco = {
     xdg.configFile = {
       "eww".source    = ewwWithHostConfig;
-      "swaync".source = ../../config/hyprland/swaync;
       "wlogout".source = ../../config/hyprland/wlogout;
-      "wal/templates".source                 = ../../config/shared/wal/templates;
-      "wal/colors-eww-default.scss".source   = ../../config/shared/wal/colors-eww-default.scss;
-      "wal/colors-swaync-default.css".source = ../../config/shared/wal/colors-swaync-default.css;
+      "wal/templates".source               = ../../config/shared/wal/templates;
+      "wal/colors-eww-default.scss".source = ../../config/shared/wal/colors-eww-default.scss;
       "gtk-3.0/bookmarks".source = gtkBookmarks;
     };
     home.file.".mozilla/native-messaging-hosts/pywalfox.json".source = pywalfoxManifest;

@@ -78,6 +78,7 @@ case "$1" in
   icon)       icon ;;
   percentage) percentage ;;
   ssid)       ssid ;;
+  state)      state ;;
   toggle)     toggle ;;
   mode)       mode ;;
 esac
