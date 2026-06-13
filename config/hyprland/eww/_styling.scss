@@ -16,6 +16,20 @@
   border-radius: $rad;
 }
 
+.nix-launcher {
+  padding: 0px 12px;
+}
+
+.nix-launcher:hover .nix-logo {
+  color: $accent;
+}
+
+.nix-logo {
+  color: $foreground;
+  font-size: 20px;
+  padding: 0px 2px;
+}
+
 .time,
 .time-pak {
   color: $foreground;
@@ -319,6 +333,17 @@ calendar button:hover {
   margin: -4px;
 }
 
+.qs-slider-cycle {
+  background-color: rgba($foreground, 0.08);
+  border-radius: 999px;
+  padding: 6px;
+  margin-left: 4px;
+}
+
+.qs-slider-cycle:hover {
+  background-color: rgba($accent, 0.3);
+}
+
 .qs-pill {
   background-color: rgba($foreground, 0.08);
   border-radius: 999px;
@@ -359,6 +384,15 @@ calendar button:hover {
 
 .media-art {
   border-radius: $rad;
+}
+
+.media-tray-art {
+  border-radius: $rad;
+}
+
+.media-tray-title {
+  padding-left: 2px;
+  font-size: 13px;
 }
 
 .media-art-placeholder {

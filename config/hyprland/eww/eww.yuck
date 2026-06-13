@@ -28,8 +28,12 @@
       :cursor "pointer"
       :onclick "scripts/media-toggle"
       :visible {media-status != "Stopped"}
-      (box :class "tray-item media-toggle" :spacing 0 :space-evenly false
-        (label :class "icon" :text "󰝚")))
+      (box :class "tray-item media-toggle" :spacing 8 :space-evenly false
+        (box :visible {media-art != ""}
+          (image :class "media-tray-art" :path media-art :image-width 20 :image-height 20))
+        (label :class "icon" :text "󰝚" :visible {media-art == ""})
+        (label :class "text media-tray-title" :text media-title
+               :ellipsize "end" :limit-width 22 :visible {media-title != ""})))
     (eventbox
       :cursor "pointer"
       :onclick "scripts/qs-toggle"
@@ -95,6 +99,15 @@
     (scale :hexpand true :orientation "h" :value value :min 0 :max 101
            :onchange onchange :flipped false)))
 
+(defwidget qs-slider-cycle [icon value onchange cycleicon cycleonclick tooltip]
+  (box :class "qs-slider" :spacing 10 :space-evenly false
+    (image :path icon :image-width 18 :image-height 18)
+    (scale :hexpand true :orientation "h" :value value :min 0 :max 101
+           :onchange onchange :flipped false)
+    (eventbox :cursor "pointer" :onclick cycleonclick :tooltip tooltip
+      (box :class "qs-slider-cycle"
+        (image :path cycleicon :image-width 14 :image-height 14)))))
+
 (defwidget qs-pill [icon label sublabel active onclick]
   (eventbox :cursor "pointer" :onclick onclick :hexpand true
     (box :class {active == "on" ? "qs-pill qs-pill-active" : "qs-pill"}
@@ -113,7 +126,16 @@
         (label :class "qs-bat-text" :text "${bat-num == '' ? '--' : bat-num}%"))
       (qs-action :icon "images/lock.svg"     :onclick "hyprlock & scripts/qs-toggle")
       (qs-action :icon "images/shutdown.svg" :onclick "scripts/qs-toggle; eww update center-option=powermenu reveal-option=powermenu"))
-    (qs-slider :icon "images/volume-high.svg" :value vol-num :onchange "pamixer --set-volume {}")
+    (qs-slider-cycle :icon "images/volume-high.svg" :value vol-num
+                     :onchange "pamixer --set-volume {}"
+                     :cycleicon "images/headphones.svg"
+                     :cycleonclick "scripts/audio-sink cycle"
+                     :tooltip {sink-name == "" ? "Trocar saída de áudio" : "Saída: ${sink-name}"})
+    (qs-slider-cycle :icon mic-icon :value {mic-num == "muted" ? 0 : mic-num}
+                     :onchange "pamixer --default-source --set-volume {}"
+                     :cycleicon "images/microphone.svg"
+                     :cycleonclick "scripts/audio-source cycle"
+                     :tooltip {source-name == "" ? "Trocar entrada de microfone" : "Entrada: ${source-name}"})
     (box :visible {has-backlight == "true"}
       (qs-slider :icon "images/brightness.svg" :value br :onchange "scripts/brightness set {}"))
     (box :orientation "v" :spacing 8 :space-evenly false
@@ -170,12 +192,18 @@
       (image :class "icon date-icon" :path "images/calendar.svg" :image-width "20" :image-height "20")
       (label :class "text" :text date))))
 
+(defwidget nix-launcher []
+  (eventbox :cursor "pointer" :onclick "vicinae toggle"
+    (box :class "nix-launcher" :spacing 0 :space-evenly false
+      (label :class "nix-logo" :text ""))))
+
 (defwidget left []
   (box
     :class "left"
     :halign "start"
     :space-evenly false
     :spacing 0
+    (nix-launcher)
     (workspaces)))
 
 (defwidget lock []

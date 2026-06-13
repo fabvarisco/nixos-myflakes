@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
-# Manage default audio source (input) via wpctl (PipeWire/WirePlumber).
+# Manage default audio source (input) via wpctl + pw-metadata (PipeWire/WirePlumber).
+# wpctl set-default writes only "default.configured.audio.source"; WirePlumber's
+# session.priority logic may override that. Forcing "default.audio.source" via
+# pw-metadata makes the switch effective immediately.
 
 current() {
   wpctl inspect @DEFAULT_AUDIO_SOURCE@ 2>/dev/null \
@@ -14,23 +17,42 @@ list() {
     | sed -E 's/\[vol[[:space:]]*$//; s/^([0-9]+)\.[[:space:]]*(.*)[[:space:]]*$/\1|\2/; s/[[:space:]]*$//'
 }
 
+node_name() {
+  wpctl inspect "$1" 2>/dev/null \
+    | awk -F'"' '/node\.name/ {print $2; exit}'
+}
+
 set_default() {
-  wpctl set-default "$1" >/dev/null
+  local id="$1"
+  local name
+  name=$(node_name "$id")
+  [[ -z "$name" ]] && return 1
+  wpctl set-default "$id" >/dev/null
+  pw-metadata 0 default.audio.source "{\"name\":\"${name}\"}" >/dev/null
+}
+
+notify() {
+  command -v notify-send >/dev/null && notify-send -t 1500 -a audio "$@" >/dev/null 2>&1
 }
 
 cycle() {
   ids=( $(list | cut -d'|' -f1) )
-  [[ ${#ids[@]} -le 1 ]] && return
+  if [[ ${#ids[@]} -le 1 ]]; then
+    notify "Microfone" "Apenas uma entrada disponível"
+    return
+  fi
   cur_id=$(wpctl inspect @DEFAULT_AUDIO_SOURCE@ 2>/dev/null \
     | awk '/^id [0-9]+/ {gsub(",",""); print $2; exit}')
   for i in "${!ids[@]}"; do
     if [[ "${ids[$i]}" == "$cur_id" ]]; then
       next_idx=$(( (i + 1) % ${#ids[@]} ))
       set_default "${ids[$next_idx]}"
+      notify "Entrada de microfone" "$(current)"
       return
     fi
   done
   set_default "${ids[0]}"
+  notify "Entrada de microfone" "$(current)"
 }
 
 case "$1" in
