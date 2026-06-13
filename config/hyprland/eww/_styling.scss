@@ -279,142 +279,63 @@ calendar button:hover {
   opacity: 0.75;
 }
 
-.qs-cycle {
-  background-color: rgba($foreground, 0.08);
-  border-radius: 999px;
-  padding: 4px 10px;
+.media-popup {
+  background-color: $background;
+  border: 2px solid rgba($foreground, 0.1);
+  border-radius: $rad;
+  padding: 14px;
   color: $foreground;
 }
 
-.qs-cycle:hover {
-  background-color: rgba($foreground, 0.16);
+.media-art {
+  border-radius: $rad;
 }
 
-.qs-cycle-text {
-  font-size: 11px;
-  font-weight: bold;
+.media-art-placeholder {
+  min-width: 80px;
+  min-height: 80px;
+  background-color: rgba($foreground, 0.08);
+  border-radius: $rad;
 }
 
-.qs-cycle-arrow {
-  font-size: 13px;
-  opacity: 0.6;
+.media-art-icon {
+  font-size: 36px;
+  padding: 0px;
+  color: rgba($foreground, 0.4);
+}
+
+.media-info {
   padding-left: 4px;
 }
 
-.qs-profile-pill {
-  background-color: rgba($foreground, 0.08);
-  border-radius: 999px;
-  padding: 4px 10px;
-  color: $foreground;
-}
-
-.qs-profile-pill:hover {
-  background-color: rgba($foreground, 0.16);
-}
-
-.qs-profile-text {
-  font-size: 12px;
+.media-title {
   font-weight: bold;
-  padding-left: 2px;
+  font-size: 13px;
 }
 
-.qs-profile-performance {
-  background-color: rgba(#e07a5f, 0.85);
-  color: $background;
-}
-
-.qs-profile-performance:hover {
-  background-color: rgba(#e07a5f, 1);
-}
-
-.qs-profile-balanced {
-  background-color: rgba($accent, 0.45);
-  color: $foreground;
-}
-
-.qs-profile-balanced:hover {
-  background-color: rgba($accent, 0.6);
-}
-
-.qs-profile-power-saver {
-  background-color: rgba(#7fb069, 0.7);
-  color: $background;
-}
-
-.qs-profile-power-saver:hover {
-  background-color: rgba(#7fb069, 0.9);
-}
-
-.qs-metrics {
-  color: rgba($foreground, 0.7);
+.media-artist {
   font-size: 11px;
-  font-weight: bold;
+  opacity: 0.75;
 }
 
-.qs-footer {
-  border-top: 1px solid rgba($foreground, 0.08);
-  padding-top: 10px;
-}
-
-.qs-footer-btn {
-  background-color: rgba($foreground, 0.06);
-  border-radius: $rad;
-  padding: 8px 4px;
-  color: $foreground;
-}
-
-.qs-footer-btn:hover {
-  background-color: rgba($accent, 0.3);
-}
-
-.qs-footer-label {
-  font-size: 10px;
-  padding-top: 2px;
-}
-
-.notification {
-  background-color: $background;
-  border: 2px solid rgba($foreground, 0.12);
-  border-radius: $rad;
-  padding: 14px 16px;
-  color: $foreground;
-  margin: 0px 12px;
-  min-width: 360px;
-}
-
-.notification-critical {
-  border-color: rgba(#e07a5f, 0.85);
-  border-width: 2px;
-}
-
-.notification-low {
-  border-color: rgba($foreground, 0.08);
-}
-
-.notification-icon {
-  border-radius: $rad;
-  margin-right: 4px;
-}
-
-.notification-summary {
-  font-size: 14px;
-  font-weight: bold;
-  color: $foreground;
-}
-
-.notification-body {
-  font-size: 12px;
-  color: rgba($foreground, 0.75);
-}
-
-.notification-close {
-  color: rgba($foreground, 0.5);
-  font-size: 14px;
-  padding: 4px 8px;
+.media-btn {
+  font-size: 22px;
+  padding: 6px 8px;
   border-radius: 999px;
+  background-color: rgba($foreground, 0.08);
 }
 
-.notification-close:hover {
-  color: $foreground;
-  background-color: rgba($foreground, 0.1);
+.media-btn:hover {
+  background-color: rgba($foreground, 0.14);
+}
+
+.media-btn-play {
+  font-size: 26px;
+  background-color: $accent;
+  color: $background;
+  padding: 6px 10px;
+}
+
+.media-btn-play:hover {
+  background-color: $accent;
 }

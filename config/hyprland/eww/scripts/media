@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+CACHE="/tmp/eww-art"
+
+case "$1" in
+  status)
+    playerctl status 2>/dev/null || echo "Stopped"
+    ;;
+  title)
+    playerctl metadata --format "{{title}}" 2>/dev/null || echo ""
+    ;;
+  artist)
+    playerctl metadata --format "{{artist}}" 2>/dev/null || echo ""
+    ;;
+  art)
+    url=$(playerctl metadata mpris:artUrl 2>/dev/null)
+    if [[ -z "$url" ]]; then
+      echo ""
+    elif [[ "$url" == file://* ]]; then
+      echo "${url#file://}"
+    elif [[ "$url" == http* ]]; then
+      curl -s -o "$CACHE" "$url" 2>/dev/null && echo "$CACHE" || echo ""
+    else
+      echo ""
+    fi
+    ;;
+  toggle)
+    playerctl play-pause
+    ;;
+  next)
+    playerctl next
+    ;;
+  prev)
+    playerctl previous
+    ;;
+esac

@@ -17,6 +17,12 @@ let
     version = "0";
     src = "${inputs.vicinae-extensions}/extensions/bluetooth";
   };
+
+  agendaExtension = inputs.vicinae.packages.${system}.mkVicinaeExtension {
+    pname = "agenda";
+    version = "0";
+    src = "${inputs.vicinae-extensions}/extensions/agenda";
+  };
   # End Vicinae Extensions
 
 
@@ -33,6 +39,18 @@ let
     file:///home/fabvarisco/Developer Developer
     file:///home/fabvarisco/Documents Documents
   '';
+
+  hostname = config.networking.hostName;
+
+  hostConfigYuck = pkgs.writeText "host-config.yuck" ''
+    (defvar has-backlight "${if hostname == "thinkpad" then "true" else "false"}")
+  '';
+
+  ewwWithHostConfig = pkgs.runCommand "eww-config" {} ''
+    cp -r ${../../config/hyprland/eww}/. $out/
+    chmod -R u+w $out
+    cp ${hostConfigYuck} $out/host-config.yuck
+  '';
 in
 
 {
@@ -40,7 +58,7 @@ in
 
   services.vicinae-launcher = {
     enable = true;
-    extensions = [ nixExtension bluetoothExtension ];
+    extensions = [ nixExtension bluetoothExtension agendaExtension ];
   };
 
   # Hyprland
@@ -50,11 +68,6 @@ in
     portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
     xwayland.enable = true;
   };
-
-  # Power profile daemon (eww quick-settings cycle pill).
-  # mkDefault so hosts using TLP (e.g. ThinkPad) can disable it — the two
-  # are mutually exclusive.
-  services.power-profiles-daemon.enable = lib.mkDefault true;
 
   # XDG Portal for Hyprland (screen sharing, file dialogs, app communication)
   xdg.portal = {
@@ -86,9 +99,9 @@ in
     hyprpaper
     hyprmon
 
-    # Notifications (custom eww-based daemon; see config/hyprland/eww/scripts/notification-daemon)
+    # Notifications
+    swaynotificationcenter
     libnotify
-    (python3.withPackages (ps: with ps; [ dbus-next ]))
 
     # OSD
     avizo
@@ -105,10 +118,6 @@ in
     pwvucontrol
     pamixer
     playerctl
-    wireplumber
-
-    # Power profile
-    power-profiles-daemon
 
     # Network TUI
     impala
@@ -131,6 +140,7 @@ in
     inotify-tools
     wirelesstools
     bc
+    python3
 
     # GTK theming
     gnome-themes-extra
@@ -140,10 +150,12 @@ in
   # Config symlinks via home-manager
   home-manager.users.fabvarisco = {
     xdg.configFile = {
-      "eww".source    = ../../config/hyprland/eww;
+      "eww".source    = ewwWithHostConfig;
+      "swaync".source = ../../config/hyprland/swaync;
       "wlogout".source = ../../config/hyprland/wlogout;
       "wal/templates".source                 = ../../config/shared/wal/templates;
       "wal/colors-eww-default.scss".source   = ../../config/shared/wal/colors-eww-default.scss;
+      "wal/colors-swaync-default.css".source = ../../config/shared/wal/colors-swaync-default.css;
       "gtk-3.0/bookmarks".source = gtkBookmarks;
     };
     home.file.".mozilla/native-messaging-hosts/pywalfox.json".source = pywalfoxManifest;

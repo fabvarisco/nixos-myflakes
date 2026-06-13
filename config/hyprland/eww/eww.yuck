@@ -1,4 +1,5 @@
 (include "variables.yuck")
+(include "host-config.yuck")
 
 ; Tray
 (defwidget tray []
@@ -6,24 +7,6 @@
     :class "tray"
     :halign "end"
     :space-evenly false
-    (eventbox
-      :cursor "pointer"
-      :onclick "scripts/qs-toggle"
-      (box
-        :class "tray-item wifi"
-        :spacing 0
-        :space-evenly false
-        (image :class "icon wifi-icon" :path wifi-icon :image-height "20")
-        (label :class "text wifi-text" :text wifi-strength)))
-    (eventbox
-      :cursor "pointer"
-      :onclick "scripts/qs-toggle"
-      (box
-        :class "tray-item vol"
-        :spacing 0
-        :space-evenly false
-        (image :class "icon vol-icon" :path vol-icon :image-height "20")
-        (label :class "text vol-text" :text "${vol-num == '' ? '--' : vol-num == 'muted' ? 'muted' : vol-num + '%'}")))
     (eventbox
       :cursor "pointer"
       :onclick "scripts/qs-toggle"
@@ -36,22 +19,22 @@
         (label :class "text bat-text" :text "${bat-num == '' ? '--' : bat-num}%")))
     (box
       :class "tray-item br"
+      :visible {has-backlight == "true"}
       :spacing 0
       :space-evenly false
       (image :class "icon br-icon" :path "images/brightness.svg" :image-height "20")
       (label :class "text vol-text" :text "${br == '' ? '--' : br}%"))
-    (box
-      :class "tray-item ram"
-      :spacing 0
-      :space-evenly false
-      (label :class "icon ram-icon" :text " ")
-      (label :class "text ram-text" :text "${ram}%"))
-    (box
-      :class "tray-item cpu"
-      :spacing 0
-      :space-evenly false
-      (label :class "icon cpu-icon" :text " ")
-      (label :class "text cpu-text" :text "${cpu}%"))
+    (eventbox
+      :cursor "pointer"
+      :onclick "scripts/media-toggle"
+      :visible {media-status != "Stopped"}
+      (box :class "tray-item media-toggle" :spacing 0 :space-evenly false
+        (label :class "icon" :text "󰝚")))
+    (eventbox
+      :cursor "pointer"
+      :onclick "scripts/qs-toggle"
+      (box :class "tray-item qs-toggle" :spacing 0 :space-evenly false
+        (label :class "icon" :text "󰍜")))
     (box
       :class "tray-item"
       :spacing 0
@@ -96,6 +79,42 @@
     :anchor "top left")
   (calendar-popup))
 
+; Media Player
+(defwidget mediaplayer-popup []
+  (box :class "media-popup" :orientation "v" :spacing 12 :space-evenly false
+    (box :spacing 12 :space-evenly false
+      (box :visible {media-art != ""}
+        (image :class "media-art" :path media-art :image-width 80 :image-height 80))
+      (box :class "media-art-placeholder" :visible {media-art == ""}
+        (label :class "icon media-art-icon" :text "󰝚"))
+      (box :class "media-info" :orientation "v" :spacing 4 :space-evenly false
+           :valign "center" :hexpand true
+        (label :class "media-title" :text media-title :halign "start"
+               :ellipsize "end" :limit-width 28)
+        (label :class "media-artist" :text media-artist :halign "start"
+               :ellipsize "end" :limit-width 28 :visible {media-artist != ""})))
+    (box :class "media-controls" :spacing 24 :halign "center" :space-evenly false
+      (eventbox :cursor "pointer" :onclick "scripts/media prev"
+        (label :class "media-btn" :text "󰒮"))
+      (eventbox :cursor "pointer" :onclick "scripts/media toggle"
+        (label :class "media-btn media-btn-play"
+               :text {media-status == "Playing" ? "󰏤" : "󰐎"}))
+      (eventbox :cursor "pointer" :onclick "scripts/media next"
+        (label :class "media-btn" :text "󰒭")))))
+
+(defwindow mediaplayer
+  :stacking "overlay"
+  :monitor "0"
+  :exclusive false
+  :namespace "mediaplayer"
+  :geometry (geometry
+    :x "10px"
+    :y "40px"
+    :width "340px"
+    :height "0%"
+    :anchor "top right")
+  (mediaplayer-popup))
+
 ; Quick Settings
 (defwidget qs-action [icon onclick]
   (eventbox :cursor "pointer" :onclick onclick
@@ -108,17 +127,6 @@
     (scale :hexpand true :orientation "h" :value value :min 0 :max 101
            :onchange onchange :flipped false)))
 
-(defwidget qs-slider-with-cycle [icon value onchange onclick-icon cycle-label cycle-onclick]
-  (box :class "qs-slider" :spacing 10 :space-evenly false
-    (eventbox :cursor "pointer" :onclick onclick-icon
-      (image :path icon :image-width 18 :image-height 18))
-    (scale :hexpand true :orientation "h" :value value :min 0 :max 101
-           :onchange onchange :flipped false)
-    (eventbox :cursor "pointer" :onclick cycle-onclick
-      (box :class "qs-cycle" :spacing 4 :space-evenly false
-        (label :class "qs-cycle-text" :text {cycle-label == "" ? "—" : cycle-label})
-        (label :class "qs-cycle-arrow" :text "›")))))
-
 (defwidget qs-pill [icon label sublabel active onclick]
   (eventbox :cursor "pointer" :onclick onclick :hexpand true
     (box :class {active == "on" ? "qs-pill qs-pill-active" : "qs-pill"}
@@ -129,69 +137,28 @@
         (label :class "qs-pill-sub"   :text sublabel :halign "start"
                :visible {sublabel != ""})))))
 
-(defwidget qs-footer-btn [icon label onclick]
-  (eventbox :cursor "pointer" :onclick onclick :hexpand true
-    (box :class "qs-footer-btn" :orientation "v" :spacing 2 :space-evenly false
-      (image :path icon :image-width 18 :image-height 18)
-      (label :class "qs-footer-label" :text label))))
-
 (defwidget quick-settings-panel []
   (box :class "qs-panel" :orientation "v" :spacing 14 :space-evenly false
-    ; Linha 1: bateria (se houver) + power profile + ações rápidas
     (box :spacing 10 :space-evenly false
       (box :class "qs-bat" :spacing 6 :space-evenly false :hexpand true :halign "start"
-           :visible {has-battery == "true"}
         (image :path bat-icon :image-height 22)
         (label :class "qs-bat-text" :text "${bat-num == '' ? '--' : bat-num}%"))
-      (eventbox :cursor "pointer" :onclick "scripts/power-profile cycle"
-        (box :class "qs-profile-pill qs-profile-${power-profile}"
-             :spacing 6 :space-evenly false
-          (image :path power-profile-icon :image-width 16 :image-height 16)
-          (label :class "qs-profile-text" :text power-profile-label)))
-      (qs-action :icon "images/lock.svg"     :onclick "scripts/qs-toggle; hyprlock")
+      (qs-action :icon "images/lock.svg"     :onclick "hyprlock & scripts/qs-toggle")
       (qs-action :icon "images/shutdown.svg" :onclick "scripts/qs-toggle; eww update center-option=powermenu reveal-option=powermenu"))
-    ; Volume + seletor de saída
-    (qs-slider-with-cycle
-      :icon vol-icon
-      :value vol-num
-      :onchange "pamixer --set-volume {}"
-      :onclick-icon "pamixer -t"
-      :cycle-label sink-name
-      :cycle-onclick "scripts/audio-sink cycle")
-    ; Microfone + seletor de entrada
-    (qs-slider-with-cycle
-      :icon mic-icon
-      :value mic-num
-      :onchange "scripts/mic set {}"
-      :onclick-icon "scripts/mic toggle"
-      :cycle-label source-name
-      :cycle-onclick "scripts/audio-source cycle")
-    ; Brilho (só notebook)
-    (box :visible {has-battery == "true"}
-      (qs-slider :icon "images/brightness.svg"  :value br :onchange "scripts/brightness set {}"))
-    ; Pills 2x2
+    (qs-slider :icon "images/volume-high.svg" :value vol-num :onchange "pamixer --set-volume {}")
+    (box :visible {has-backlight == "true"}
+      (qs-slider :icon "images/brightness.svg" :value br :onchange "scripts/brightness set {}"))
     (box :orientation "v" :spacing 8 :space-evenly false
       (box :spacing 8 :space-evenly true
-        (qs-pill
-          :icon {net-mode == "ethernet" ? "images/ethernet.svg" : wifi-icon}
-          :label {net-mode == "ethernet" ? "Ethernet" : "Wi-Fi"}
-          :sublabel {net-mode == "ethernet" ? "Connected" : wifi-ssid}
-          :active {net-mode == "off" ? "off" : "on"}
-          :onclick "scripts/wifi toggle")
+        (qs-pill :icon wifi-icon                 :label "Wi-Fi"       :sublabel wifi-ssid :active wifi-state  :onclick "scripts/wifi toggle")
         (qs-pill :icon "images/bluetooth.svg"    :label "Bluetooth"   :sublabel bt-device :active bt-state    :onclick "scripts/bluetooth toggle"))
-      (box :spacing 8 :space-evenly true
-        (qs-pill :icon "images/night-light.svg"  :label "Night Light" :sublabel ""        :active night-light :onclick "scripts/night-light toggle")
-        (qs-pill :icon "images/airplane.svg"     :label "Airplane"    :sublabel ""        :active airplane    :onclick "scripts/airplane toggle")))
-    ; Métricas
-    (box :class "qs-metrics" :spacing 16 :space-evenly false :halign "center"
-      (label :text "CPU ${cpu}%")
-      (label :text "RAM ${ram}%"))
-    ; Footer power menu
-    (box :class "qs-footer" :spacing 6 :space-evenly true
-      (qs-footer-btn :icon "images/lock.svg"     :label "Lock"     :onclick "scripts/qs-toggle; hyprlock")
-      (qs-footer-btn :icon "images/logout.svg"   :label "Logout"   :onclick "scripts/qs-toggle; pkill Hyprland")
-      (qs-footer-btn :icon "images/reboot.svg"   :label "Reboot"   :onclick "scripts/qs-toggle; reboot")
-      (qs-footer-btn :icon "images/shutdown.svg" :label "Shutdown" :onclick "scripts/qs-toggle; shutdown -f now"))))
+      (box :class "qs-sysinfo" :spacing 20 :space-evenly true
+        (box :spacing 6 :space-evenly false
+          (label :class "icon" :text " ")
+          (label :class "text" :text "${cpu}%"))
+        (box :spacing 6 :space-evenly false
+          (label :class "icon" :text " ")
+          (label :class "text" :text "${ram}%")))))
 
 (defwindow quick-settings
   :stacking "overlay"
@@ -201,7 +168,7 @@
   :geometry (geometry
     :x "10px"
     :y "40px"
-    :width "380px"
+    :width "340px"
     :height "0%"
     :anchor "top right")
   (quick-settings-panel))
@@ -229,6 +196,7 @@
     :onclick "bash scripts/toggle-calendar"
     (box
       :class "date"
+      :halign "start"
       :spacing 0
       :space-evenly false
       (image :class "icon date-icon" :path "images/calendar.svg" :image-width "20" :image-height "20")
@@ -241,15 +209,6 @@
     :space-evenly false
     :spacing 0
     (workspaces)))
-
-(defwidget clock []
-  (box
-    :class "clock"
-    :halign "center"
-    :space-evenly false
-    :spacing 0
-    (time)
-    (date)))
 
 (defwidget lock []
   (eventbox
@@ -414,7 +373,11 @@
         (screenshooter)))
     (box
       :visible {center-option == "workspaces" ? true : false}
-      (clock))
+      (box
+        :space-evenly false
+        :spacing 0
+        (time)
+        (date)))
     (box
       :visible {center-option == "powermenu" ? true : false}
       (revealer
@@ -562,49 +525,3 @@
   )
   (brightness-osd)
 )
-
-; Notification popup (top center)
-(defwidget notification-card []
-  (revealer
-    :transition "slidedown"
-    :duration "200ms"
-    :reveal {notif != "" && notif != "{}"}
-    (box :class "notification notification-${jq(notif, '.urgency // \"normal\"')}"
-         :orientation "h"
-         :spacing 12
-         :space-evenly false
-      (image :class "notification-icon"
-             :path {jq(notif, '.icon // ""')}
-             :image-width 48 :image-height 48
-             :visible {jq(notif, '.icon // ""') != ""})
-      (box :orientation "v"
-           :spacing 2
-           :space-evenly false
-           :hexpand true
-        (label :class "notification-summary"
-               :text {jq(notif, '.summary // ""')}
-               :halign "start"
-               :limit-width 60
-               :wrap true)
-        (label :class "notification-body"
-               :text {jq(notif, '.body // ""')}
-               :halign "start"
-               :limit-width 60
-               :wrap true
-               :visible {jq(notif, '.body // ""') != ""}))
-      (eventbox :cursor "pointer"
-        :onclick "dbus-send --session --dest=org.freedesktop.Notifications --type=method_call /org/freedesktop/Notifications org.freedesktop.Notifications.CloseNotification uint32:${jq(notif, '.id // 0')}"
-        (label :class "notification-close" :text "✕")))))
-
-(defwindow notification
-  :stacking "overlay"
-  :monitor "0"
-  :exclusive false
-  :namespace "notification"
-  :geometry (geometry
-    :x "0px"
-    :y "12px"
-    :width "440px"
-    :height "0%"
-    :anchor "top center")
-  (notification-card))
