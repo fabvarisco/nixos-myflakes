@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# Open the emitting app of a notification by ID.
+# Strategy:
+#   1. If the notification has a "default" action, emit ActionInvoked via our
+#      daemon (Discord/Slack/Element listen for this and jump to context).
+#   2. Otherwise gtk-launch the desktop-entry (or app_name lowercased).
+#   3. Last resort: focus an existing window by class via hyprctl.
+
+set -e
+
+id="$1"
+[ -z "$id" ] && exit 0
+
+hist="${XDG_CACHE_HOME:-$HOME/.cache}/eww-notif-history.json"
+[ -f "$hist" ] || exit 0
+
+notif=$(jq -c --argjson id "$id" 'map(select(.id == $id)) | .[0] // empty' "$hist" 2>/dev/null)
+[ -z "$notif" ] && exit 0
+
+actions=$(printf '%s' "$notif" | jq -r '.actions // [] | .[]')
+entry=$(printf '%s'  "$notif" | jq -r '.desktop_entry // ""')
+app=$(printf '%s'    "$notif" | jq -r '.app // ""')
+
+# 1. default action via dbus
+if printf '%s\n' "$actions" | grep -qx "default"; then
+  if busctl --user call \
+       org.freedesktop.Notifications \
+       /org/freedesktop/Notifications \
+       org.freedesktop.Notifications \
+       Activate us "$id" "default" >/dev/null 2>&1; then
+    exit 0
+  fi
+fi
+
+# 2. gtk-launch desktop-entry (or app_name lowercased)
+target="${entry:-$(printf '%s' "$app" | tr '[:upper:]' '[:lower:]')}"
+if [ -n "$target" ] && command -v gtk-launch >/dev/null; then
+  if gtk-launch "$target" >/dev/null 2>&1; then
+    exit 0
+  fi
+fi
+
+# 3. last resort: focus an existing window by class
+if [ -n "$app" ]; then
+  hyprctl dispatch focuswindow "class:(?i)$app" >/dev/null 2>&1 || true
+fi

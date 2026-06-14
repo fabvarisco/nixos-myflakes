@@ -25,6 +25,7 @@
 }
 
 .nix-logo {
+  font-family: "JetBrainsMono Nerd Font", monospace;
   color: $foreground;
   font-size: 20px;
   padding: 0px 2px;
@@ -297,15 +298,39 @@ calendar button:hover {
   padding-left: 4px;
 }
 
+.qs-bat-time {
+  color: rgba($foreground, 0.7);
+  font-size: 0.85em;
+  padding-left: 8px;
+}
+
+.qs-profile-row {
+  margin-top: 4px;
+}
+
+.qs-profile-btn {
+  background-color: rgba($foreground, 0.08);
+  border-radius: $rad;
+  padding: 6px 10px;
+}
+
+.qs-profile-btn:hover {
+  background-color: rgba($accent, 0.25);
+}
+
+.qs-profile-btn-active {
+  background-color: rgba($accent, 0.4);
+}
+
 .qs-action {
   background-color: rgba($foreground, 0.08);
-  border-radius: 999px;
-  padding: 8px;
+  border-radius: $rad;
+  padding: 6px 10px;
   margin-left: 4px;
 }
 
 .qs-action:hover {
-  background-color: rgba($accent, 0.3);
+  background-color: rgba($accent, 0.25);
 }
 
 .qs-slider scale {
@@ -372,6 +397,12 @@ calendar button:hover {
 .qs-pill-sub {
   font-size: 11px;
   opacity: 0.75;
+}
+
+.qs-audio-device {
+  color: rgba($foreground, 0.7);
+  font-size: 0.85em;
+  padding-left: 32px;
 }
 
 .media-popup {

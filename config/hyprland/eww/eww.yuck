@@ -88,8 +88,8 @@
   (mediaplayer-popup))
 
 ; Quick Settings
-(defwidget qs-action [icon onclick]
-  (eventbox :cursor "pointer" :onclick onclick
+(defwidget qs-action [icon onclick ?tooltip]
+  (eventbox :cursor "pointer" :onclick onclick :tooltip tooltip
     (box :class "qs-action"
       (image :path icon :image-width 18 :image-height 18))))
 
@@ -108,8 +108,9 @@
       (box :class "qs-slider-cycle"
         (image :path cycleicon :image-width 14 :image-height 14)))))
 
-(defwidget qs-pill [icon label sublabel active onclick]
-  (eventbox :cursor "pointer" :onclick onclick :hexpand true
+(defwidget qs-pill [icon label sublabel active onclick ?onrightclick ?tooltip]
+  (eventbox :cursor "pointer" :onclick onclick :onrightclick onrightclick
+            :tooltip tooltip :hexpand true
     (box :class {active == "on" ? "qs-pill qs-pill-active" : "qs-pill"}
          :spacing 10 :space-evenly false :hexpand true
       (image :class "qs-pill-icon" :path icon :image-width 18 :image-height 18)
@@ -118,37 +119,76 @@
         (label :class "qs-pill-sub"   :text sublabel :halign "start"
                :visible {sublabel != ""})))))
 
+(defwidget qs-profile-btn [profile icon active ?tooltip]
+  (eventbox :cursor "pointer" :tooltip tooltip
+            :onclick "scripts/power-profile set ${profile}"
+    (box :class {active ? "qs-profile-btn qs-profile-btn-active" : "qs-profile-btn"}
+         :hexpand true :halign "fill"
+      (image :path icon :image-width 16 :image-height 16))))
+
 (defwidget quick-settings-panel []
   (box :class "qs-panel" :orientation "v" :spacing 14 :space-evenly false
-    (box :spacing 10 :space-evenly false
-      (box :class "qs-bat" :spacing 6 :space-evenly false :hexpand true :halign "start"
-        (image :path bat-icon :image-height 22)
-        (label :class "qs-bat-text" :text "${bat-num == '' ? '--' : bat-num}%"))
-      (qs-action :icon "images/lock.svg"     :onclick "hyprlock & scripts/qs-toggle")
-      (qs-action :icon "images/shutdown.svg" :onclick "scripts/qs-toggle; eww update center-option=powermenu reveal-option=powermenu"))
-    (qs-slider-cycle :icon "images/volume-high.svg" :value vol-num
-                     :onchange "pamixer --set-volume {}"
-                     :cycleicon "images/headphones.svg"
-                     :cycleonclick "scripts/audio-sink cycle"
-                     :tooltip {sink-name == "" ? "Trocar saída de áudio" : "Saída: ${sink-name}"})
-    (qs-slider-cycle :icon mic-icon :value {mic-num == "muted" ? 0 : mic-num}
-                     :onchange "pamixer --default-source --set-volume {}"
-                     :cycleicon "images/microphone.svg"
-                     :cycleonclick "scripts/audio-source cycle"
-                     :tooltip {source-name == "" ? "Trocar entrada de microfone" : "Entrada: ${source-name}"})
+    (box :spacing 10 :space-evenly false :valign "start"
+      (box :class "qs-bat" :orientation "v" :spacing 6 :space-evenly false :hexpand true
+        (box :spacing 6 :space-evenly false :halign "start"
+          (image :path bat-icon :image-height 22)
+          (label :class "qs-bat-text" :text "${bat-num == '' ? '--' : bat-num}%")
+          (label :class "qs-bat-time" :text bat-remaining
+                 :visible {bat-remaining != ""}))
+        (box :class "qs-profile-row" :spacing 4 :space-evenly true
+          (qs-profile-btn :profile "performance"
+                          :icon "images/power-profile-performance.svg"
+                          :active {power-profile == "performance"}
+                          :tooltip "Desempenho")
+          (qs-profile-btn :profile "balanced"
+                          :icon "images/power-profile-balanced.svg"
+                          :active {power-profile == "balanced"}
+                          :tooltip "Equilibrado")
+          (qs-profile-btn :profile "low-power"
+                          :icon "images/power-profile-saver.svg"
+                          :active {power-profile == "low-power"}
+                          :tooltip "Economia de energia")))
+      (qs-action :icon "images/lock.svg"     :tooltip "Bloquear tela"
+                 :onclick "hyprlock & scripts/qs-toggle")
+      (qs-action :icon "images/shutdown.svg" :tooltip "Menu de energia"
+                 :onclick "scripts/qs-toggle; eww update center-option=powermenu reveal-option=powermenu"))
+    (box :orientation "v" :spacing 2 :space-evenly false
+      (qs-slider-cycle :icon "images/volume-high.svg" :value vol-num
+                       :onchange "pamixer --set-volume {}"
+                       :cycleicon "images/headphones.svg"
+                       :cycleonclick "scripts/audio-sink cycle"
+                       :tooltip "Trocar saída de áudio")
+      (label :class "qs-audio-device" :halign "start"
+             :text {sink-name == "" ? "Saída: —" : "Saída: ${sink-name}"}
+             :limit-width 36))
+    (box :orientation "v" :spacing 2 :space-evenly false
+      (qs-slider-cycle :icon mic-icon :value {mic-num == "muted" ? 0 : mic-num}
+                       :onchange "pamixer --default-source --set-volume {}"
+                       :cycleicon "images/microphone.svg"
+                       :cycleonclick "scripts/audio-source cycle"
+                       :tooltip "Trocar entrada de microfone")
+      (label :class "qs-audio-device" :halign "start"
+             :text {source-name == "" ? "Entrada: —" : "Entrada: ${source-name}"}
+             :limit-width 36))
     (box :visible {has-backlight == "true"}
       (qs-slider :icon "images/brightness.svg" :value br :onchange "scripts/brightness set {}"))
     (box :orientation "v" :spacing 8 :space-evenly false
       (box :spacing 8 :space-evenly true
-        (qs-pill :icon wifi-icon                 :label "Wi-Fi"       :sublabel wifi-ssid :active wifi-state  :onclick "scripts/wifi toggle")
-        (qs-pill :icon "images/bluetooth.svg"    :label "Bluetooth"   :sublabel bt-device :active bt-state    :onclick "scripts/bluetooth toggle"))
+        (qs-pill :icon wifi-icon              :label "Wi-Fi"     :sublabel wifi-ssid :active wifi-state
+                 :onclick "scripts/qs-toggle; kitty -e impala"
+                 :onrightclick "scripts/wifi toggle"
+                 :tooltip "Abrir Impala (botão direito: ligar/desligar Wi-Fi)")
+        (qs-pill :icon "images/bluetooth.svg" :label "Bluetooth" :sublabel bt-device :active bt-state
+                 :onclick "scripts/qs-toggle; vicinae deeplink \"vicinae://extensions/bluetooth\""
+                 :onrightclick "scripts/bluetooth toggle"
+                 :tooltip "Abrir Bluetooth no Vicinae (botão direito: ligar/desligar)"))
       (box :class "qs-sysinfo" :spacing 20 :space-evenly true
-        (box :spacing 6 :space-evenly false
+        (box :spacing 6 :space-evenly false :tooltip "Uso de CPU"
           (label :class "icon" :text " ")
-          (label :class "text" :text "${cpu}%"))
-        (box :spacing 6 :space-evenly false
+          (label :class "text" :text "CPU ${cpu}%"))
+        (box :spacing 6 :space-evenly false :tooltip "Uso de RAM"
           (label :class "icon" :text " ")
-          (label :class "text" :text "${ram}%"))))))
+          (label :class "text" :text "RAM ${ram}%"))))))
 
 (defwindow quick-settings
   :stacking "overlay"
@@ -183,6 +223,7 @@
 (defwidget date []
   (eventbox
     :cursor "pointer"
+    :tooltip "Abrir/fechar central de notificações"
     :onclick "scripts/toggle-notif-center"
     (box
       :class "date"
@@ -193,7 +234,7 @@
       (label :class "text" :text date))))
 
 (defwidget nix-launcher []
-  (eventbox :cursor "pointer" :onclick "vicinae toggle"
+  (eventbox :cursor "pointer" :tooltip "Abrir Vicinae" :onclick "vicinae toggle"
     (box :class "nix-launcher" :spacing 0 :space-evenly false
       (label :class "nix-logo" :text ""))))
 
@@ -396,16 +437,19 @@
     (scroll :vscroll true :vexpand true :visible {notif-history != "[]"}
       (box :orientation "v" :spacing 6 :space-evenly false
         (for item in notif-history
-          (box :class "notif-item" :spacing 8 :space-evenly false :hexpand true
-            (box :visible {item.icon != ""}
-              (image :class "notif-icon" :path {item.icon} :image-width 28 :image-height 28))
-            (box :class "notif-item-content" :orientation "v" :spacing 2 :space-evenly false :hexpand true
-              (label :class "notif-summary" :text {item.summary} :halign "start"
-                     :ellipsize "end" :limit-width 24)
-              (label :class "notif-body" :text {item.body} :halign "start"
-                     :ellipsize "end" :limit-width 28 :visible {item.body != ""}))
-            (eventbox :cursor "pointer" :onclick "scripts/dismiss-from-history {item.id}"
-              (label :class "notif-dismiss" :text ""))))))))
+          (eventbox :cursor "pointer"
+                    :tooltip "Clique para abrir o app emissor"
+                    :onclick "scripts/notification-open ${item.id}; scripts/dismiss-from-history ${item.id}"
+            (box :class "notif-item" :spacing 8 :space-evenly false :hexpand true
+              (box :visible {item.icon != ""}
+                (image :class "notif-icon" :path {item.icon} :image-width 28 :image-height 28))
+              (box :class "notif-item-content" :orientation "v" :spacing 2 :space-evenly false :hexpand true
+                (label :class "notif-summary" :text {item.summary} :halign "start"
+                       :ellipsize "end" :limit-width 24)
+                (label :class "notif-body" :text {item.body} :halign "start"
+                       :ellipsize "end" :limit-width 28 :visible {item.body != ""}))
+              (eventbox :cursor "pointer" :onclick "scripts/dismiss-from-history ${item.id}"
+                (label :class "notif-dismiss" :text "")))))))))
 
 (defwidget notif-calendar-pane []
   (box :class "notif-calendar-pane" :orientation "v" :spacing 8 :space-evenly false
@@ -578,16 +622,19 @@
 
 ; Notification
 (defwidget notification-popup []
-  (box :class "notif-popup" :orientation "v" :spacing 6 :space-evenly false
-    :visible {notif != "{}"}
-    (box :spacing 10 :space-evenly false
-      (box :visible {notif.icon != ""}
-        (image :class "notif-icon" :path {notif.icon} :image-width 32 :image-height 32))
-      (box :orientation "v" :spacing 2 :space-evenly false
-        (label :class "notif-summary" :text {notif.summary} :halign "start"
-               :ellipsize "end" :limit-width 36)
-        (label :class "notif-body" :text {notif.body} :halign "start"
-               :ellipsize "end" :limit-width 40 :visible {notif.body != ""})))))
+  (eventbox :cursor "pointer"
+            :tooltip "Clique para abrir o app emissor"
+            :onclick "scripts/notification-open ${notif.id}; scripts/dismiss-notification ${notif.id}"
+    (box :class "notif-popup" :orientation "v" :spacing 6 :space-evenly false
+      :visible {notif != "{}"}
+      (box :spacing 10 :space-evenly false
+        (box :visible {notif.icon != ""}
+          (image :class "notif-icon" :path {notif.icon} :image-width 32 :image-height 32))
+        (box :orientation "v" :spacing 2 :space-evenly false
+          (label :class "notif-summary" :text {notif.summary} :halign "start"
+                 :ellipsize "end" :limit-width 36)
+          (label :class "notif-body" :text {notif.body} :halign "start"
+                 :ellipsize "end" :limit-width 40 :visible {notif.body != ""}))))))
 
 (defwindow notification
   :stacking "overlay"

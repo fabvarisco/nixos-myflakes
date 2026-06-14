@@ -106,6 +106,13 @@ class Daemon(ServiceInterface):
         if expire_timeout < 0:
             expire_timeout = DEFAULT_TIMEOUT_MS[urgency_lvl]
 
+        desktop_entry_var = hints.get("desktop-entry")
+        desktop_entry = (
+            desktop_entry_var.value
+            if isinstance(desktop_entry_var, Variant)
+            else ""
+        )
+
         state = {
             "id": nid,
             "app": app_name or "",
@@ -114,6 +121,8 @@ class Daemon(ServiceInterface):
             "icon": pick_icon(app_icon, hints),
             "urgency": URGENCY[urgency_lvl],
             "timeout": expire_timeout,
+            "actions": list(actions) if actions else [],
+            "desktop_entry": desktop_entry or "",
         }
 
         # Replace previous notification (single-slot policy)
@@ -140,6 +149,10 @@ class Daemon(ServiceInterface):
             if self._timeout_task and not self._timeout_task.done():
                 self._timeout_task.cancel()
         self.NotificationClosed(id, CLOSE_REASON["closed"])
+
+    @method()
+    def Activate(self, id: "u", action_key: "s"):  # noqa: F722, A002
+        self.ActionInvoked(id, action_key or "default")
 
     @signal()
     def NotificationClosed(self, id, reason) -> "uu":  # noqa: F722, A002

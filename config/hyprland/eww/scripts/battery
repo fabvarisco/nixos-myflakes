@@ -36,8 +36,31 @@ number() {
   read_capacity
 }
 
-if [[ $1 == icon ]]; then
-  icon
-elif [[ $1 == number ]]; then
-  number
-fi
+remaining() {
+  [[ -z "$BAT" ]] && return
+  local status e p min
+  status=$(read_status)
+  [[ "$status" != "Discharging" && "$status" != "Charging" ]] && return
+  e=$(cat "$BAT/energy_now" 2>/dev/null) || return
+  p=$(cat "$BAT/power_now"  2>/dev/null) || return
+  [[ -z "$e" || -z "$p" || "$p" -le 0 ]] && return
+  if [[ "$status" == "Charging" ]]; then
+    local full
+    full=$(cat "$BAT/energy_full" 2>/dev/null) || return
+    [[ -z "$full" || "$full" -le "$e" ]] && return
+    min=$(( (full - e) * 60 / p ))
+  else
+    min=$(( e * 60 / p ))
+  fi
+  if (( min >= 60 )); then
+    printf '%dh %dm\n' $((min/60)) $((min%60))
+  else
+    printf '%dm\n' "$min"
+  fi
+}
+
+case "$1" in
+  icon)      icon ;;
+  number)    number ;;
+  remaining) remaining ;;
+esac

@@ -1,36 +1,34 @@
 #!/usr/bin/env bash
-# Manage system power profile via powerprofilesctl.
-# Profiles: performance | balanced | power-saver
+# Manage system power profile via the kernel platform_profile sysfs interface.
+# Profiles on ThinkPad: performance | balanced | low-power
+
+PROFILE_FILE=/sys/firmware/acpi/platform_profile
 
 current() {
-  if command -v powerprofilesctl >/dev/null 2>&1; then
-    powerprofilesctl get 2>/dev/null || echo balanced
+  [[ -r $PROFILE_FILE ]] && cat "$PROFILE_FILE" || echo balanced
+}
+
+set_profile() {
+  [[ -n "$1" ]] || return
+  if [[ -w $PROFILE_FILE ]]; then
+    echo "$1" | tee "$PROFILE_FILE" >/dev/null 2>&1
   else
-    echo balanced
+    echo "$1" | sudo -n tee "$PROFILE_FILE" >/dev/null 2>&1
   fi
 }
 
 cycle() {
-  command -v powerprofilesctl >/dev/null 2>&1 || exit 0
-  now=$(current)
-  case "$now" in
-    performance) next=balanced ;;
-    balanced)    next=power-saver ;;
-    *)           next=performance ;;
+  case "$(current)" in
+    performance) set_profile balanced ;;
+    balanced)    set_profile low-power ;;
+    *)           set_profile performance ;;
   esac
-  powerprofilesctl set "$next" 2>/dev/null
-}
-
-set_profile() {
-  command -v powerprofilesctl >/dev/null 2>&1 || exit 0
-  powerprofilesctl set "$1" 2>/dev/null
 }
 
 label() {
   case "$(current)" in
     performance) echo Performance ;;
-    balanced)    echo Balanced ;;
-    power-saver) echo Saver ;;
+    low-power)   echo Saver ;;
     *)           echo Balanced ;;
   esac
 }
@@ -38,7 +36,7 @@ label() {
 icon() {
   case "$(current)" in
     performance) echo "images/power-profile-performance.svg" ;;
-    power-saver) echo "images/power-profile-saver.svg" ;;
+    low-power)   echo "images/power-profile-saver.svg" ;;
     *)           echo "images/power-profile-balanced.svg" ;;
   esac
 }

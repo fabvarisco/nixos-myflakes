@@ -60,6 +60,15 @@
   };
   services.power-profiles-daemon.enable = false;
 
+  # Allow EWW to switch ACPI platform_profile without a password prompt.
+  security.sudo.extraRules = [{
+    users = [ "fabvarisco" ];
+    commands = [{
+      command = "/run/current-system/sw/bin/tee /sys/firmware/acpi/platform_profile";
+      options = [ "NOPASSWD" ];
+    }];
+  }];
+
   # Thermal management — complements TLP for mixed workloads on ThinkPads
   services.thermald.enable = true;
 

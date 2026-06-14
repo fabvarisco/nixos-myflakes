@@ -21,6 +21,7 @@
 
 (defpoll bat-icon :interval "10s" :initial "images/battery-100.svg" "scripts/battery icon")
 (defpoll bat-num :interval "10s" :initial "" "scripts/battery number")
+(defpoll bat-remaining :interval "30s" :initial "" "scripts/battery remaining")
 (defpoll has-battery :interval "1h" :initial "false" "compgen -G '/sys/class/power_supply/BAT*' >/dev/null && echo true || echo false")
 
 (defpoll wifi-ssid   :interval "10s" :initial ""    "scripts/wifi ssid")
