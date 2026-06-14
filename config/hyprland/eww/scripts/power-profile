@@ -1,26 +1,20 @@
 #!/usr/bin/env bash
-# Manage system power profile via the kernel platform_profile sysfs interface.
-# Profiles on ThinkPad: performance | balanced | low-power
-
-PROFILE_FILE=/sys/firmware/acpi/platform_profile
+# Manage power profile via power-profiles-daemon.
+# Profiles: performance | balanced | power-saver
 
 current() {
-  [[ -r $PROFILE_FILE ]] && cat "$PROFILE_FILE" || echo balanced
+  powerprofilesctl get 2>/dev/null || echo balanced
 }
 
 set_profile() {
   [[ -n "$1" ]] || return
-  if [[ -w $PROFILE_FILE ]]; then
-    echo "$1" | tee "$PROFILE_FILE" >/dev/null 2>&1
-  else
-    echo "$1" | sudo -n tee "$PROFILE_FILE" >/dev/null 2>&1
-  fi
+  powerprofilesctl set "$1" >/dev/null 2>&1
 }
 
 cycle() {
   case "$(current)" in
     performance) set_profile balanced ;;
-    balanced)    set_profile low-power ;;
+    balanced)    set_profile power-saver ;;
     *)           set_profile performance ;;
   esac
 }
@@ -28,7 +22,7 @@ cycle() {
 label() {
   case "$(current)" in
     performance) echo Performance ;;
-    low-power)   echo Saver ;;
+    power-saver) echo Saver ;;
     *)           echo Balanced ;;
   esac
 }
@@ -36,7 +30,7 @@ label() {
 icon() {
   case "$(current)" in
     performance) echo "images/power-profile-performance.svg" ;;
-    low-power)   echo "images/power-profile-saver.svg" ;;
+    power-saver) echo "images/power-profile-saver.svg" ;;
     *)           echo "images/power-profile-balanced.svg" ;;
   esac
 }

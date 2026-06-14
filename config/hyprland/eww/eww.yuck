@@ -144,9 +144,9 @@
                           :icon "images/power-profile-balanced.svg"
                           :active {power-profile == "balanced"}
                           :tooltip "Balanced")
-          (qs-profile-btn :profile "low-power"
+          (qs-profile-btn :profile "power-saver"
                           :icon "images/power-profile-saver.svg"
-                          :active {power-profile == "low-power"}
+                          :active {power-profile == "power-saver"}
                           :tooltip "Power saver")))
       (qs-action :icon "images/lock.svg"     :tooltip "Lock screen"
                  :onclick "hyprlock & scripts/qs-toggle")

@@ -10,6 +10,21 @@
   border-left: 2px solid rgba($foreground, 0.1);
 }
 
+.tray-item.qs-toggle,
+.tray-item.bat,
+.tray-item.media-toggle,
+.date {
+  transition: background-color 120ms ease, color 120ms ease;
+}
+
+.tray-item.qs-toggle:hover,
+.tray-item.bat:hover,
+.tray-item.media-toggle:hover,
+.date:hover {
+  background-color: rgba($foreground, 0.08);
+  color: $accent;
+}
+
 .wifi { border: 0px; }
 
 .workspaces {
@@ -88,11 +103,23 @@
   color: $background;
   background-color: $accent;
   padding: 0px 20px;
+  transition: background-color 120ms ease;
 }
 
 .pwr-inactive,
 .ss-inactive {
   background-color: transparent;
+  transition: background-color 120ms ease;
+}
+
+.pwr-inactive:hover,
+.ss-inactive:hover {
+  background-color: rgba($foreground, 0.14);
+}
+
+.pwr-active:hover,
+.ss-active:hover {
+  background-color: rgba($accent, 0.85);
 }
 
 .icon { padding: 0px 4px; }
@@ -504,7 +531,7 @@ calendar button:hover {
 }
 
 .media-btn-play:hover {
-  background-color: $accent;
+  background-color: rgba($accent, 0.85);
 }
 
 .notif-popup {
@@ -512,6 +539,11 @@ calendar button:hover {
   border: 2px solid rgba($foreground, 0.1);
   border-radius: $rad;
   padding: 12px 14px;
+  transition: border-color 140ms ease;
+}
+
+.notif-popup:hover {
+  border-color: rgba($accent, 0.5);
 }
 
 .notif-icon {

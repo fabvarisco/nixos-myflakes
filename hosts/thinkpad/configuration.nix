@@ -37,39 +37,27 @@
     disableWhileTyping = true;
   };
 
-  # Power management (TLP for ThinkPad)
-  services.tlp = {
-    enable = true;
-    settings = {
-      CPU_SCALING_GOVERNOR_ON_AC = "performance";
-      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-      CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
-      CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
-      CPU_BOOST_ON_AC = 1;
-      CPU_BOOST_ON_BAT = 0;
-      PLATFORM_PROFILE_ON_AC = "performance";
-      PLATFORM_PROFILE_ON_BAT = "low-power";
-      START_CHARGE_THRESH_BAT0 = 75;
-      STOP_CHARGE_THRESH_BAT0 = 80;
-      WIFI_PWR_ON_AC = "off";
-      WIFI_PWR_ON_BAT = "on";
-      RUNTIME_PM_ON_AC = "on";
-      RUNTIME_PM_ON_BAT = "auto";
-      USB_AUTOSUSPEND = 1;
+  # Power management — power-profiles-daemon drives CPU governor, EPP,
+  # boost and platform_profile in response to powerprofilesctl set ...
+  services.power-profiles-daemon.enable = true;
+
+  # Charge thresholds (PPD doesn't manage these). Bound to the BAT0 udev
+  # device so it applies once the battery enumerates at boot/resume.
+  systemd.services.thinkpad-charge-thresholds = {
+    description = "Set ThinkPad BAT0 charge thresholds (75/80)";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "sys-class-power_supply-BAT0.device" ];
+    bindsTo = [ "sys-class-power_supply-BAT0.device" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
     };
+    script = ''
+      echo 75 > /sys/class/power_supply/BAT0/charge_control_start_threshold
+      echo 80 > /sys/class/power_supply/BAT0/charge_control_end_threshold
+    '';
   };
-  services.power-profiles-daemon.enable = false;
 
-  # Allow EWW to switch ACPI platform_profile without a password prompt.
-  security.sudo.extraRules = [{
-    users = [ "fabvarisco" ];
-    commands = [{
-      command = "/run/current-system/sw/bin/tee /sys/firmware/acpi/platform_profile";
-      options = [ "NOPASSWD" ];
-    }];
-  }];
-
-  # Thermal management — complements TLP for mixed workloads on ThinkPads
   services.thermald.enable = true;
 
   # Delegate lid switch to Hyprland; prevents unexpected suspend before compositor starts
