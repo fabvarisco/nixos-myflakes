@@ -1,10 +1,11 @@
 { inputs, pkgs, ... }:
 
 let
-  mkExt = inputs.vicinae.lib.${pkgs.stdenv.hostPlatform.system}.mkVicinaeExtension;
+  mkExt = inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.mkVicinaeExtension;
   extsSrc = inputs.vicinae-extensions;
   ext = name: mkExt {
-    version = (builtins.fromJSON (builtins.readFile "${extsSrc}/extensions/${name}/package.json")).version;
+    pname = name;
+    version = "0-unstable-${extsSrc.shortRev or "unknown"}";
     src = "${extsSrc}/extensions/${name}";
   };
 in
