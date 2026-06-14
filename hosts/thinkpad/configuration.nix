@@ -73,10 +73,10 @@
   services.thermald.enable = true;
 
   # Delegate lid switch to Hyprland; prevents unexpected suspend before compositor starts
-  services.logind = {
-    lidSwitch = "ignore";
-    lidSwitchExternalPower = "ignore";
-    powerKey = "poweroff";
+  services.logind.settings.Login = {
+    HandleLidSwitch = "ignore";
+    HandleLidSwitchExternalPower = "ignore";
+    HandlePowerKey = "poweroff";
   };
 
   # Fingerprint reader — accepts password OR fingerprint

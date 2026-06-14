@@ -5,6 +5,10 @@
   home.homeDirectory = "/home/fabvarisco";
   home.stateVersion = "25.05";
 
+  # home-manager tracks master (26.11) while nixpkgs follows nixos-unstable (currently 26.05).
+  # The combination is intentional; silence the release-mismatch warning.
+  home.enableNixpkgsReleaseCheck = false;
+
   programs.bash = {
     enable = true;
     bashrcExtra = ''

@@ -149,7 +149,10 @@ in
   # Config symlinks via home-manager
   home-manager.users.fabvarisco = {
     xdg.configFile = {
-      "eww".source    = ewwWithHostConfig;
+      "eww" = {
+        source = ewwWithHostConfig;
+        force = true;  # allow overwriting a dev symlink (ln -sfn ~/my-dotfiles/...) without manual rm
+      };
       "wlogout".source = ../../config/hyprland/wlogout;
       "wal/templates".source               = ../../config/shared/wal/templates;
       "wal/colors-eww-default.scss".source = ../../config/shared/wal/colors-eww-default.scss;
