@@ -1,6 +1,23 @@
 { pkgs, ... }:
 
 {
+  # Kernel mais responsivo sob carga (latency tweaks, scheduler diferente)
+  boot.kernelPackages = pkgs.linuxPackages_zen;
+
+  # Engines modernos (Star Citizen, Hogwarts Legacy, alguns Unreal 5) pedem
+  # mais do que o padrão NixOS (1048576)
+  boot.kernel.sysctl."vm.max_map_count" = 2147483642;
+
+  # Udev rules p/ Steam Controller, Steam Deck dock, dongles compat. Steam Input
+  hardware.steam-hardware.enable = true;
+
+  # Auto-priority de processos (cobre o que gamemoded não cobre)
+  services.ananicy = {
+    enable = true;
+    package = pkgs.ananicy-cpp;
+    rulesProvider = pkgs.ananicy-rules-cachyos;
+  };
+
   # GPU Screen Recorder - capabilities for gsr-kms-server
   security.wrappers.gsr-kms-server = {
     owner = "root";
@@ -18,11 +35,20 @@
     pcsx2
     gpu-screen-recorder      # Replay buffer / recording (like NVIDIA ShadowPlay)
     gpu-screen-recorder-gtk  # GUI for gpu-screen-recorder
-    mangohud                  # Overlay de FPS/stats (pressione R_Shift+F12 no jogo)
+    mangohud                 # Overlay de FPS/stats (pressione R_Shift+F12 no jogo)
+    goverlay                 # GUI p/ configurar MangoHud
+    vkbasalt                 # Pós-processamento Vulkan (sharpen, CAS, FXAA)
     protonup-qt              # Gerenciar versões do Proton
+    protontricks             # Troubleshoot/instalar deps em prefixes Proton
   ];
 
-  programs.gamemode.enable = true;
+  programs.gamemode = {
+    enable = true;
+    settings.general = {
+      renice = 10;
+      inhibit_screensaver = 1;
+    };
+  };
 
   programs.steam = {
     enable = true;

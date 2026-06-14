@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Wallpaper selector with Vicinae - no pywal
+# Wallpaper selector with Vicinae
 
 WALLPAPER_DIR="$HOME/.config/walls"
 CACHE_FILE="$HOME/.cache/hypr/current_wallpaper"

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Random wallpaper selector with pywal integration
+# Random wallpaper selector
 
 WALLPAPER_DIR="$HOME/.config/walls"
 CACHE_FILE="$HOME/.cache/hypr/current_wallpaper"
@@ -41,8 +41,5 @@ awww img "$RANDOM_WALL" \
 
 # Save current wallpaper
 echo "$RANDOM_WALL" > "$CACHE_FILE"
-
-# Apply pywal colors
-~/.config/hypr/apply-pywal.sh "$RANDOM_WALL"
 
 notify-send "Wallpaper Changed" "$(basename "$RANDOM_WALL")"

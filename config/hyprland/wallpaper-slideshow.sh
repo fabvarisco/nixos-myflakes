@@ -48,8 +48,5 @@ while true; do
     # Save current wallpaper
     echo "$RANDOM_WALL" > "$CACHE_FILE"
 
-    # Apply pywal colors
-    ~/.config/hypr/apply-pywal.sh "$RANDOM_WALL"
-
     sleep $INTERVAL
 done

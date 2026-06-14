@@ -7,8 +7,6 @@
     kdePackages.breeze-icons
     adwaita-icon-theme
 
-    # Browser
-    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.snappy-switcher.packages.${pkgs.stdenv.hostPlatform.system}.default
 
 
