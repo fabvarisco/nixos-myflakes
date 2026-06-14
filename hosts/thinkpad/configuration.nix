@@ -53,9 +53,6 @@
   };
   services.power-profiles-daemon.enable = false;
 
-  # Thermal management — complements TLP for mixed workloads on ThinkPads
-  services.thermald.enable = true;
-
   # Delegate lid switch to Hyprland; prevents unexpected suspend before compositor starts
   services.logind = {
     lidSwitch = "ignore";

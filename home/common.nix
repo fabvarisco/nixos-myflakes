@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, ... }:
 
 {
   home.packages = with pkgs; [
@@ -6,9 +6,6 @@
     kdePackages.breeze
     kdePackages.breeze-icons
     adwaita-icon-theme
-
-    inputs.snappy-switcher.packages.${pkgs.stdenv.hostPlatform.system}.default
-
 
     # Screen recording
     simplescreenrecorder

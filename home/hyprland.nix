@@ -18,7 +18,6 @@
     awww
     hyprpaper
     hyprmon
-    nwg-dock-hyprland
 
     # Notifications
     libnotify

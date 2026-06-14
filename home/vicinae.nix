@@ -1,5 +1,13 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 
+let
+  mkExt = inputs.vicinae.lib.${pkgs.stdenv.hostPlatform.system}.mkVicinaeExtension;
+  extsSrc = inputs.vicinae-extensions;
+  ext = name: mkExt {
+    version = (builtins.fromJSON (builtins.readFile "${extsSrc}/extensions/${name}/package.json")).version;
+    src = "${extsSrc}/extensions/${name}";
+  };
+in
 {
   imports = [ inputs.vicinae.homeManagerModules.default ];
 
@@ -22,5 +30,10 @@
       };
       launcher_window.opacity = 1.0;
     };
+    extensions = [
+      (ext "hypr")
+      (ext "nix")
+      (ext "process-manager")
+    ];
   };
 }

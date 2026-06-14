@@ -27,7 +27,6 @@
 
     # Clipboard
     wl-clipboard
-    clipse
     imagemagick
   ];
 }
