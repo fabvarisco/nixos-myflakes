@@ -312,14 +312,23 @@ calendar button:hover {
   background-color: rgba($foreground, 0.08);
   border-radius: $rad;
   padding: 6px 10px;
+  transition: background-color 120ms ease;
 }
 
 .qs-profile-btn:hover {
   background-color: rgba($accent, 0.25);
 }
 
+.qs-profile-btn:active {
+  background-color: rgba($accent, 0.55);
+}
+
 .qs-profile-btn-active {
   background-color: rgba($accent, 0.4);
+}
+
+.qs-profile-btn-active:hover {
+  background-color: rgba($accent, 0.5);
 }
 
 .qs-action {
@@ -327,10 +336,15 @@ calendar button:hover {
   border-radius: $rad;
   padding: 6px 10px;
   margin-left: 4px;
+  transition: background-color 120ms ease;
 }
 
 .qs-action:hover {
   background-color: rgba($accent, 0.25);
+}
+
+.qs-action:active {
+  background-color: rgba($accent, 0.45);
 }
 
 .qs-slider scale {
@@ -363,10 +377,15 @@ calendar button:hover {
   border-radius: 999px;
   padding: 6px;
   margin-left: 4px;
+  transition: background-color 120ms ease;
 }
 
 .qs-slider-cycle:hover {
   background-color: rgba($accent, 0.3);
+}
+
+.qs-slider-cycle:active {
+  background-color: rgba($accent, 0.5);
 }
 
 .qs-pill {
@@ -374,10 +393,15 @@ calendar button:hover {
   border-radius: 999px;
   padding: 8px 14px;
   color: $foreground;
+  transition: background-color 140ms ease, color 140ms ease;
 }
 
 .qs-pill:hover {
   background-color: rgba($foreground, 0.14);
+}
+
+.qs-pill:active {
+  background-color: rgba($foreground, 0.22);
 }
 
 .qs-pill-active {
@@ -386,7 +410,15 @@ calendar button:hover {
 }
 
 .qs-pill-active:hover {
-  background-color: $accent;
+  background-color: rgba($accent, 0.85);
+}
+
+.qs-pill-active:active {
+  background-color: rgba($accent, 0.7);
+}
+
+.qs-overlay-catcher {
+  background-color: transparent;
 }
 
 .qs-pill-title {

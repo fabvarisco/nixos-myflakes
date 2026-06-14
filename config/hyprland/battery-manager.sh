@@ -75,12 +75,12 @@ show_status() {
         "$(gum style --foreground 212 --bold '⚡ Battery Manager')"
 
     echo ""
-    gum style --padding "0 2" "$(echo -e "${BOLD}Status atual:${NC}")"
+    gum style --padding "0 2" "$(echo -e "${BOLD}Current status:${NC}")"
     echo ""
-    gum style --padding "0 4" "🔋 Bateria:      ${capacity}% (${status})"
-    gum style --padding "0 4" "💚 Saúde:        ${health}%"
-    gum style --padding "0 4" "${profile_icon} Perfil:       ${profile}"
-    gum style --padding "0 4" "🔌 Limite carga: ${charge_start}% - ${charge_end}%"
+    gum style --padding "0 4" "🔋 Battery:      ${capacity}% (${status})"
+    gum style --padding "0 4" "💚 Health:       ${health}%"
+    gum style --padding "0 4" "${profile_icon} Profile:      ${profile}"
+    gum style --padding "0 4" "🔌 Charge limit: ${charge_start}% - ${charge_end}%"
     echo ""
 }
 
@@ -88,29 +88,29 @@ change_profile() {
     local current=$(cat "$PROFILE_PATH" 2>/dev/null)
 
     echo ""
-    gum style --foreground 212 --bold "Selecione o perfil de performance:"
+    gum style --foreground 212 --bold "Select performance profile:"
     echo ""
 
     local choice=$(gum choose \
         --cursor.foreground 212 \
         --selected.foreground 212 \
-        "🚀 performance  (máximo desempenho, mais consumo)" \
-        "⚖️  balanced     (equilíbrio entre performance e bateria)" \
-        "🍃 low-power    (economia de energia, menos performance)" \
-        "↩️  Voltar")
+        "🚀 performance  (maximum performance, higher consumption)" \
+        "⚖️  balanced     (balance between performance and battery)" \
+        "🍃 low-power    (power saving, lower performance)" \
+        "↩️  Back")
 
     case "$choice" in
         *performance*)
             echo "performance" | pkexec tee "$PROFILE_PATH" > /dev/null
-            gum style --foreground 40 "✓ Perfil alterado para performance"
+            gum style --foreground 40 "✓ Profile changed to performance"
             ;;
         *balanced*)
             echo "balanced" | pkexec tee "$PROFILE_PATH" > /dev/null
-            gum style --foreground 40 "✓ Perfil alterado para balanced"
+            gum style --foreground 40 "✓ Profile changed to balanced"
             ;;
         *low-power*)
             echo "low-power" | pkexec tee "$PROFILE_PATH" > /dev/null
-            gum style --foreground 40 "✓ Perfil alterado para low-power"
+            gum style --foreground 40 "✓ Profile changed to low-power"
             ;;
     esac
     sleep 1
@@ -120,19 +120,19 @@ change_charge_limit() {
     local current_end=$(cat "$CHARGE_END" 2>/dev/null)
 
     echo ""
-    gum style --foreground 212 --bold "Selecione o limite máximo de carregamento:"
+    gum style --foreground 212 --bold "Select maximum charge limit:"
     echo ""
-    gum style --foreground 245 --italic "  Limitar a carga prolonga a vida útil da bateria"
+    gum style --foreground 245 --italic "  Limiting charge extends battery lifespan"
     echo ""
 
     local choice=$(gum choose \
         --cursor.foreground 212 \
         --selected.foreground 212 \
-        "💚 60%  (máxima longevidade - uso sempre conectado)" \
-        "💛 80%  (recomendado - bom equilíbrio)" \
-        "🧡 90%  (mais capacidade, menos longevidade)" \
-        "❤️  100% (capacidade total, desgaste normal)" \
-        "↩️  Voltar")
+        "💚 60%  (maximum lifespan - always plugged in)" \
+        "💛 80%  (recommended - good balance)" \
+        "🧡 90%  (more capacity, less lifespan)" \
+        "❤️  100% (full capacity, normal wear)" \
+        "↩️  Back")
 
     local new_end=""
     local new_start=""
@@ -154,14 +154,14 @@ change_charge_limit() {
             echo "$new_start" | pkexec tee "$CHARGE_START" > /dev/null
             echo "$new_end" | pkexec tee "$CHARGE_END" > /dev/null
         fi
-        gum style --foreground 40 "✓ Limite alterado para ${new_start}% - ${new_end}%"
+        gum style --foreground 40 "✓ Limit changed to ${new_start}% - ${new_end}%"
     fi
     sleep 1
 }
 
 show_health_info() {
     echo ""
-    gum style --foreground 212 --bold "Informações de saúde da bateria:"
+    gum style --foreground 212 --bold "Battery health information:"
     echo ""
 
     if [[ -f "$BAT_HEALTH" && -f "$BAT_DESIGN" ]]; then
@@ -171,24 +171,24 @@ show_health_info() {
         local full_wh=$((full / 1000000))
         local design_wh=$((design / 1000000))
 
-        gum style --padding "0 2" "Capacidade atual:  ${full_wh} Wh"
-        gum style --padding "0 2" "Capacidade design: ${design_wh} Wh"
-        gum style --padding "0 2" "Saúde da bateria:  ${health}%"
+        gum style --padding "0 2" "Current capacity: ${full_wh} Wh"
+        gum style --padding "0 2" "Design capacity:  ${design_wh} Wh"
+        gum style --padding "0 2" "Battery health:   ${health}%"
         echo ""
 
         if [[ $health -ge 80 ]]; then
-            gum style --foreground 40 --padding "0 2" "✓ Bateria em bom estado"
+            gum style --foreground 40 --padding "0 2" "✓ Battery in good condition"
         elif [[ $health -ge 60 ]]; then
-            gum style --foreground 214 --padding "0 2" "⚠ Bateria com desgaste moderado"
+            gum style --foreground 214 --padding "0 2" "⚠ Battery with moderate wear"
         else
-            gum style --foreground 196 --padding "0 2" "✗ Bateria com desgaste significativo"
+            gum style --foreground 196 --padding "0 2" "✗ Battery with significant wear"
         fi
     else
-        gum style --foreground 196 "Informações de saúde não disponíveis"
+        gum style --foreground 196 "Health information not available"
     fi
 
     echo ""
-    gum style --foreground 245 "Pressione Enter para voltar..."
+    gum style --foreground 245 "Press Enter to go back..."
     read -r
 }
 
@@ -199,16 +199,16 @@ main_menu() {
         local choice=$(gum choose \
             --cursor.foreground 212 \
             --selected.foreground 212 \
-            "🚀 Alterar perfil de performance" \
-            "🔋 Alterar limite de carregamento" \
-            "💚 Ver saúde da bateria" \
-            "❌ Sair")
+            "🚀 Change performance profile" \
+            "🔋 Change charge limit" \
+            "💚 View battery health" \
+            "❌ Exit")
 
         case "$choice" in
-            *"perfil"*) change_profile ;;
-            *"limite"*) change_charge_limit ;;
-            *"saúde"*) show_health_info ;;
-            *"Sair"*)
+            *"profile"*) change_profile ;;
+            *"limit"*) change_charge_limit ;;
+            *"health"*) show_health_info ;;
+            *"Exit"*)
                 clear
                 exit 0
                 ;;
@@ -218,12 +218,12 @@ main_menu() {
 
 # Check requirements
 if ! command -v gum &> /dev/null; then
-    echo "Erro: gum não está instalado"
+    echo "Error: gum is not installed"
     exit 1
 fi
 
 if [[ ! -f "$PROFILE_PATH" ]]; then
-    echo "Erro: platform_profile não disponível neste sistema"
+    echo "Error: platform_profile not available on this system"
     exit 1
 fi
 

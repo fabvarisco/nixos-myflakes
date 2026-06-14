@@ -139,54 +139,54 @@
           (qs-profile-btn :profile "performance"
                           :icon "images/power-profile-performance.svg"
                           :active {power-profile == "performance"}
-                          :tooltip "Desempenho")
+                          :tooltip "Performance")
           (qs-profile-btn :profile "balanced"
                           :icon "images/power-profile-balanced.svg"
                           :active {power-profile == "balanced"}
-                          :tooltip "Equilibrado")
+                          :tooltip "Balanced")
           (qs-profile-btn :profile "low-power"
                           :icon "images/power-profile-saver.svg"
                           :active {power-profile == "low-power"}
-                          :tooltip "Economia de energia")))
-      (qs-action :icon "images/lock.svg"     :tooltip "Bloquear tela"
+                          :tooltip "Power saver")))
+      (qs-action :icon "images/lock.svg"     :tooltip "Lock screen"
                  :onclick "hyprlock & scripts/qs-toggle")
-      (qs-action :icon "images/shutdown.svg" :tooltip "Menu de energia"
+      (qs-action :icon "images/shutdown.svg" :tooltip "Power menu"
                  :onclick "scripts/qs-toggle; eww update center-option=powermenu reveal-option=powermenu"))
     (box :orientation "v" :spacing 2 :space-evenly false
       (qs-slider-cycle :icon "images/volume-high.svg" :value vol-num
                        :onchange "pamixer --set-volume {}"
                        :cycleicon "images/headphones.svg"
                        :cycleonclick "scripts/audio-sink cycle"
-                       :tooltip "Trocar saída de áudio")
+                       :tooltip "Switch audio output")
       (label :class "qs-audio-device" :halign "start"
-             :text {sink-name == "" ? "Saída: —" : "Saída: ${sink-name}"}
+             :text {sink-name == "" ? "Output: —" : "Output: ${sink-name}"}
              :limit-width 36))
     (box :orientation "v" :spacing 2 :space-evenly false
       (qs-slider-cycle :icon mic-icon :value {mic-num == "muted" ? 0 : mic-num}
                        :onchange "pamixer --default-source --set-volume {}"
                        :cycleicon "images/microphone.svg"
                        :cycleonclick "scripts/audio-source cycle"
-                       :tooltip "Trocar entrada de microfone")
+                       :tooltip "Switch microphone input")
       (label :class "qs-audio-device" :halign "start"
-             :text {source-name == "" ? "Entrada: —" : "Entrada: ${source-name}"}
+             :text {source-name == "" ? "Input: —" : "Input: ${source-name}"}
              :limit-width 36))
     (box :visible {has-backlight == "true"}
       (qs-slider :icon "images/brightness.svg" :value br :onchange "scripts/brightness set {}"))
     (box :orientation "v" :spacing 8 :space-evenly false
       (box :spacing 8 :space-evenly true
         (qs-pill :icon wifi-icon              :label "Wi-Fi"     :sublabel wifi-ssid :active wifi-state
-                 :onclick "scripts/qs-toggle; kitty -e impala"
-                 :onrightclick "scripts/wifi toggle"
-                 :tooltip "Abrir Impala (botão direito: ligar/desligar Wi-Fi)")
+                 :onclick "scripts/wifi toggle"
+                 :onrightclick "scripts/qs-toggle; kitty -e impala"
+                 :tooltip "Toggle Wi-Fi (right-click: open Impala)")
         (qs-pill :icon "images/bluetooth.svg" :label "Bluetooth" :sublabel bt-device :active bt-state
-                 :onclick "scripts/qs-toggle; vicinae deeplink \"vicinae://extensions/bluetooth\""
-                 :onrightclick "scripts/bluetooth toggle"
-                 :tooltip "Abrir Bluetooth no Vicinae (botão direito: ligar/desligar)"))
+                 :onclick "scripts/bluetooth toggle"
+                 :onrightclick "scripts/qs-toggle; vicinae deeplink \"vicinae://extensions/bluetooth\""
+                 :tooltip "Toggle Bluetooth (right-click: open Bluetooth manager)"))
       (box :class "qs-sysinfo" :spacing 20 :space-evenly true
-        (box :spacing 6 :space-evenly false :tooltip "Uso de CPU"
+        (box :spacing 6 :space-evenly false :tooltip "CPU usage"
           (label :class "icon" :text " ")
           (label :class "text" :text "CPU ${cpu}%"))
-        (box :spacing 6 :space-evenly false :tooltip "Uso de RAM"
+        (box :spacing 6 :space-evenly false :tooltip "RAM usage"
           (label :class "icon" :text " ")
           (label :class "text" :text "RAM ${ram}%"))))))
 
@@ -202,6 +202,21 @@
     :height "0%"
     :anchor "top right")
   (quick-settings-panel))
+
+(defwindow qs-overlay
+  :stacking "fg"
+  :monitor "0"
+  :exclusive false
+  :focusable false
+  :namespace "qs-overlay"
+  :geometry (geometry
+    :x "0"
+    :y "0"
+    :width "100%"
+    :height "100%"
+    :anchor "top left")
+  (eventbox :cursor "default" :onclick "scripts/qs-toggle"
+    (box :class "qs-overlay-catcher" :hexpand true :vexpand true)))
 
 ; Workspaces
 (defwidget workspaces []
@@ -223,7 +238,7 @@
 (defwidget date []
   (eventbox
     :cursor "pointer"
-    :tooltip "Abrir/fechar central de notificações"
+    :tooltip "Open/close notification center"
     :onclick "scripts/toggle-notif-center"
     (box
       :class "date"
@@ -234,7 +249,7 @@
       (label :class "text" :text date))))
 
 (defwidget nix-launcher []
-  (eventbox :cursor "pointer" :tooltip "Abrir Vicinae" :onclick "vicinae toggle"
+  (eventbox :cursor "pointer" :tooltip "Open Vicinae" :onclick "vicinae toggle"
     (box :class "nix-launcher" :spacing 0 :space-evenly false
       (label :class "nix-logo" :text ""))))
 
@@ -427,18 +442,18 @@
 (defwidget notif-history-pane []
   (box :class "notif-history-pane" :orientation "v" :spacing 10 :space-evenly false
     (box :space-evenly false :spacing 0
-      (label :class "notif-history-title" :text "Notificações" :hexpand true :halign "start")
+      (label :class "notif-history-title" :text "Notifications" :hexpand true :halign "start")
       (eventbox :cursor "pointer" :onclick "scripts/clear-notifications"
-        (label :class "notif-clear-btn" :text "Limpar" :visible {notif-history != "[]"})))
+        (label :class "notif-clear-btn" :text "Clear" :visible {notif-history != "[]"})))
     (box :class "notif-empty-state" :orientation "v" :valign "center" :vexpand true
          :visible {notif-history == "[]"}
       (label :class "notif-empty-icon" :text "")
-      (label :class "notif-empty-text" :text "Sem notificações"))
+      (label :class "notif-empty-text" :text "No notifications"))
     (scroll :vscroll true :vexpand true :visible {notif-history != "[]"}
       (box :orientation "v" :spacing 6 :space-evenly false
         (for item in notif-history
           (eventbox :cursor "pointer"
-                    :tooltip "Clique para abrir o app emissor"
+                    :tooltip "Click to open source app"
                     :onclick "scripts/notification-open ${item.id}; scripts/dismiss-from-history ${item.id}"
             (box :class "notif-item" :spacing 8 :space-evenly false :hexpand true
               (box :visible {item.icon != ""}

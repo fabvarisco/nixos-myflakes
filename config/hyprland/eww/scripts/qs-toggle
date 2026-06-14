@@ -1,2 +1,7 @@
 #!/usr/bin/env bash
-(eww active-windows | grep -q "^quick-settings:" && eww close quick-settings) || eww open quick-settings
+if eww active-windows | grep -q "^quick-settings:"; then
+  eww close quick-settings qs-overlay
+else
+  eww open qs-overlay
+  eww open quick-settings
+fi

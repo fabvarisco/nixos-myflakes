@@ -38,7 +38,7 @@ notify() {
 cycle() {
   ids=( $(list | cut -d'|' -f1) )
   if [[ ${#ids[@]} -le 1 ]]; then
-    notify "Microfone" "Apenas uma entrada disponível"
+    notify "Microphone" "Only one input available"
     return
   fi
   cur_id=$(wpctl inspect @DEFAULT_AUDIO_SOURCE@ 2>/dev/null \
@@ -47,12 +47,12 @@ cycle() {
     if [[ "${ids[$i]}" == "$cur_id" ]]; then
       next_idx=$(( (i + 1) % ${#ids[@]} ))
       set_default "${ids[$next_idx]}"
-      notify "Entrada de microfone" "$(current)"
+      notify "Microphone input" "$(current)"
       return
     fi
   done
   set_default "${ids[0]}"
-  notify "Entrada de microfone" "$(current)"
+  notify "Microphone input" "$(current)"
 }
 
 case "$1" in
