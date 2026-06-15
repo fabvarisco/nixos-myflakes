@@ -10,6 +10,9 @@
       package = pkgs.gnome-themes-extra;
     };
 
+    # Keep GTK4 apps following the GTK theme (legacy default pre-26.05)
+    gtk4.theme = config.gtk.theme;
+
     iconTheme = {
       name = "Papirus-Dark";
       package = pkgs.papirus-icon-theme;
