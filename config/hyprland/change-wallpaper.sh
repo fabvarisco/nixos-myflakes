@@ -33,11 +33,10 @@ while [ "$RANDOM_WALL" = "$CURRENT_WALL" ] && [ $ATTEMPTS -lt 10 ] && [ ${#WALLP
     ((ATTEMPTS++))
 done
 
-# Set the wallpaper with animation
-awww img "$RANDOM_WALL" \
-    --transition-type any \
-    --transition-duration 0.5 \
-    --transition-fps 60
+# Set the wallpaper on every connected monitor via Noctalia IPC
+for mon in $(hyprctl monitors -j | jq -r '.[].name'); do
+    noctalia-shell ipc call wallpaper set "$RANDOM_WALL" "$mon"
+done
 
 # Save current wallpaper
 echo "$RANDOM_WALL" > "$CACHE_FILE"

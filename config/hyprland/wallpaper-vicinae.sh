@@ -41,12 +41,10 @@ if [ ! -f "$SELECTED_WALL" ]; then
     exit 1
 fi
 
-# Set the wallpaper with animation
-awww img "$SELECTED_WALL" \
-    --transition-type grow \
-    --transition-duration 1.5 \
-    --transition-fps 60 \
-    --transition-pos center
+# Set the wallpaper on every connected monitor via Noctalia IPC
+for mon in $(hyprctl monitors -j | jq -r '.[].name'); do
+    noctalia-shell ipc call wallpaper set "$SELECTED_WALL" "$mon"
+done
 
 # Save current wallpaper
 echo "$SELECTED_WALL" > "$CACHE_FILE"

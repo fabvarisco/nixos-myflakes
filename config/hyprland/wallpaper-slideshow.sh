@@ -14,8 +14,6 @@ if [ ! -d "$WALLPAPER_DIR" ]; then
     exit 1
 fi
 
-awww wait
-
 while true; do
     WALLPAPERS=($(find -L "$WALLPAPER_DIR" \( -type f -o -type l \) \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) | sort))
 
@@ -39,11 +37,10 @@ while true; do
         ((ATTEMPTS++))
     done
 
-    # Set wallpaper with animation
-    awww img "$RANDOM_WALL" \
-        --transition-type fade \
-        --transition-duration 2 \
-        --transition-fps 60
+    # Set wallpaper on every connected monitor via Noctalia IPC
+    for mon in $(hyprctl monitors -j | jq -r '.[].name'); do
+        noctalia-shell ipc call wallpaper set "$RANDOM_WALL" "$mon"
+    done
 
     # Save current wallpaper
     echo "$RANDOM_WALL" > "$CACHE_FILE"

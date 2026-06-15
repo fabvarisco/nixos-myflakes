@@ -16,15 +16,11 @@
     hyprlock
     hypridle
     wlogout
-    awww
-    hyprpaper
     hyprmon
+    hyprpolkitagent
 
     # Notifications
     libnotify
-
-    # OSD
-    avizo
 
     # Sound effects (pw-play is provided by pipewire, already in system packages)
     kdePackages.oxygen-sounds
@@ -59,6 +55,26 @@
       --subst-var-by USERNAME "${user.username}"
   '';
   home.file.".config/wlogout".source = ../config/hyprland/wlogout;
+
+  # Polkit authentication agent (needed by NetworkManager wifi connect, hyprlock, etc)
+  systemd.user.services.hyprpolkitagent = {
+    Unit = {
+      Description = "Hyprland polkit authentication agent";
+      After = [ "graphical-session.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+
+    Service = {
+      Type = "simple";
+      ExecStart = "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent";
+      Restart = "on-failure";
+      RestartSec = "5";
+    };
+
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
 
   # Wallpaper slideshow service
   systemd.user.services.wallpaper-slideshow = {
