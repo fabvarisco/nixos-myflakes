@@ -8,6 +8,11 @@ let
     version = "0-unstable-${extsSrc.shortRev or "unknown"}";
     src = "${extsSrc}/extensions/${name}";
   };
+  localExt = name: mkExt {
+    pname = name;
+    version = "0-local";
+    src = ../vicinae-extensions/${name};
+  };
 in
 {
   imports = [ inputs.vicinae.homeManagerModules.default ];
@@ -35,6 +40,7 @@ in
       (ext "hypr")
       (ext "nix")
       (ext "process-manager")
+      (localExt "noctalia-settings")
     ];
   };
 }

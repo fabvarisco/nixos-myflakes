@@ -16,7 +16,10 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Networking
-  networking.wireless.iwd.enable = true;
+  networking.networkmanager.enable = true;
+
+  # Power & battery (needed by noctalia battery widget)
+  services.upower.enable = true;
 
   # Timezone & locale
   time.timeZone = "America/Sao_Paulo";

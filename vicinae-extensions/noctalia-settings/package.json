@@ -1,0 +1,178 @@
+{
+  "$schema": "https://raw.githubusercontent.com/vicinaehq/vicinae/refs/heads/main/extra/schemas/extension.json",
+  "name": "noctalia-settings",
+  "title": "Noctalia Settings",
+  "description": "Open Noctalia shell settings tabs directly from Vicinae.",
+  "categories": ["System"],
+  "license": "MIT",
+  "author": "fabvarisco",
+  "icon": "extension_icon.png",
+  "commands": [
+    {
+      "name": "about",
+      "title": "About",
+      "description": "About Noctalia and version info",
+      "keywords": ["version", "info", "credits"],
+      "mode": "no-view"
+    },
+    {
+      "name": "audio",
+      "title": "Audio",
+      "description": "Audio settings (volume, MPRIS, visualizer)",
+      "keywords": ["sound", "volume", "mpris", "music", "speaker", "microphone"],
+      "mode": "no-view"
+    },
+    {
+      "name": "bar",
+      "title": "Bar",
+      "description": "Top/side bar configuration and widgets",
+      "keywords": ["panel", "topbar", "widgets", "statusbar"],
+      "mode": "no-view"
+    },
+    {
+      "name": "colorscheme",
+      "title": "Color Scheme",
+      "description": "Theme and color scheme configuration",
+      "keywords": ["theme", "colors", "darkmode", "lightmode", "palette", "wallpaper colors"],
+      "mode": "no-view"
+    },
+    {
+      "name": "lockscreen",
+      "title": "Lock Screen",
+      "description": "Lock screen appearance and behavior",
+      "keywords": ["lock", "screensaver", "password", "auth"],
+      "mode": "no-view"
+    },
+    {
+      "name": "controlcenter",
+      "title": "Control Center",
+      "description": "Control center cards and shortcuts",
+      "keywords": ["quick settings", "shortcuts", "cards", "panel"],
+      "mode": "no-view"
+    },
+    {
+      "name": "desktopwidgets",
+      "title": "Desktop Widgets",
+      "description": "Desktop widget grid and overview",
+      "keywords": ["widgets", "desktop", "overview", "grid"],
+      "mode": "no-view"
+    },
+    {
+      "name": "osd",
+      "title": "OSD",
+      "description": "On-screen display (volume/brightness popups)",
+      "keywords": ["popup", "onscreen", "indicator", "toast", "overlay"],
+      "mode": "no-view"
+    },
+    {
+      "name": "display",
+      "title": "Display",
+      "description": "Monitor and display configuration",
+      "keywords": ["monitor", "screen", "resolution", "scaling", "refresh"],
+      "mode": "no-view"
+    },
+    {
+      "name": "dock",
+      "title": "Dock",
+      "description": "Dock appearance and pinned apps",
+      "keywords": ["taskbar", "launcher", "pinned", "apps"],
+      "mode": "no-view"
+    },
+    {
+      "name": "general",
+      "title": "General",
+      "description": "General Noctalia settings (animations, fonts, language)",
+      "keywords": ["misc", "global", "animations", "fonts", "language", "scale"],
+      "mode": "no-view"
+    },
+    {
+      "name": "hooks",
+      "title": "Hooks",
+      "description": "Custom hook commands for Noctalia events",
+      "keywords": ["scripts", "events", "automation", "callbacks"],
+      "mode": "no-view"
+    },
+    {
+      "name": "launcher",
+      "title": "Launcher",
+      "description": "App launcher panel settings",
+      "keywords": ["applauncher", "search", "clipboard", "apps", "menu"],
+      "mode": "no-view"
+    },
+    {
+      "name": "location",
+      "title": "Location & Weather",
+      "description": "Location, weather, calendar settings",
+      "keywords": ["weather", "calendar", "city", "timezone", "geoip"],
+      "mode": "no-view"
+    },
+    {
+      "name": "connections",
+      "title": "Connections",
+      "description": "Network and Bluetooth connections",
+      "keywords": ["wifi", "ethernet", "vpn", "bluetooth", "network", "wireless"],
+      "mode": "no-view"
+    },
+    {
+      "name": "notifications",
+      "title": "Notifications",
+      "description": "Notification appearance, sounds, and history",
+      "keywords": ["alerts", "popups", "history", "dnd", "do not disturb", "sounds"],
+      "mode": "no-view"
+    },
+    {
+      "name": "plugins",
+      "title": "Plugins",
+      "description": "Noctalia plugin manager",
+      "keywords": ["extensions", "addons", "plugins"],
+      "mode": "no-view"
+    },
+    {
+      "name": "sessionmenu",
+      "title": "Session Menu",
+      "description": "Power/session menu (logout, reboot, shutdown)",
+      "keywords": ["power", "logout", "shutdown", "reboot", "suspend", "hibernate"],
+      "mode": "no-view"
+    },
+    {
+      "name": "system",
+      "title": "System Monitor",
+      "description": "System monitor thresholds and external monitor command",
+      "keywords": ["sysmon", "cpu", "memory", "disk", "gpu", "monitor", "performance"],
+      "mode": "no-view"
+    },
+    {
+      "name": "userinterface",
+      "title": "User Interface",
+      "description": "UI fonts, opacity, scrollbar, tooltips",
+      "keywords": ["ui", "fonts", "opacity", "scrollbar", "tooltips", "appearance"],
+      "mode": "no-view"
+    },
+    {
+      "name": "wallpaper",
+      "title": "Wallpaper",
+      "description": "Wallpaper directory, transitions, automation",
+      "keywords": ["background", "image", "wall", "slideshow", "wallhaven"],
+      "mode": "no-view"
+    },
+    {
+      "name": "idle",
+      "title": "Idle",
+      "description": "Idle timeout, lock, suspend, screen-off commands",
+      "keywords": ["timeout", "sleep", "suspend", "lock", "screenoff", "inactivity"],
+      "mode": "no-view"
+    }
+  ],
+  "preferences": [],
+  "scripts": {
+    "build": "vici build",
+    "dev": "vici develop",
+    "lint": "vici lint"
+  },
+  "dependencies": {
+    "@vicinae/api": "^0.20.9"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  }
+}

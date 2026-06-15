@@ -34,6 +34,11 @@
       flake = false;
     };
 
+    noctalia = {
+      url = "github:noctalia-dev/noctalia/legacy-v4";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     silentSDDM = {
       url = "git+https://github.com/uiriansan/SilentSDDM";
       inputs.nixpkgs.follows = "nixpkgs";

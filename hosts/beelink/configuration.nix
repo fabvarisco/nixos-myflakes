@@ -22,6 +22,9 @@
   };
 
 
+  # Power profiles (consumed by noctalia power-profile widget; no TLP on this host)
+  services.power-profiles-daemon.enable = true;
+
   # Steam
   programs.steam = {
     enable = true;

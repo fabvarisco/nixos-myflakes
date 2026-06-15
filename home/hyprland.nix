@@ -4,6 +4,7 @@
   imports = [
     ./nautilus.nix
     ./vicinae.nix
+    ./noctalia.nix
   ];
 
   home.packages = with pkgs; [
