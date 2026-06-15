@@ -1,10 +1,16 @@
 { self, nixpkgs, home-manager, vicinae, silentSDDM, ... } @inputs:
 
 let
-  mkHost = { hostname, desktop, extraModules ? [] }:
+  defaultUser = {
+    username = "fabvarisco";
+    fullName = "Fabricio Varisco Oliveira";
+    homeDirectory = "/home/fabvarisco";
+  };
+
+  mkHost = { hostname, desktop, user ? defaultUser, extraModules ? [] }:
     nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      specialArgs = { inherit inputs; };
+      specialArgs = { inherit inputs user; };
       modules = [
         ./hosts/${hostname}/configuration.nix
         ./modules/desktop/${desktop}.nix
@@ -14,18 +20,18 @@ let
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            users.fabvarisco = { ... }: {
+            users.${user.username} = { ... }: {
               imports = [
                 ./home/common.nix
                 ./home/${desktop}.nix
                 ./home/cursor/miku.nix
               ];
-              home.username = "fabvarisco";
-              home.homeDirectory = "/home/fabvarisco";
+              home.username = user.username;
+              home.homeDirectory = user.homeDirectory;
               home.stateVersion = "25.05";
             };
             backupFileExtension = "backup";
-            extraSpecialArgs = { inherit inputs; };
+            extraSpecialArgs = { inherit inputs user; };
           };
         }
       ] ++ extraModules;

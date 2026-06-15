@@ -16,9 +16,9 @@
     };
 
     gtk3.bookmarks = [
-      "file:///home/fabvarisco/Downloads Downloads"
-      "file:///home/fabvarisco/Developer Developer"
-      "file:///home/fabvarisco/Documents Documents"
+      "file://${config.home.homeDirectory}/Downloads Downloads"
+      "file://${config.home.homeDirectory}/Developer Developer"
+      "file://${config.home.homeDirectory}/Documents Documents"
     ];
   };
 

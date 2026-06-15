@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, lib, inputs, user, ... }:
 
 {
   imports = [
@@ -58,7 +58,7 @@
   programs.silentSDDM = {
     enable = true;
     theme = "rei";  # Options: rei, ken, silvia
-    profileIcons.fabvarisco = ../config/profile-pics/profile_2.jpg;
+    profileIcons.${user.username} = ../config/profile-pics/profile_2.jpg;
   };
 
   # Audio

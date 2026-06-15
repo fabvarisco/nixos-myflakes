@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, user, ... }:
 
 {
   imports = [
@@ -50,8 +50,13 @@
     jq
   ];
 
-  # Hyprland configs
-  home.file.".config/hypr".source = ../config/hyprland;
+  # Hyprland configs (templated to substitute @USERNAME@ in hyprland.conf)
+  home.file.".config/hypr".source = pkgs.runCommand "hypr-config" {} ''
+    cp -r ${../config/hyprland} $out
+    chmod -R u+w $out
+    substituteInPlace $out/hyprland.conf \
+      --subst-var-by USERNAME "${user.username}"
+  '';
   home.file.".config/wlogout".source = ../config/hyprland/wlogout;
 
   # Wallpaper slideshow service

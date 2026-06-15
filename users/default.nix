@@ -1,7 +1,10 @@
-{ ... }:
+{ user, pkgs, ... }:
 
 {
-  imports = [
-    ./fabvarisco/system.nix
-  ];
+  users.users.${user.username} = {
+    isNormalUser = true;
+    description = user.fullName;
+    extraGroups = [ "wheel" "bluetooth" "audio" ];
+    packages = with pkgs; [ tree ];
+  };
 }
