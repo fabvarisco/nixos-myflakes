@@ -15,7 +15,6 @@
     # Hyprland ecosystem
     hyprlock
     hypridle
-    wlogout
     hyprmon
     hyprpolkitagent
 
@@ -54,7 +53,7 @@
     substituteInPlace $out/hyprland.conf \
       --subst-var-by USERNAME "${user.username}"
   '';
-  home.file.".config/wlogout".source = ../config/hyprland/wlogout;
+  home.file.".config/wiremix/wiremix.toml".source = ../config/wiremix/wiremix.toml;
 
   # Polkit authentication agent (needed by NetworkManager wifi connect, hyprlock, etc)
   systemd.user.services.hyprpolkitagent = {
@@ -69,26 +68,6 @@
       ExecStart = "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent";
       Restart = "on-failure";
       RestartSec = "5";
-    };
-
-    Install = {
-      WantedBy = [ "graphical-session.target" ];
-    };
-  };
-
-  # Wallpaper slideshow service
-  systemd.user.services.wallpaper-slideshow = {
-    Unit = {
-      Description = "Automatic wallpaper slideshow (changes every 12h)";
-      After = [ "graphical-session.target" ];
-      PartOf = [ "graphical-session.target" ];
-    };
-
-    Service = {
-      Type = "simple";
-      ExecStart = "${pkgs.bash}/bin/bash ${config.home.homeDirectory}/.config/hypr/wallpaper-slideshow.sh";
-      Restart = "on-failure";
-      RestartSec = "10";
     };
 
     Install = {
