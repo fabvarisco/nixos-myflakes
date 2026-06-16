@@ -3,9 +3,7 @@
 {
   imports = [
     ./development.nix
-    ./cpp.nix
     ./gaming.nix
-    ./calendar.nix
     ./utils.nix
     ./fonts.nix
     ../users/default.nix
