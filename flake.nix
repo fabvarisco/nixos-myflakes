@@ -6,11 +6,13 @@
       "https://cache.nixos.org"
       "https://hyprland.cachix.org"
       "https://nix-community.cachix.org"
+      "https://zen-browser.cachix.org"
     ];
     extra-trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCUSjDg="
+      "zen-browser.cachix.org-1:nocWVkADxTz+7HyJHRXbD3xKUCerRiAKjFxGQKQ6V4g="
     ];
   };
 
@@ -41,6 +43,11 @@
 
     silentSDDM = {
       url = "git+https://github.com/uiriansan/SilentSDDM";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    zen-browser = {
+      url = "https://github.com/0xc000022070/zen-browser-flake/archive/main.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

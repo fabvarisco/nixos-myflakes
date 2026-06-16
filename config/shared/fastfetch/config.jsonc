@@ -28,6 +28,26 @@
       "type": "uptime",
       "key": "Uptime"
     },
+    {
+      "type": "host",
+      "key": "Host"
+    },
+    {
+      "type": "cpu",
+      "key": "CPU"
+    },
+    {
+      "type": "gpu",
+      "key": "GPU"
+    },
+    {
+      "type": "memory",
+      "key": "RAM"
+    },
+    {
+      "type": "disk",
+      "key": "Disk"
+    },
     "break",
     "colors"
   ]

@@ -38,6 +38,16 @@ in
     };
     extensions = [
       (ext "hypr")
+      (ext "hypr-keybinds")
+      (ext "hyprland-monitors")
+      (ext "wifi-commander")
+      (ext "vscode-recents")
+      (ext "github")
+      (ext "agenda")
+      (ext "html-symbol-finder")
+      (ext "mise")
+      (ext "iconify")
+      (ext "npm")
       (ext "nix")
       (ext "process-manager")
       (localExt "noctalia-settings")

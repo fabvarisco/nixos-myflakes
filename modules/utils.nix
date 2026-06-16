@@ -1,7 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
+    inputs.zen-browser.packages.${pkgs.system}.default
     gum
     unzip
     zip
