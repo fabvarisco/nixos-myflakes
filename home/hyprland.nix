@@ -5,6 +5,7 @@
     ./nautilus.nix
     ./vicinae.nix
     ./noctalia.nix
+    ./cursor/aosp.nix
   ];
 
   home.packages = with pkgs; [
@@ -24,18 +25,11 @@
     # Sound effects (pw-play is provided by pipewire, already in system packages)
     kdePackages.oxygen-sounds
 
-    # Audio (Hyprland doesn't have built-in mixer)
-    wiremix
-
-    # Network TUI
-    impala
-
     # Brightness control
     brightnessctl
-    
+
     # Audio
     pwvucontrol
-    pamixer
     playerctl
 
     # Bluetooth
@@ -53,8 +47,6 @@
     substituteInPlace $out/hyprland.conf \
       --subst-var-by USERNAME "${user.username}"
   '';
-  home.file.".config/wiremix/wiremix.toml".source = ../config/wiremix/wiremix.toml;
-
   # Polkit authentication agent (needed by NetworkManager wifi connect, hyprlock, etc)
   systemd.user.services.hyprpolkitagent = {
     Unit = {

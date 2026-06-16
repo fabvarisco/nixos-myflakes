@@ -42,12 +42,12 @@
     "bar": {
         "autoHideDelay": 500,
         "autoShowDelay": 150,
-        "backgroundOpacity": 0.93,
+        "backgroundOpacity": 0.9500000000000001,
         "barType": "simple",
         "capsuleColorKey": "none",
         "capsuleOpacity": 1,
-        "contentPadding": 3,
-        "density": "spacious",
+        "contentPadding": 2,
+        "density": "default",
         "displayMode": "always_visible",
         "enableExclusionZoneInset": true,
         "fontScale": 1,
@@ -74,10 +74,23 @@
         "showCapsule": false,
         "showOnWorkspaceSwitch": true,
         "showOutline": false,
-        "useSeparateOpacity": false,
-        "widgetSpacing": 6,
+        "useSeparateOpacity": true,
+        "widgetSpacing": 0,
         "widgets": {
             "center": [
+                {
+                    "defaultSettings": {
+                        "catColor": "default",
+                        "catOffsetY": 0,
+                        "catSize": 1,
+                        "idleTimeout": 150,
+                        "raveMode": false,
+                        "tappyMode": false,
+                        "useMprisFilter": false,
+                        "waitingTimeout": 30000
+                    },
+                    "id": "plugin:slowbongo"
+                },
                 {
                     "clockColor": "none",
                     "customFont": "",
@@ -138,8 +151,8 @@
                     "id": "Workspace",
                     "labelMode": "index",
                     "occupiedColor": "error",
-                    "pillSize": 0.6,
-                    "showApplications": true,
+                    "pillSize": 0.7,
+                    "showApplications": false,
                     "showApplicationsHover": false,
                     "showBadge": true,
                     "showLabelsOnlyWhenOccupied": true,
@@ -158,6 +171,43 @@
                 }
             ],
             "right": [
+                {
+                    "blacklist": [
+                    ],
+                    "chevronColor": "none",
+                    "colorizeIcons": false,
+                    "drawerEnabled": false,
+                    "hidePassive": false,
+                    "id": "Tray",
+                    "pinned": [
+                    ]
+                },
+                {
+                    "id": "Spacer",
+                    "width": 20
+                },
+                {
+                    "defaultSettings": {
+                        "githubGistId": "",
+                        "githubToken": "",
+                        "notes": "[]",
+                        "syncEnabled": false
+                    },
+                    "id": "plugin:sticky-notes"
+                },
+                {
+                    "defaultSettings": {
+                        "group": "",
+                        "platform": "github",
+                        "refreshInterval": 60,
+                        "repo": ""
+                    },
+                    "id": "plugin:git-companion"
+                },
+                {
+                    "id": "Spacer",
+                    "width": 20
+                },
                 {
                     "compactMode": true,
                     "diskPath": "/",
@@ -179,17 +229,6 @@
                     "textColor": "none",
                     "useMonospaceFont": true,
                     "usePadding": false
-                },
-                {
-                    "blacklist": [
-                    ],
-                    "chevronColor": "none",
-                    "colorizeIcons": false,
-                    "drawerEnabled": true,
-                    "hidePassive": false,
-                    "id": "Tray",
-                    "pinned": [
-                    ]
                 },
                 {
                     "id": "Spacer",
@@ -473,7 +512,7 @@
         "suspendTimeout": 1800
     },
     "location": {
-        "analogClockInCalendar": false,
+        "analogClockInCalendar": true,
         "autoLocate": false,
         "firstDayOfWeek": -1,
         "hideWeatherCityName": false,
@@ -481,7 +520,7 @@
         "name": "Canoas, RS, Brazil",
         "showCalendarEvents": true,
         "showCalendarWeather": true,
-        "showWeekNumberInCalendar": false,
+        "showWeekNumberInCalendar": true,
         "use12hourFormat": false,
         "useFahrenheit": false,
         "weatherEnabled": true,

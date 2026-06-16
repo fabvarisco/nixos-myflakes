@@ -24,7 +24,7 @@ let
               imports = [
                 ./home/common.nix
                 ./home/${desktop}.nix
-                ./home/cursor/miku.nix
+                ./home/cursor/aosp.nix
               ];
               home.username = user.username;
               home.homeDirectory = user.homeDirectory;
