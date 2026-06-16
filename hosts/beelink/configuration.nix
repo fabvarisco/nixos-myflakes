@@ -25,13 +25,8 @@
   # Power profiles (consumed by noctalia power-profile widget; no TLP on this host)
   services.power-profiles-daemon.enable = true;
 
-  # Steam
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true; 
-    dedicatedServer.openFirewall = true; 
-    localNetworkGameTransfers.openFirewall = true;
-  };
+  # Steam (gaming.nix handles the rest)
+  programs.steam.localNetworkGameTransfers.openFirewall = true;
 
   system.stateVersion = "25.05";
 }

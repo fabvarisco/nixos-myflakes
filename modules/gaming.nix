@@ -1,8 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   # Kernel mais responsivo sob carga (latency tweaks, scheduler diferente)
-  boot.kernelPackages = pkgs.linuxPackages_zen;
+  boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_zen;
 
   # Engines modernos (Star Citizen, Hogwarts Legacy, alguns Unreal 5) pedem
   # mais do que o padrão NixOS (1048576)
