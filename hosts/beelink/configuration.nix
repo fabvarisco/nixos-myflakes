@@ -6,18 +6,20 @@
     ../../modules/common.nix
   ];
 
-  boot.initrd.kernelModules = [ "amdgpu" ];
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  
+
   networking.hostName = "beelink";
-  programs.nix-ld.enable = true; 
+  programs.nix-ld.enable = true;
+
+  hardware.enableRedistributableFirmware = true;
+  hardware.amdgpu.initrd.enable = true;
+  hardware.amdgpu.opencl.enable = true;
+
   hardware.graphics = {
     enable = true;
-    enable32Bit = true; 
-    
+    enable32Bit = true;
     extraPackages = with pkgs; [
       libva-utils
-      rocmPackages.clr.icd 
     ];
   };
 

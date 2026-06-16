@@ -1,7 +1,7 @@
 { inputs, pkgs, ... }:
 
 let
-  mkExt = inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.mkVicinaeExtension;
+  mkExt = inputs.vicinae.lib.${pkgs.stdenv.hostPlatform.system}.mkVicinaeExtension;
   extsSrc = inputs.vicinae-extensions;
   ext = name: mkExt {
     pname = name;
