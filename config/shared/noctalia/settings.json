@@ -160,13 +160,13 @@
                 },
                 {
                     "colorizeIcons": false,
-                    "hideMode": "visible",
+                    "hideMode": "hidden",
                     "id": "ActiveWindow",
                     "maxWidth": 145,
                     "scrollingMode": "always",
                     "showIcon": true,
-                    "showText": true,
-                    "textColor": "none",
+                    "showText": false,
+                    "textColor": "primary",
                     "useFixedWidth": true
                 }
             ],
@@ -395,7 +395,7 @@
         "displayMode": "auto_hide",
         "dockType": "floating",
         "enabled": true,
-        "floatingRatio": 1,
+        "floatingRatio": 1.1400000000000001,
         "groupApps": false,
         "groupClickAction": "cycle",
         "groupContextMenuMode": "extended",
@@ -418,7 +418,7 @@
         "showDockIndicator": false,
         "showLauncherIcon": false,
         "sitOnFrame": false,
-        "size": 1
+        "size": 1.4000000000000001
     },
     "general": {
         "allowPanelsOnScreenWithoutBar": true,
@@ -727,7 +727,7 @@
         "overviewEnabled": false,
         "overviewTint": 0.6,
         "panelPosition": "follow_bar",
-        "randomIntervalSec": 300,
+        "randomIntervalSec": 3600,
         "setWallpaperOnAllMonitors": true,
         "showHiddenFiles": false,
         "skipStartupTransition": false,
