@@ -7,6 +7,7 @@
     gh
     vscode
     nodejs_24
+    ionic-cli
     claude-code
     fastfetch
     kitty

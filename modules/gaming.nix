@@ -64,4 +64,6 @@
     enable = true;
     capSysNice = true;
   };
+
+  services.flatpak.enable = true;
 }
