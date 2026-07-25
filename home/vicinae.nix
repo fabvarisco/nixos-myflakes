@@ -50,7 +50,7 @@ in
       # (ext "github")
       (ext "agenda")
       (ext "html-symbol-finder")
-      (ext "mise")
+      #(ext "mise")
       (ext "iconify")
       #(ext "npm")
       (ext "nix")
