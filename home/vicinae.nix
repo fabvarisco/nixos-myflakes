@@ -35,19 +35,24 @@ in
         family = "JetBrains Mono Nerd Font";
       };
       launcher_window.opacity = 1.0;
+      favorites = [
+        "applications:zen-beta"
+        "applications:vesktop"
+        "files:search"
+      ];
     };
     extensions = [
-      (ext "hypr")
-      (ext "hypr-keybinds")
-      (ext "hyprland-monitors")
-      (ext "wifi-commander")
-      (ext "vscode-recents")
-      (ext "github")
+      # (ext "hypr")
+      # (ext "hypr-keybinds")
+      # (ext "hyprland-monitors")
+      # (ext "wifi-commander")
+      # (ext "vscode-recents")
+      # (ext "github")
       (ext "agenda")
       (ext "html-symbol-finder")
       (ext "mise")
       (ext "iconify")
-      (ext "npm")
+      #(ext "npm")
       (ext "nix")
       (ext "process-manager")
       (localExt "noctalia-settings")

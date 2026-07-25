@@ -1,4 +1,4 @@
-{ config, pkgs, user, ... }:
+{ config, pkgs, lib, user, ... }:
 
 {
   imports = [
@@ -40,12 +40,44 @@
     jq
   ];
 
-  # Hyprland configs (templated to substitute @USERNAME@ in hyprland.conf)
-  home.file.".config/hypr".source = pkgs.runCommand "hypr-config" {} ''
-    cp -r ${../config/hyprland} $out
-    chmod -R u+w $out
-    substituteInPlace $out/hyprland.conf \
-      --subst-var-by USERNAME "${user.username}"
+  # Hyprland configs — individual symlinks so ~/.config/hypr/ is a regular
+  # writable directory (tools like hyprmon can create files inside it).
+  home.file.".config/hypr/hyprland.conf".text =
+    builtins.replaceStrings [ "@USERNAME@" ] [ user.username ]
+    (builtins.readFile ../config/hyprland/hyprland.conf);
+
+  home.file.".config/hypr/hypridle.conf".source = ../config/hyprland/hypridle.conf;
+  home.file.".config/hypr/hyprlock.conf".source = ../config/hyprland/hyprlock.conf;
+
+  home.file.".config/hypr/battery-manager.sh" = {
+    source = ../config/hyprland/battery-manager.sh;
+    executable = true;
+  };
+  home.file.".config/hypr/mouse-sensitivity.sh" = {
+    source = ../config/hyprland/mouse-sensitivity.sh;
+    executable = true;
+  };
+  home.file.".config/hypr/wallpaper-vicinae.sh" = {
+    source = ../config/hyprland/wallpaper-vicinae.sh;
+    executable = true;
+  };
+
+  # Seed monitors.conf on first activation; hyprmon writes profiles here.
+  # Not Nix-managed after creation — persists across rebuilds.
+  home.activation.createMonitorsConf = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    mkdir -p "$HOME/.config/hypr"
+    if [ ! -f "$HOME/.config/hypr/monitors.conf" ]; then
+      cat > "$HOME/.config/hypr/monitors.conf" << 'MONITORSEOF'
+# Laptop display (ThinkPad eDP-1)
+monitor = eDP-1, 1920x1200@60, auto, 1.0
+
+# Dell P3425WE ultrawide
+monitor = desc:Dell Inc. DELL P3425WE, 3440x1440@100, 0x0, 1.0
+
+# Fallback for other external monitors
+monitor = , preferred, auto, 1.0
+MONITORSEOF
+    fi
   '';
   # Polkit authentication agent (needed by NetworkManager wifi connect, hyprlock, etc)
   systemd.user.services.hyprpolkitagent = {

@@ -1,13 +1,25 @@
 { config, lib, pkgs, ... }:
 
+let
+  papirus-dark-nordic = pkgs.papirus-icon-theme.overrideAttrs (old: {
+    nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.gawk ];
+    postInstall = (old.postInstall or "") + ''
+      XDG_DATA_HOME="$out/share" ${pkgs.papirus-folders}/bin/papirus-folders -C nordic -t Papirus-Dark
+    '';
+  });
+in
 {
+  home.packages = with pkgs; [
+    nautilus-open-any-terminal
+  ];
+
   # GTK theme e configurações
   gtk = {
     enable = true;
 
     theme = {
-      name = "Adwaita-dark";
-      package = pkgs.gnome-themes-extra;
+      name = "adw-gtk3-dark";
+      package = pkgs.adw-gtk3;
     };
 
     # Keep GTK4 apps following the GTK theme (legacy default pre-26.05)
@@ -15,13 +27,16 @@
 
     iconTheme = {
       name = "Papirus-Dark";
-      package = pkgs.papirus-icon-theme;
+      package = papirus-dark-nordic;
     };
 
     gtk3.bookmarks = [
       "file://${config.home.homeDirectory}/Downloads Downloads"
       "file://${config.home.homeDirectory}/Developer Developer"
       "file://${config.home.homeDirectory}/Documents Documents"
+      "file://${config.home.homeDirectory}/Videos Videos"
+      "file://${config.home.homeDirectory}/Images Images"
+
     ];
   };
 
@@ -49,6 +64,12 @@
 
     "org/gnome/nautilus/icon-view" = {
       default-zoom-level = "small";
+    };
+
+    "com/github/stunkymonkey/nautilus-open-any-terminal" = {
+      terminal = "kitty";
+      new-tab = false;
+      keybinding = "<Ctrl><Alt>t";
     };
   };
 }

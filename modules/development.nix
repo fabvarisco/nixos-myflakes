@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
@@ -16,5 +16,7 @@
     godot_4-mono
     neovim
     android-tools
+    code-cursor
+    inputs.herdr.packages.${pkgs.system}.default
   ];
 }

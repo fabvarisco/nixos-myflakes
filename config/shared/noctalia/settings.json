@@ -79,19 +79,6 @@
         "widgets": {
             "center": [
                 {
-                    "defaultSettings": {
-                        "catColor": "default",
-                        "catOffsetY": 0,
-                        "catSize": 1,
-                        "idleTimeout": 150,
-                        "raveMode": false,
-                        "tappyMode": false,
-                        "useMprisFilter": false,
-                        "waitingTimeout": 30000
-                    },
-                    "id": "plugin:slowbongo"
-                },
-                {
                     "clockColor": "none",
                     "customFont": "",
                     "formatHorizontal": "HH:mm ddd, MMM dd",
@@ -187,22 +174,13 @@
                     "width": 20
                 },
                 {
-                    "defaultSettings": {
-                        "githubGistId": "",
-                        "githubToken": "",
-                        "notes": "[]",
-                        "syncEnabled": false
-                    },
-                    "id": "plugin:sticky-notes"
-                },
-                {
-                    "defaultSettings": {
-                        "group": "",
-                        "platform": "github",
-                        "refreshInterval": 60,
-                        "repo": ""
-                    },
-                    "id": "plugin:git-companion"
+                    "deviceNativePath": "__default__",
+                    "displayMode": "graphic-clean",
+                    "hideIfIdle": false,
+                    "hideIfNotDetected": true,
+                    "id": "Battery",
+                    "showNoctaliaPerformance": false,
+                    "showPowerProfiles": false
                 },
                 {
                     "id": "Spacer",
@@ -712,7 +690,7 @@
     },
     "wallpaper": {
         "automationEnabled": true,
-        "directory": "/home/fabvarisco/.config/walls",
+        "directory": "/home/fabvarisco/Pictures/Wallpapers",
         "enableMultiMonitorDirectories": false,
         "enabled": true,
         "favorites": [

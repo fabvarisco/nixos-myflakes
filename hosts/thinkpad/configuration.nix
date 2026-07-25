@@ -6,7 +6,7 @@
     ../../modules/common.nix
   ];
 
-  boot.initrd.kernelModules = [ "amdgpu" ];
+  boot.initrd.kernelModules = [ "i915" ];
 
   networking.hostName = "thinkpad";
   hardware.graphics = {
@@ -69,9 +69,15 @@
   security.pam.services.hyprlock.fprintAuth = true;
 
 
+  # Intel GPU: VA-API via iHD (Intel Media Driver), Vulkan via ANV
+  environment.sessionVariables = {
+    LIBVA_DRIVER_NAME = "iHD";
+  };
+
   environment.systemPackages = with pkgs; [
     fprintd
     cheese  # Webcam app
+    intel-media-driver  # VA-API iHD for Intel Xe/Gen12+
   ];
 
   system.stateVersion = "25.05";

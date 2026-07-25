@@ -33,6 +33,12 @@
     localNetworkGameTransfers.openFirewall = true;
   };
 
+  # AMD GPU: Vulkan via RADV, VA-API via radeonsi
+  environment.sessionVariables = {
+    AMD_VULKAN_ICD = "RADV";
+    LIBVA_DRIVER_NAME = "radeonsi";
+  };
+
   environment.systemPackages = with pkgs; [
     inkscape
     davinci-resolve
