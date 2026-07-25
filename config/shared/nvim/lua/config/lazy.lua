@@ -10,6 +10,15 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   spec = {
+    -- Must be registered before LazyVim so this opts runs innermost in the chain.
+    -- snacks_picker extra expects dashboard.button and dashboard.section.buttons.val
+    -- to already exist when its opts function runs.
+    {
+      "goolord/alpha-nvim",
+      opts = function()
+        return require("alpha.themes.dashboard")
+      end,
+    },
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     -- LazyVim extras (devem vir antes dos plugins do usuário)
     { import = "lazyvim.plugins.extras.lang.typescript" },
