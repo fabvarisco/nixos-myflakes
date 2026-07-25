@@ -23,6 +23,9 @@
   home.file.".config/profile-pics".source = ../config/profile-pics;
   home.file.".claude/agents".source = ../config/claude/agents;
   home.file.".claude/skills".source = ../config/claude/skills;
+  home.file.".config/nvim".source =
+    config.lib.file.mkOutOfStoreSymlink
+      "${config.home.homeDirectory}/Developer/my-dotfiles/config/shared/nvim";
   home.file.".config/onedrive/config".text = ''
     disable_notifications = "true"
   '';

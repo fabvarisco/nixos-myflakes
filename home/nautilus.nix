@@ -4,7 +4,10 @@ let
   papirus-dark-nordic = pkgs.papirus-icon-theme.overrideAttrs (old: {
     nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.gawk ];
     postInstall = (old.postInstall or "") + ''
-      XDG_DATA_HOME="$out/share" ${pkgs.papirus-folders}/bin/papirus-folders -C nordic -t Papirus-Dark
+      export XDG_DATA_HOME="$out/share"
+      export USER_HOME="$out"
+      export XDG_CONFIG_HOME="$(mktemp -d)"
+      ${pkgs.papirus-folders}/bin/papirus-folders -C nordic -t Papirus-Dark
     '';
   });
 in
