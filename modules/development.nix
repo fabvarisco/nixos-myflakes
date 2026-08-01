@@ -18,7 +18,7 @@
     fd
     ripgrep
     gcc
-
+    deno
     # LSPs e ferramentas para neovim
     tree-sitter
     typescript-language-server

@@ -75,4 +75,22 @@ in
       keybinding = "<Ctrl><Alt>t";
     };
   };
+
+  home.activation.nautilusFolderIcons =
+    let
+      home = config.home.homeDirectory;
+      folderIcons = {
+        "${home}/Developer" = "folder-nordic-development";
+        "${home}/Downloads" = "folder-nordic-downloads";
+        "${home}/Documents" = "folder-nordic-documents";
+        "${home}/Videos"    = "folder-nordic-videos";
+        "${home}/Images"    = "folder-nordic-pictures";
+      };
+      setCmds = lib.concatStringsSep "\n" (lib.mapAttrsToList (dir: icon: ''
+        if [ -d "${dir}" ]; then
+          run ${pkgs.glib}/bin/gio set "${dir}" metadata::custom-icon-name '${icon}'
+        fi
+      '') folderIcons);
+    in
+    lib.hm.dag.entryAfter [ "writeBoundary" ] setCmds;
 }
