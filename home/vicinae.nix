@@ -36,9 +36,10 @@ in
       };
       launcher_window.opacity = 1.0;
       favorites = [
+        "applications:cursor"
         "applications:zen-beta"
+        "applications:org.gnome.Nautilus"
         "applications:vesktop"
-        "files:search"
       ];
     };
     extensions = [

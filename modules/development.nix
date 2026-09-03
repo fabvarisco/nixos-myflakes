@@ -9,6 +9,8 @@
     nodejs_24
     ionic-cli
     claude-code
+    codex
+    cursor-cli
     fastfetch
     kitty
     starship
